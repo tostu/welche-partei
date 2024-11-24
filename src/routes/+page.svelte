@@ -46,8 +46,9 @@
 			</span>
 			</div>
 
-
-			<button class="btn btn-lg btn-secondary text-neutral text-2xl">Jetzt herausfinden!</button>
+			<a href="/coming_soon">
+				<button class="btn btn-lg btn-secondary text-neutral text-2xl">Jetzt herausfinden!</button>
+			</a>
 
 		</div>
 
