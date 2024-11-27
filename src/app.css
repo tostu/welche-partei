@@ -1,3 +1,14 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import '@fontsource/lilita-one';
+@import '@fontsource/roboto';
+
+
+h1 {
+    font-family: 'Lilita One', system-ui;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

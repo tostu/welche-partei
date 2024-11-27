@@ -1,5 +1,4 @@
 <script>
-	import { slide, fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import TextRolling from '$lib/components/TextRolling.svelte';
 
@@ -37,41 +36,19 @@
 {#if visible}
 
 	<div class="container mx-auto flex-1 flex justify-center flex-col">
-		<div transition:slide={{ y: -200, duration: 500 }} class="flex justify-center items-center flex-col gap-y-12">
+		<div class="flex justify-center items-center flex-col gap-y-16">
 
-			<div>
+			<div class="text-center">
 				<h1 class=" lilita-one-regular text-9xl text-neutral  drop-shadow-md block">Welche Partei?</h1>
-				<span class="text-5xl text-center drop-shadow block text-base-200">
+				<span class="text-5xl  drop-shadow block text-base-200">
 				<TextRolling textList={heroTextList} />
 			</span>
 			</div>
 
 			<a href="/coming_soon">
-				<button class="btn btn-lg btn-secondary text-neutral text-2xl">Jetzt herausfinden!</button>
+				<button class="btn h-full py-5 btn-secondary text-neutral text-5xl">Jetzt herausfinden!</button>
 			</a>
 
 		</div>
-
-
-
 	</div>
 {/if}
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Modak&display=swap');
-
-    .modak-regular {
-        font-family: "Modak", system-ui;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    .lilita-one-regular {
-        font-family: "Lilita One", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-
-
-</style>
