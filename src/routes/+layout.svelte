@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 	let { children } = $props();
-	import { House } from 'lucide-svelte';
 	import LayoutMenu from '$lib/components/layout/LayoutMenu.svelte';
 </script>
 
