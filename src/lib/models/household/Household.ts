@@ -1,4 +1,4 @@
-export class Haushalt {
+export class Household {
  erwachseneAnzahl: number;
  kinderAnzahl: number;
 
