@@ -1,6 +1,8 @@
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
+import { addIconSelectors } from '@iconify/tailwind';
 import type { Config } from 'tailwindcss';
+
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -30,5 +32,10 @@ export default {
 		],
 	},
 
-	plugins: [typography, forms, require('daisyui'),]
+	plugins: [
+		typography,
+		forms,
+		require('daisyui'),
+		addIconSelectors(['icon-park-outline']),
+	]
 } satisfies Config;
