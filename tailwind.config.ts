@@ -36,6 +36,6 @@ export default {
 		typography,
 		forms,
 		require('daisyui'),
-		addIconSelectors(['icon-park-outline']),
+		addIconSelectors(['icon-park-outline', 'fluent-mdl2']),
 	]
 } satisfies Config;

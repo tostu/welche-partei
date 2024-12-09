@@ -18,6 +18,7 @@
 		"db:studio": "drizzle-kit studio"
 	},
 	"devDependencies": {
+		"@iconify-json/fluent-mdl2": "^1.2.0",
 		"@iconify-json/icon-park": "^1.2.1",
 		"@iconify-json/icon-park-outline": "^1.2.1",
 		"@iconify/tailwind": "^1.2.0",
