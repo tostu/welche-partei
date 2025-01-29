@@ -1,14 +1,14 @@
 import type { FullCategory } from "$lib/categories";
 
 export interface Question {
-  id: string;
+  id: number;
   text: string;
   answers: { text: string; category: FullCategory }[];
 }
 
 export const questions: Question[] = [
   {
-    id: "wohnsituation",
+    id: 1,
     text: "Wie ist Ihre Wohnsituation?",
     answers: [
       { text: "Zur Miete", category: "wohnen_miete" },
@@ -16,7 +16,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: "einkommen",
+    id: 2,
     text: "Wie hoch ist Ihr monatliches Nettoeinkommen?",
     answers: [
       { text: "Unter 2.000 €", category: "einkommen_niedrig" },
@@ -25,7 +25,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: "lebenssituation",
+    id: 3,
     text: "Welche Lebenssituation beschreibt Sie am besten?",
     answers: [
       { text: "Alleinerziehend", category: "lebenssituation_alleinerziehend" },
@@ -35,7 +35,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: "wohnort",
+    id:4,
     text: "Wo leben Sie überwiegend?",
     answers: [
       { text: "In einer Großstadt", category: "urbanisierung_grossstadt" },
@@ -43,7 +43,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: "prioritaet",
+    id: 5,
     text: "Welche politische Priorität ist Ihnen am wichtigsten?",
     answers: [
       { text: "Soziale Gerechtigkeit", category: "prioritaet_soziale_gerechtigkeit" },
