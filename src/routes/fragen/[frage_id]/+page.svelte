@@ -10,9 +10,10 @@
 	}
 </script>
 
-<h1>{data.question.text}</h1>
+
  
-<div class="flex h-full items-center justify-center">
+<div class="flex flex-col h-full items-center justify-center gap-5 m-5 md:gap-10">
+	<h1 class="text-white text-3xl md:text-5xl text-center">{data.question.text}</h1>
 	<div class="flex flex-wrap justify-center gap-10 w-full max-w-[1000px]">
 	{#each data.question.answers as answer}
 		<div class="card bg-secondary text-primary-content w-72 h-72 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
@@ -24,4 +25,4 @@
 	{/each}
 </div>
 
-</div>
+</d@Ral
