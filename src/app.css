@@ -4,11 +4,10 @@
 @import '@fontsource/lilita-one';
 @import '@fontsource/roboto';
 
-
 h1 {
-    font-family: 'Lilita One', system-ui;
+	font-family: 'Lilita One', system-ui;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
