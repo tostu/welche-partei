@@ -1,5 +1,8 @@
 <script>
+	import { answerState } from '$lib/state.svelte';
 </script>
+
+{JSON.stringify(answerState.answerMap)}
 
 <div class="container mx-auto flex flex-1 flex-col justify-center">
 	<div class="flex flex-col items-center justify-center gap-y-12">

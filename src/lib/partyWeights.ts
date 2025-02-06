@@ -1,10 +1,10 @@
 // /src/lib/data/partyWeights.ts
-import type { MainCategory, SubCategory } from '$lib/categories';
-import { parties, type Party } from '$lib/parties';
+import type { Category, Answer } from '$lib/categories';
+import type { Party } from '$lib/parties';
 
 export const partyWeights: Record<
 	Party, // Partei-Name
-	Record<MainCategory, Partial<Record<SubCategory<MainCategory>, number>>>
+	Record<Category, Partial<Record<Answer<Category>, number>>>
 > = {
 	'Die Linke': {
 		wohnen: {

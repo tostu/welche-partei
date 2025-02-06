@@ -13,6 +13,6 @@ export const categories = {
 	] as const
 } as const;
 
-export type MainCategory = keyof typeof categories;
-export type SubCategory<C extends MainCategory> = (typeof categories)[C][number];
-export type FullCategory = `${MainCategory}_${SubCategory<MainCategory>}`;
+export type Category = keyof typeof categories;
+export type Answer<C extends Category> = (typeof categories)[C][number];
+export type FullCategory = `${Category}_${Answer<Category>}`;
