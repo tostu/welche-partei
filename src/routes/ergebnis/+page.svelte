@@ -3,13 +3,17 @@
 	import { answerState } from '$lib/state.svelte';
 	import { onMount } from 'svelte';
 
+	import ResultStat from '$lib/components/ResultStat.svelte';
+
 	import type { Answer, Category } from '$lib/categories';
 
 	type PartyScores = Record<string, number>;
+	type RankedParty = { party: string; percentage: number };
 
 	let bestMatch = $state('');
 	let partyScores = $state<PartyScores>({});
-	let normalizedScores = $state<PartyScores>({});
+	let normalizedScores = $state<RankedParty[]>([]);
+	let showStats = $state(false);
 
 	// Berechnet die Gesamtpunkte jeder Partei basierend auf den Antworten
 	function calculatePartyScores(): PartyScores {
@@ -35,12 +39,12 @@
 	}
 
 	// Berechnet die Scores als Prozent des maximal erreichbaren Scores
-	function normalizeScores(scores: PartyScores, maxScore: number): PartyScores {
+	function normalizeScores(scores: PartyScores, maxScore: number): RankedParty[] {
 		return maxScore > 0
-			? Object.fromEntries(
-					Object.entries(scores).map(([party, score]) => [party, (score / maxScore) * 100])
-				)
-			: scores;
+			? Object.entries(scores)
+					.map(([party, score]) => ({ party, percentage: (score / maxScore) * 100 }))
+					.sort((a, b) => b.percentage - a.percentage) // Sort in descending order
+			: [];
 	}
 
 	// Findet die Partei mit der höchsten Punktzahl
@@ -58,6 +62,8 @@
 		normalizedScores = normalizeScores(partyScores, maxScore);
 		bestMatch = findBestMatch(partyScores);
 
+		showStats = true;
+
 		// Debugging-Logs
 		console.log('Party Scores:', partyScores);
 		console.log('Max Score:', maxScore);
@@ -71,18 +77,11 @@
 	});
 </script>
 
-{#if bestMatch}
-	<div class="result">
-		<h2>Best Match</h2>
-		<p>{bestMatch}</p>
-
-		<!-- Zeigt alle Partei-Scores als Prozent des maximal erreichbaren Scores -->
-		<div class="scores">
-			{#each Object.entries(normalizedScores) as [party, score]}
-				<div class="score-item">
-					<span>{party}:</span>
-					<span>{score.toFixed(2)}%</span>
-				</div>
+{#if showStats}
+	<div class="container mx-auto flex w-full justify-center">
+		<div class="flex h-full w-1/2 flex-col gap-3">
+			{#each normalizedScores as { party, percentage }, index}
+				<ResultStat rank={index + 1} name={party} {percentage} />
 			{/each}
 		</div>
 	</div>
