@@ -12,9 +12,10 @@
 		answerState.answerMap[category] = answer;
 
 		if (questions.length == id) {
-			goto('/coming_soon');
+			goto('/ergebnis');
 		} else {
-			goto(id.toString());
+			const nextId: number = id + 1;
+			goto(nextId.toString());
 		}
 	}
 </script>

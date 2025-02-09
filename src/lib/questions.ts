@@ -47,17 +47,17 @@ export const questions: Question[] = [
 			{ text: 'In einem ländlichen Gebiet', answer: 'laendlich', icon: 'tabler--trees' }
 		]
 	},
-	{
-		id: 5,
-		text: 'Welche politische Priorität ist Ihnen am wichtigsten?',
-		category: 'prioritaet',
-		answers: [
-			{ text: 'Soziale Gerechtigkeit', answer: 'soziale_gerechtigkeit', icon: 'tabler--scale' },
-			{ text: 'Klimapolitik', answer: 'klimapolitik', icon: 'tabler--leaf' },
-			{ text: 'Steuerentlastung', answer: 'steuerentlastung', icon: 'tabler--percentage' },
-			{ text: 'Infrastruktur', answer: 'infrastruktur', icon: 'tabler--road' },
-			{ text: 'Eigentumsförderung', answer: 'eigentumsfoerderung', icon: 'tabler--home' },
-			{ text: 'Marktlösungen', answer: 'marktloesungen', icon: 'tabler--chart-line' }
-		]
-	}
+	// {
+	// 	id: 5,
+	// 	text: 'Welche politische Priorität ist Ihnen am wichtigsten?',
+	// 	category: 'prioritaet',
+	// 	answers: [
+	// 		{ text: 'Soziale Gerechtigkeit', answer: 'soziale_gerechtigkeit', icon: 'tabler--scale' },
+	// 		{ text: 'Klimapolitik', answer: 'klimapolitik', icon: 'tabler--leaf' },
+	// 		{ text: 'Steuerentlastung', answer: 'steuerentlastung', icon: 'tabler--percentage' },
+	// 		{ text: 'Infrastruktur', answer: 'infrastruktur', icon: 'tabler--road' },
+	// 		{ text: 'Eigentumsförderung', answer: 'eigentumsfoerderung', icon: 'tabler--home' },
+	// 		{ text: 'Marktlösungen', answer: 'marktloesungen', icon: 'tabler--chart-line' }
+	// 	]
+	// }
 ];
