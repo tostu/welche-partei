@@ -20,7 +20,7 @@
 </script>
 
 <details
-	on:toggle={handleToggle}
+	ontoggle={handleToggle}
 	class="collapse cursor-pointer rounded-lg bg-base-200 transition-all duration-150 hover:shadow-md"
 >
 	<summary class="p-5">
