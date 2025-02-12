@@ -1,7 +1,3 @@
-// /src/lib/data/partyWeights.ts
-import type { Category, Answer } from '$lib/categories';
-import type { Party } from '$lib/parties';
-
 export const partyWeights: Record<
 	Party, // Partei-Name
 	Record<Category, Partial<Record<Answer<Category>, number>>>
@@ -17,10 +13,12 @@ export const partyWeights: Record<
 			hoch: 1
 		},
 		lebenssituation: {
+			erwerbstaetig: 6,
+			selbstständig: 4,
+			studierend_auszubildend: 7,
+			arbeitslos_uebergangsphase: 9,
 			alleinerziehend: 9,
-			wohnungslos: 10,
-			studierend: 7,
-			auszubildend: 8
+			wohnungslos: 10
 		},
 		urbanisierung: {
 			grossstadt: 8,
@@ -46,10 +44,12 @@ export const partyWeights: Record<
 			hoch: 3
 		},
 		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 5,
+			studierend_auszubildend: 8,
+			arbeitslos_uebergangsphase: 6,
 			alleinerziehend: 7,
-			wohnungslos: 6,
-			studierend: 8,
-			auszubildend: 6
+			wohnungslos: 6
 		},
 		urbanisierung: {
 			grossstadt: 6,
@@ -75,10 +75,12 @@ export const partyWeights: Record<
 			hoch: 8
 		},
 		lebenssituation: {
+			erwerbstaetig: 5,
+			selbstständig: 6,
+			studierend_auszubildend: 4,
+			arbeitslos_uebergangsphase: 3,
 			alleinerziehend: 3,
-			wohnungslos: 2,
-			studierend: 4,
-			auszubildend: 3
+			wohnungslos: 2
 		},
 		urbanisierung: {
 			grossstadt: 3,
@@ -93,7 +95,6 @@ export const partyWeights: Record<
 			marktloesungen: 9
 		}
 	},
-
 	BSW: {
 		wohnen: {
 			miete: 8,
@@ -105,10 +106,12 @@ export const partyWeights: Record<
 			hoch: 2
 		},
 		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 6,
+			studierend_auszubildend: 6,
+			arbeitslos_uebergangsphase: 5,
 			alleinerziehend: 8,
-			wohnungslos: 7,
-			studierend: 6,
-			auszubildend: 5
+			wohnungslos: 7
 		},
 		urbanisierung: {
 			grossstadt: 7,
@@ -123,7 +126,6 @@ export const partyWeights: Record<
 			marktloesungen: 2
 		}
 	},
-
 	CDU: {
 		wohnen: {
 			miete: 5,
@@ -135,10 +137,12 @@ export const partyWeights: Record<
 			hoch: 6
 		},
 		lebenssituation: {
+			erwerbstaetig: 6,
+			selbstständig: 5,
+			studierend_auszubildend: 6,
+			arbeitslos_uebergangsphase: 4,
 			alleinerziehend: 5,
-			wohnungslos: 4,
-			studierend: 6,
-			auszubildend: 6
+			wohnungslos: 4
 		},
 		urbanisierung: {
 			grossstadt: 6,
@@ -153,7 +157,6 @@ export const partyWeights: Record<
 			marktloesungen: 5
 		}
 	},
-
 	FDP: {
 		wohnen: {
 			miete: 1,
@@ -165,10 +168,12 @@ export const partyWeights: Record<
 			hoch: 10
 		},
 		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 8,
+			studierend_auszubildend: 7,
+			arbeitslos_uebergangsphase: 3,
 			alleinerziehend: 3,
-			wohnungslos: 2,
-			studierend: 7,
-			auszubildend: 6
+			wohnungslos: 2
 		},
 		urbanisierung: {
 			grossstadt: 7,
@@ -183,7 +188,6 @@ export const partyWeights: Record<
 			marktloesungen: 10
 		}
 	},
-
 	'Die Grünen': {
 		wohnen: {
 			miete: 8,
@@ -195,10 +199,12 @@ export const partyWeights: Record<
 			hoch: 3
 		},
 		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 6,
+			studierend_auszubildend: 9,
+			arbeitslos_uebergangsphase: 7,
 			alleinerziehend: 8,
-			wohnungslos: 7,
-			studierend: 9,
-			auszubildend: 7
+			wohnungslos: 7
 		},
 		urbanisierung: {
 			grossstadt: 9,

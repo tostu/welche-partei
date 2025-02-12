@@ -1,16 +1,14 @@
 export const categories = {
 	wohnen: ['miete', 'eigentum'] as const,
 	einkommen: ['niedrig', 'mittel', 'hoch'] as const,
-	lebenssituation: ['alleinerziehend', 'wohnungslos', 'studierend', 'auszubildend'] as const,
-	urbanisierung: ['grossstadt', 'laendlich'] as const,
-	prioritaet: [
-		'soziale_gerechtigkeit',
-		'klimapolitik',
-		'steuerentlastung',
-		'infrastruktur',
-		'eigentumsfoerderung',
-		'marktloesungen'
-	] as const
+	lebenssituation: [
+		'erwerbstaetig',
+		'selbstständig',
+		'studierend_auszubildend',
+		'arbeitslos_uebergangsphase'
+	] as const,
+	familie: ['kinderlos', 'elternteil', 'alleinerziehend'],
+	urbanisierung: ['grossstadt', 'laendlich'] as const
 } as const;
 
 export type Category = keyof typeof categories;
