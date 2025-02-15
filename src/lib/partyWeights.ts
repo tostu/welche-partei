@@ -1,3 +1,6 @@
+import type { Category, Answer } from '$lib/categories';
+import type { Party } from '$lib/parties';
+
 export const partyWeights: Record<
 	Party, // Partei-Name
 	Record<Category, Partial<Record<Answer<Category>, number>>>
