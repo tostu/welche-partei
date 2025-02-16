@@ -19,12 +19,13 @@ export const questions: Question[] = [
 	},
 	{
 		id: 2,
-		text: 'Wie hoch ist Ihr monatliches Nettoeinkommen?',
+		text: 'Wie hoch ist Ihr monatliches Bruttoeinkommen?',
 		category: 'einkommen',
 		answers: [
-			{ text: 'Unter 1.500 €', answer: 'niedrig', icon: 'tabler--currency-euro' },
-			{ text: '1.500–3.500 €', answer: 'mittel', icon: 'tabler--wallet' },
-			{ text: 'Über 3.500 €', answer: 'hoch', icon: 'tabler--chart-bar' }
+			{ text: 'Unter 3.000 €', answer: 'niedrig', icon: 'tabler--currency-euro' },
+			{ text: '3.000–5.000 €', answer: 'mittel', icon: 'tabler--wallet' },
+			{ text: '5.000–6.500 €', answer: 'hoch', icon: 'tabler--wallet' },
+			{ text: 'Über 6.500 €', answer: 'sehr_hoch', icon: 'tabler--chart-bar' }
 		]
 	},
 	{

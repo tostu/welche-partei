@@ -1,6 +1,6 @@
 export const categories = {
 	wohnen: ['miete', 'eigentum'] as const,
-	einkommen: ['niedrig', 'mittel', 'hoch'] as const,
+	einkommen: ['niedrig', 'mittel', 'hoch', 'sehr_hoch'] as const,
 	lebenssituation: [
 		'erwerbstaetig',
 		'selbstständig',
