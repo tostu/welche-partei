@@ -34,7 +34,7 @@ export const questions: Question[] = [
 		category: 'lebenssituation',
 		answers: [
 			{ text: 'Erwerbstätig', answer: 'erwerbstaetig', icon: 'tabler--briefcase' },
-			{ text: 'Selbstständig', answer: 'selbstständig', icon: 'tabler--business' },
+			{ text: 'Selbstständig', answer: 'selbstständig', icon: 'tabler--tie' },
 			{
 				text: 'Studierend oder in Ausbildung',
 				answer: 'studierend_auszubildend',
