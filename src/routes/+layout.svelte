@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
-	let { children } = $props();
 	import LayoutMenu from '$lib/components/layout/LayoutMenu.svelte';
+	let { children } = $props();
 </script>
 
 <div class="flex min-h-svh flex-col">

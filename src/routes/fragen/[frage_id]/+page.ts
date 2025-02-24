@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { questions } from '$lib/questions';
+export const prerender = false;
 
 export const load: PageLoad = ({ params }) => {
 	return {

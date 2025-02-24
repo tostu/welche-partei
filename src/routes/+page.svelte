@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import TextRolling from '$lib/components/TextRolling.svelte';
-
 	onMount(() => (visible = true));
 
 	let visible = $state(false);
