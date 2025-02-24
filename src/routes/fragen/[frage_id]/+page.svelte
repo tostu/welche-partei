@@ -20,8 +20,6 @@
 	}
 </script>
 
-{JSON.stringify(answerState.answerMap)}
-
 <div class="m-5 flex h-full flex-col items-center justify-center gap-5 md:gap-10">
 	<h1 class="text-center text-3xl text-white md:text-5xl">{data.question.text}</h1>
 	<div class="flex w-full max-w-[1000px] flex-wrap justify-center gap-10">
