@@ -1,5 +1,3 @@
-import parties from '$lib/parties';
-
 interface Haushalt {
 	haushaltstyp: string;
 	einkommensklassen: Einkommensklasse[];
