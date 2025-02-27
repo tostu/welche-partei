@@ -18,7 +18,7 @@ export default {
 					secondary: '#FF7F50', // Pfirsich/Koralle
 					accent: '#FFD700', // Goldgelb für Akzente
 					neutral: '#F5F5F5', // Sehr helles Grau für Hintergründe
-					'base-100': '#FFFFFF', // Weiß für Hauptinhalte
+					'base-100': '#E5E7EB', // Weiß für Hauptinhalte
 					'base-200': '#E5E7EB', // Hellgrau für Kontraste
 					'base-300': '#D1D5DB', // Grau für weniger wichtige Bereiche
 					info: '#40C4FF', // Helles Türkisblau für Informationen

@@ -83,7 +83,7 @@
 	});
 </script>
 
-<div class="min-h-ful mx-6 mt-6 flex w-full flex-col items-center gap-5 md:mx-[400px]">
+<div class="min-h-ful mx-6 mt-6 flex w-full flex-col items-center gap-5 lg:mx-[200px] xl:mx-[20vw]">
 	<div class="w-full rounded-md bg-base-200">
 		<div class="mx-5 mt-5 flex flex-col items-center gap-3">
 			<h1 class="text-4xl text-gray-700">Beste Übereinstimmung:</h1>
@@ -96,12 +96,41 @@
 			{/if}
 		</div>
 	</div>
-	<div class="w-full rounded-md bg-base-200">
+
+	<div role="tablist" class="tabs tabs-lifted w-full">
+		<input
+			type="radio"
+			name="my_tabs_2"
+			role="tab"
+			class="tab bg-transparent"
+			aria-label="Tab 1"
+			checked="checked"
+		/>
+
+		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+			<div class="mx-5 mt-5 flex h-full flex-col items-center gap-3">
+				<!-- <h1 class="text-4xl text-gray-700">Interessante Fakten:</h1> -->
+				<ChartBar />
+			</div>
+		</div>
+
+		<input type="radio" name="my_tabs_2" role="tab" class="tab bg-transparent" aria-label="Tab 2" />
+		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+			Tab content 2
+		</div>
+
+		<input type="radio" name="my_tabs_2" role="tab" class="tab bg-transparent" aria-label="Tab 3" />
+		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+			Tab content 3
+		</div>
+	</div>
+
+	<!-- <div class="w-full rounded-md bg-base-200">
 		<div class="mx-5 mt-5 flex h-[400px] flex-col items-center gap-3">
 			<h1 class="text-4xl text-gray-700">Interessante Fakten:</h1>
 			<ChartBar />
 		</div>
-	</div>
+	</div> -->
 
 	{#if showStats}
 		<div class="flex h-full w-full flex-col gap-3">
