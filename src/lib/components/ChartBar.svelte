@@ -4,36 +4,41 @@
 	import { onMount } from 'svelte';
 	import { daten } from '$lib/programs/taxes';
 
-	let { labels, series, high = 10, low = 0 } = $props();
+	let { high = 20000, low = -5000 } = $props();
 
 	onMount(() => {
+		// Extract income levels for labels
+		const incomeLabels = daten.einkommensklassen.map(
+			(klasse) => `${klasse.bruttoeinkommen.toLocaleString()} €`
+		);
+
+		// Extract party names
+		const partyNames = daten.einkommensklassen[0].parteien.map((partei) => partei.name);
+
+		// Create series data - one series per party
+		const seriesData = partyNames.map((partyName) => {
+			return daten.einkommensklassen.map((klasse) => {
+				const partyData = klasse.parteien.find((p) => p.name === partyName);
+				return partyData ? partyData.veraenderung : 0;
+			});
+		});
+
 		new BarChart(
 			'#chart',
 			{
-				labels: [
-					'Jan',
-					'Feb',
-					'Mar',
-					'Apr',
-					'May',
-					'Jun',
-					'Jul',
-					'Aug',
-					'Sep',
-					'Oct',
-					'Nov',
-					'Dec'
-				],
-				series: [
-					[5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
-					[3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
-				]
+				labels: incomeLabels,
+				series: seriesData
 			},
 			{
 				high: high,
 				low: low,
+				seriesBarDistance: 10,
+				axisY: {
+					offset: 80,
+					labelInterpolationFnc: (value) => `${value.toLocaleString()} €`
+				},
 				axisX: {
-					labelInterpolationFnc: (value, index) => (index % 2 === 0 ? value : null)
+					labelInterpolationFnc: (value) => value
 				}
 			}
 		);
