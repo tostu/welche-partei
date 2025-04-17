@@ -3,8 +3,9 @@
 	import { answerState } from '$lib/state.svelte';
 	import { onMount } from 'svelte';
 	import ChartBar from '$lib/components/ChartBar.svelte';
-	import { parties, type Party, type PartyData } from '$lib/parties';
+	import { parties, type PartyData } from '$lib/parties';
 	import ResultStat from '$lib/components/ResultStat.svelte';
+	import { daten } from '$lib/programs/taxes';
 
 	import type { Answer, Category } from '$lib/categories';
 
@@ -91,7 +92,7 @@
 				<img
 					src={bestMatch.logo}
 					alt={bestMatch.name}
-					class="aspect-square rounded-md object-contain"
+					class="max-w-full h-auto w-auto max-h-[200px] rounded-md object-contain sm:max-h-[250px] md:max-h-[300px] lg:max-h-[350px]"
 				/>
 			{/if}
 		</div>
@@ -107,20 +108,21 @@
 			checked="checked"
 		/>
 
-		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+		<div role="tabpanel" class="tab-content h-[500px] rounded-box border-base-300 bg-base-200 p-6">
 			<div class="mx-5 mt-5 flex h-full flex-col items-center gap-3">
-				<!-- <h1 class="text-4xl text-gray-700">Interessante Fakten:</h1> -->
+				<h2 class="text-2xl text-gray-700 mb-2">Steuerliche Auswirkungen nach Parteiprogramm</h2>
+				<p class="text-sm text-gray-600 mb-4">Jährliche Veränderung in Euro für {daten.haushaltstyp}</p>
 				<ChartBar />
 			</div>
 		</div>
 
 		<input type="radio" name="my_tabs_2" role="tab" class="tab bg-transparent" aria-label="Tab 2" />
-		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+		<div role="tabpanel" class="tab-content h-[500px] rounded-box border-base-300 bg-base-200 p-6">
 			Tab content 2
 		</div>
 
 		<input type="radio" name="my_tabs_2" role="tab" class="tab bg-transparent" aria-label="Tab 3" />
-		<div role="tabpanel" class="tab-content h-[400px] rounded-box border-base-300 bg-base-200 p-6">
+		<div role="tabpanel" class="tab-content h-[500px] rounded-box border-base-300 bg-base-200 p-6">
 			Tab content 3
 		</div>
 	</div>
