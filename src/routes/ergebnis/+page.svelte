@@ -92,7 +92,7 @@
 				<img
 					src={bestMatch.logo}
 					alt={bestMatch.name}
-					class="max-w-full h-auto w-auto max-h-[200px] rounded-md object-contain sm:max-h-[250px] md:max-h-[300px] lg:max-h-[350px]"
+					class="my-8 h-auto max-h-[100px] w-auto max-w-full rounded-md object-contain sm:max-h-[250px] md:max-h-[150px] lg:max-h-[200px]"
 				/>
 			{/if}
 		</div>
@@ -110,8 +110,10 @@
 
 		<div role="tabpanel" class="tab-content h-[500px] rounded-box border-base-300 bg-base-200 p-6">
 			<div class="mx-5 mt-5 flex h-full flex-col items-center gap-3">
-				<h2 class="text-2xl text-gray-700 mb-2">Steuerliche Auswirkungen nach Parteiprogramm</h2>
-				<p class="text-sm text-gray-600 mb-4">Jährliche Veränderung in Euro für {daten.haushaltstyp}</p>
+				<h2 class="mb-2 text-2xl text-gray-700">Steuerliche Auswirkungen nach Parteiprogramm</h2>
+				<p class="mb-4 text-sm text-gray-600">
+					Jährliche Veränderung in Euro für {daten.haushaltstyp}
+				</p>
 				<ChartBar />
 			</div>
 		</div>
