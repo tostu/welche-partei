@@ -8,7 +8,8 @@ export const categories = {
 		'arbeitslos_uebergangsphase'
 	] as const,
 	familie: ['kinderlos', 'elternteil', 'alleinerziehend'],
-	urbanisierung: ['grossstadt', 'laendlich'] as const
+	urbanisierung: ['grossstadt', 'laendlich'] as const,
+	klima: ['egal', 'passiv', 'mittel', 'aktiv'] as const
 } as const;
 
 export type Category = keyof typeof categories;

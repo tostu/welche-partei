@@ -65,5 +65,32 @@ export const questions: Question[] = [
 			{ text: 'In einer Großstadt', answer: 'grossstadt', icon: 'tabler--building-skyscraper' },
 			{ text: 'In einem ländlichen Gebiet', answer: 'laendlich', icon: 'tabler--trees' }
 		]
+	},
+	{
+		id: 6,
+		text: 'Wie wichtig ist ihnen Klimaschutz?',
+		category: 'klima',
+		answers: [
+			{
+				text: 'Ist mir egal',
+				answer: 'egal',
+				icon: 'tabler--circle-off'
+			},
+			{
+				text: 'Solange es mich nicht beeinträchtigt',
+				answer: 'passiv',
+				icon: 'tabler--hand-stop'
+			},
+			{
+				text: 'Wichtig, aber nicht meine Priorität',
+				answer: 'mittel',
+				icon: 'tabler--adjustments-horizontal'
+			},
+			{
+				text: 'Sehr wichtig – ich richte mein Verhalten danach aus',
+				answer: 'aktiv',
+				icon: 'tabler--leaf'
+			}
+		]
 	}
 ];
