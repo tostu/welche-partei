@@ -1,0 +1,197 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.1</storyId>
+    <title>Data Model for Ideological Axes</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-data-model-for-ideological-axes.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>a clear and extensible data structure to define ideological axes (e.g., Market vs. State, Individual vs. Collective) with their respective ranges</iWant>
+    <soThat>the matching algorithm has a robust foundation for comparing user and party ideological profiles</soThat>
+    <tasks>
+      <task id="1" ac="1,5">
+        <summary>Create ideology directory and types file</summary>
+        <subtasks>
+          <subtask>Create directory src/lib/ideology/</subtask>
+          <subtask>Create src/lib/ideology/types.ts file</subtask>
+          <subtask>Define IdeologicalAxis interface with all required fields</subtask>
+          <subtask>Export the interface</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="2,3,4">
+        <summary>Create ideological axes configuration</summary>
+        <subtasks>
+          <subtask>Create src/lib/ideology/ideologicalAxes.ts file</subtask>
+          <subtask>Import IdeologicalAxis type from ./types</subtask>
+          <subtask>Define array of 4 ideological axes: market-state, individual-collective, progressive-conservative, ecology-economy</subtask>
+          <subtask>Set range 1-10 for all axes</subtask>
+          <subtask>Add clear descriptions and labels for min/max ends</subtask>
+          <subtask>Export ideologicalAxes array</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="6,7">
+        <summary>Type safety validation</summary>
+        <subtasks>
+          <subtask>Run npm run check to verify TypeScript compilation</subtask>
+          <subtask>Verify no any types used</subtask>
+          <subtask>Verify all exports are typed correctly</subtask>
+          <subtask>Fix any type errors</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="test-coverage">
+        <summary>Write unit tests (Test Strategy T1 from Tech Spec)</summary>
+        <subtasks>
+          <subtask>Create src/lib/ideology/ideologicalAxes.test.ts</subtask>
+          <subtask>Test: Verify axes load successfully</subtask>
+          <subtask>Test: Validate schema (all fields present for each axis)</subtask>
+          <subtask>Test: Check count >= 4 axes</subtask>
+          <subtask>Test: Verify all axes have valid ranges (min_value < max_value)</subtask>
+          <subtask>Test: Verify all axes have unique IDs</subtask>
+          <subtask>Run npm run test:unit to verify tests pass</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">A types.ts file defines IdeologicalAxis interface with id, name, min_value, max_value, description, min_label, max_label</criterion>
+    <criterion id="2">An ideologicalAxes.ts file exports an array of IdeologicalAxis objects</criterion>
+    <criterion id="3">Each axis has a clear definition and range (e.g., 1-10)</criterion>
+    <criterion id="4">At minimum, 4 axes are defined: market-state, individual-collective, progressive-conservative, ecology-economy</criterion>
+    <criterion id="5">All TypeScript interfaces are exported from src/lib/ideology/types.ts</criterion>
+    <criterion id="6">TypeScript strict mode compiles without errors</criterion>
+    <criterion id="7">No use of any type in production code</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Ideological Matching Engine</title>
+        <section>Data Models and Contracts</section>
+        <snippet>Defines complete TypeScript interface for IdeologicalAxis with 7 required fields (id, name, description, min_value, max_value, min_label, max_label). Sample configuration shows 4 axes: market-state, individual-collective, progressive-conservative, ecology-economy with 1-10 ranges.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Ideological Matching Engine</title>
+        <section>Acceptance Criteria (AC1)</section>
+        <snippet>AC1 specifies exact interface structure and minimum 4 axes requirement. Provides authoritative acceptance criteria for data model implementation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Ideological Matching Engine</title>
+        <section>Test Strategy Summary</section>
+        <snippet>Test T1: Axis configuration loads (4+ axes loaded, no validation errors). Requires schema validation, axis count check, range validity check. Target: 85% line coverage, 80% branch coverage using Vitest framework.</snippet>
+      </doc>
+      <doc>
+        <path>docs/user_stories.md</path>
+        <title>User Stories for Integrated Profiling & Narrative Ideology Matching Quiz</title>
+        <section>Data Model for Ideological Axes</section>
+        <snippet>Original user story and acceptance criteria from epic breakdown. Confirms requirement for TypeScript interface and configuration file structure.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document</title>
+        <section>Data Model (Section 5)</section>
+        <snippet>Ideological Axes defined as predefined axes (Market vs. State, Individual vs. Collective, Regulation vs. Deregulation) with defined range (1-10). Provides business context for technical implementation.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/parties.ts</path>
+        <kind>configuration</kind>
+        <symbol>Party (type), parties (array)</symbol>
+        <lines>41-42</lines>
+        <reason>Existing Party type definition that party ideological profiles will reference. Shows naming pattern (type alias from const array) to follow for ideological axes.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/partyWeights.ts</path>
+        <kind>configuration</kind>
+        <symbol>partyWeights</symbol>
+        <lines>1-466</lines>
+        <reason>Example of existing party scoring system (weight-based). Will be replaced by ideological profile system. Shows TypeScript const object pattern and structure to consider when designing new system.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="typescript" version="^5.7.3" scope="devDependencies"/>
+        <package name="svelte" version="^5.19.4" scope="devDependencies"/>
+        <package name="@sveltejs/kit" version="^2.16.1" scope="devDependencies"/>
+        <package name="vitest" version="^3.0.4" scope="devDependencies"/>
+        <package name="vite" version="6.0.10" scope="devDependencies"/>
+        <package name="svelte-check" version="^4.1.4" scope="devDependencies"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint category="architecture">Module Organization: New directory src/lib/ideology/ must house all ideological matching logic. Maintains separation from existing src/lib/ modules (questions, parties, categories).</constraint>
+    <constraint category="type-safety">TypeScript strict mode must be enabled. No any types allowed in production code. All interfaces must be explicitly typed.</constraint>
+    <constraint category="naming">Use kebab-case for axis IDs (e.g., market-state). Use PascalCase for TypeScript interfaces (e.g., IdeologicalAxis). Use camelCase for exported arrays (e.g., ideologicalAxes).</constraint>
+    <constraint category="foundation">types.ts is foundation module with no dependencies. Other modules in Epic 1 will depend on it.</constraint>
+    <constraint category="data-integrity">Axis Score Granularity: Use decimals (number type) for finer granularity. Range: Standard 1-10 for all axes. Neutral midpoint: (min_value + max_value) / 2.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>IdeologicalAxis</name>
+      <kind>TypeScript interface</kind>
+      <signature>
+export interface IdeologicalAxis {
+  id: string;                    // e.g., 'market-state', 'individual-collective'
+  name: string;                  // Display name
+  description: string;           // Explanation of the axis
+  min_value: number;             // Minimum score (e.g., 1)
+  max_value: number;             // Maximum score (e.g., 10)
+  min_label: string;             // Label for min end (e.g., 'Market-oriented')
+  max_label: string;             // Label for max end (e.g., 'State-oriented')
+}
+      </signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>ideologicalAxes</name>
+      <kind>Configuration export</kind>
+      <signature>
+export const ideologicalAxes: IdeologicalAxis[] = [
+  {
+    id: 'market-state',
+    name: 'Economic Approach',
+    description: 'Market-driven solutions vs. State intervention',
+    min_value: 1,
+    max_value: 10,
+    min_label: 'Free Market',
+    max_label: 'State Control'
+  },
+  // ... 3 more axes (individual-collective, progressive-conservative, ecology-economy)
+];
+      </signature>
+      <path>src/lib/ideology/ideologicalAxes.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing Framework: Vitest (v3.0.4) configured via package.json script "test:unit". Tests co-located with source files using .test.ts suffix. Line coverage target: 85%. Branch coverage target: 80%. Test all edge cases and validation logic. TypeScript strict mode for test files.
+    </standards>
+    <locations>
+      <location>src/lib/ideology/*.test.ts (co-located with modules)</location>
+      <location>Run tests: npm run test:unit</location>
+      <location>TypeScript check: npm run check</location>
+    </locations>
+    <ideas>
+      <idea ac="1,2,3,4">T1: Verify axes load successfully - import ideologicalAxes and check array length >= 4</idea>
+      <idea ac="1">Schema validation - for each axis, verify all 7 required fields present (id, name, description, min_value, max_value, min_label, max_label)</idea>
+      <idea ac="3">Range validation - for each axis, assert min_value < max_value</idea>
+      <idea ac="4">ID uniqueness - check no duplicate axis IDs in array</idea>
+      <idea ac="4">Required axes present - verify specific IDs exist: market-state, individual-collective, progressive-conservative, ecology-economy</idea>
+      <idea ac="6,7">Type safety - npm run check must pass without errors. No 'any' types used.</idea>
+      <idea>Edge cases - test with empty axis array, missing fields, invalid ranges (min > max), duplicate IDs</idea>
+    </ideas>
+  </tests>
+</story-context>

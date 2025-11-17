@@ -1,0 +1,423 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>User Ideological Profile Calculation</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/1-3-user-ideological-profile-calculation.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to implement the logic to calculate a user's ideological profile from their narrative quiz answers</iWant>
+    <soThat>the matching algorithm can use this profile to find the best political party match</soThat>
+    <tasks>
+      - [ ] **Task 1: Implement `calculateUserIdeology` function** (AC: #1, #2, #3, #4, #5)
+        - [ ] Create `src/lib/ideology/calculateUserIdeology.ts`
+        - [ ] Import necessary types (`UserQuizAnswers`, `UserIdeologicalProfile`) from `./types`
+        - [ ] Import `ideologicalAxes` from `./ideologicalAxes`
+        - [ ] Implement function signature: `export function calculateUserIdeology(quizAnswers: UserQuizAnswers): UserIdeologicalProfile`
+        - [ ] Initialize `axis_scores` for all `ideologicalAxes` at their neutral midpoint (`(min_value + max_value) / 2`)
+        - [ ] Iterate through `quizAnswers.narrative_choices`
+        - [ ] For each choice, find the corresponding narrative question (from `narrativeQuestions` - *Note: This is an Epic 2 dependency, will need a mock or placeholder*)
+        - [ ] Apply `impact.delta` from the selected option to the respective `axis_id` in `axis_scores`
+        - [ ] Implement `clamp` utility function to ensure scores stay within `min_value` and `max_value`
+        - [ ] Return `UserIdeologicalProfile` object
+
+      - [ ] **Task 2: Create mock for `narrativeQuestions`** (AC: #2)
+        - [ ] Create a mock `narrativeQuestions` array for development and testing purposes, matching the expected structure from Epic 2.
+
+      - [ ] **Task 3: Write unit tests for `calculateUserIdeology`**
+        - [ ] Create `src/lib/ideology/calculateUserIdeology.test.ts`
+        - [ ] Test: Verify function initializes axes at neutral midpoint (AC: #4)
+        - [ ] Test: Verify correct application of positive delta values (AC: #2)
+        - [ ] Test: Verify correct application of negative delta values (AC: #2)
+        - [ ] Test: Verify clamping of scores within valid ranges (AC: #5)
+        - [ ] Test: Verify output matches `UserIdeologicalProfile` interface (AC: #3)
+        - [ ] Test: Handle cases with missing narrative questions (graceful degradation)
+        - [ ] Run `npm run test:unit` to verify tests pass
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. A function `calculateUserIdeology(quizAnswers: UserQuizAnswers): UserIdeologicalProfile` exists in `src/lib/ideology/`
+    2. The function correctly maps narrative quiz choices to changes in ideological axis scores using delta values from question impacts
+    3. The output `UserIdeologicalProfile` matches the defined interface with `axis_scores: Record<string, number>`
+    4. User profile initializes all axes at neutral midpoint before applying answer deltas
+    5. Axis scores are clamped to valid ranges after applying answer deltas
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>US2.3 - Ideological Axis Mapping</section>
+        <snippet>As a system, I need to map user choices in the narrative quiz to a score on predefined ideological axes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>FR3.4 - Ideological Scoring</section>
+        <snippet>Implement backend logic to convert user choices into ideological axis scores.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>User Profile</section>
+        <snippet>Stores initial profiling answers and the calculated ideological axis scores.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>IdeologicalAxis</symbol>
+        <reason>Existing interface to be reused</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>PartyIdeologicalProfile</symbol>
+        <reason>Existing interface to be reused</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>UserIdeologicalProfile</symbol>
+        <reason>New interface to be defined for this story</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>NarrativeAnswerImpact</symbol>
+        <reason>New interface to be defined for this story</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>UserQuizAnswers</symbol>
+        <reason>New interface to be defined for this story</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/ideologicalAxes.ts</path>
+        <kind>file</kind>
+        <symbol>ideologicalAxes</symbol>
+        <reason>Array of existing ideological axes to be used for scoring</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/partyIdeologies.ts</path>
+        <kind>file</kind>
+        <symbol>partyIdeologies</symbol>
+        <reason>Array of existing party ideological profiles to be used by matching algorithm</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/parties.ts</path>
+        <kind>file</kind>
+        <symbol>Party</symbol>
+        <reason>Existing Party type to be referenced</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@fontsource/lilita-one</package>
+        <version>^5.1.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@fontsource/roboto</package>
+        <version>^5.1.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@iconify/svelte</package>
+        <version>^4.2.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@iconify/utils</package>
+        <version>^2.2.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@libsql/client</package>
+        <version>^0.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tabler/icons-svelte</package>
+        <version>^3.29.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tailwindcss/forms</package>
+        <version>^0.5.10</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tailwindcss/typography</package>
+        <version>^0.5.16</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@types/sanitize-html</package>
+        <version>^2.13.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>caniuse-lite</package>
+        <version>^1.0.30001754</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>chartist</package>
+        <version>^1.3.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>d3</package>
+        <version>^7.9.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>lucide-svelte</package>
+        <version>^0.474.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>sanitize-html</package>
+        <version>^2.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/fluent-mdl2</package>
+        <version>^1.2.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/icon-park</package>
+        <version>^1.2.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/icon-park-outline</package>
+        <version>^1.2.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/tabler</package>
+        <version>^1.2.15</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify/tailwind</package>
+        <version>^1.2.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@playwright/test</package>
+        <version>^1.50.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/adapter-auto</package>
+        <version>^4.0.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/adapter-static</package>
+        <version>^3.0.8</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/kit</package>
+        <version>^2.16.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/vite-plugin-svelte</package>
+        <version>^5.0.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>autoprefixer</package>
+        <version>^10.4.20</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>daisyui</package>
+        <version>^4.12.23</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint</package>
+        <version>^9.19.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint-config-prettier</package>
+        <version>^10.0.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint-plugin-svelte</package>
+        <version>^2.46.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>globals</package>
+        <version>^15.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>mdsvex</package>
+        <version>^0.12.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier</package>
+        <version>^3.4.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier-plugin-svelte</package>
+        <version>^3.3.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier-plugin-tailwindcss</package>
+        <version>^0.6.11</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>svelte</package>
+        <version>^5.19.4</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>svelte-check</package>
+        <version>^4.1.4</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>tailwindcss</package>
+        <version>^3.4.17</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>typescript</package>
+        <version>^5.7.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>typescript-eslint</package>
+        <version>^8.22.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>vite</package>
+        <version>6.0.10</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>vitest</package>
+        <version>^3.0.4</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Naming Convention</type>
+      <description>Kebab-case for axis IDs, PascalCase for interfaces, camelCase for arrays.</description>
+    </constraint>
+    <constraint>
+      <type>Data Range</type>
+      <description>All ideological axes use a 1-10 range (decimal values allowed).</description>
+    </constraint>
+    <constraint>
+      <type>Type Safety</type>
+      <description>TypeScript strict mode must be enabled. No `any` types allowed in production code. All interfaces must be explicitly typed.</description>
+    </constraint>
+    <constraint>
+      <type>Data Model</type>
+      <description>UserIdeologicalProfile interface must have `axis_scores: Record<string, number>` and optional `confidence: Record<string, number>`.</description>
+    </constraint>
+    <constraint>
+      <type>Data Model</type>
+      <description>NarrativeAnswerImpact interface must have `axis_id: string` and `delta: number`.</description>
+    </constraint>
+    <constraint>
+      <type>Data Model</type>
+      <description>UserQuizAnswers interface must have `narrative_choices: Record<number, 'A' | 'B'>`.</description>
+    </constraint>
+    <constraint>
+      <type>Initialization</type>
+      <description>User profile must initialize all axes at their neutral midpoint before applying answer deltas.</description>
+    </constraint>
+    <constraint>
+      <type>Clamping</type>
+      <description>Axis scores must be clamped to valid ranges (min_value to max_value) after applying deltas.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>IdeologicalAxis</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface IdeologicalAxis { id: string; name: string; description: string; min_value: number; max_value: number; min_label: string; max_label: string; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>PartyIdeologicalProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface PartyIdeologicalProfile { party_id: string; axis_scores: Record&lt;string, number&gt;; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>UserIdeologicalProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface UserIdeologicalProfile { axis_scores: Record&lt;string, number&gt;; confidence?: Record&lt;string, number&gt;; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>NarrativeAnswerImpact</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface NarrativeAnswerImpact { axis_id: string; delta: number; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>UserQuizAnswers</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface UserQuizAnswers { narrative_choices: Record&lt;number, 'A' | 'B'&gt;; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>calculateUserIdeology</name>
+      <kind>TypeScript Function</kind>
+      <signature>export function calculateUserIdeology(quizAnswers: UserQuizAnswers): UserIdeologicalProfile</signature>
+      <path>src/lib/ideology/calculateUserIdeology.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>Unit Test Framework: Vitest (configured in package.json)</standard>
+      <standard>Testing Pattern: Co-located `.test.ts` files with comprehensive test coverage.</standard>
+      <standard>Test Coverage Goals: Line Coverage: 85% target, Branch Coverage: 80% target (from Epic Tech Spec)</standard>
+    </standards>
+    <locations>
+      <location>src/lib/ideology/calculateUserIdeology.test.ts (new file)</location>
+      <location>Co-located with implementation files (e.g., `src/lib/ideology/types.test.ts`)</location>
+    </locations>
+    <ideas>
+      <idea>Test: Verify function initializes axes at neutral midpoint (AC: #4)</idea>
+      <idea>Test: Verify correct application of positive delta values (AC: #2)</idea>
+      <idea>Test: Verify correct application of negative delta values (AC: #2)</idea>
+      <idea>Test: Verify clamping of scores within valid ranges (AC: #5)</idea>
+      <idea>Test: Verify output matches `UserIdeologicalProfile` interface (AC: #3)</idea>
+      <idea>Test: Handle cases with missing narrative questions (graceful degradation)</idea>
+    </ideas>
+  </tests>
+</story-context>

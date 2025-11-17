@@ -1,0 +1,386 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>4</storyId>
+    <title>Best Match Identification</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/1-4-best-match-identification.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to implement the algorithm to find the best matching political party for a user's ideological profile</iWant>
+    <soThat>the system can recommend the most aligned party</soThat>
+    <tasks>
+      - [ ] **Task 1: Implement `findBestMatch` function** (AC: #1, #2, #3, #4, #5)
+        - [ ] Create `src/lib/ideology/findBestMatch.ts`
+        - [ ] Import necessary types (`UserIdeologicalProfile`, `PartyIdeologicalProfile`, `Party`) from `./types` and `$lib/parties`
+        - [ ] Import `partyIdeologies` from `./partyIdeologies`
+        - [ ] Implement function signature: `export function findBestMatch(userProfile: UserIdeologicalProfile, partyProfiles: PartyIdeologicalProfile[] = partyIdeologies): Party`
+        - [ ] Implement `calculateEuclideanDistance` helper function: `function calculateEuclideanDistance(userScores: Record<string, number>, partyScores: Record<string, number>): number`
+        - [ ] Initialize `minDistance` to `Infinity` and `bestMatch` to `null`
+        - [ ] Iterate through `partyProfiles`
+        - [ ] Calculate Euclidean distance between `userProfile.axis_scores` and `partyProfile.axis_scores`
+        - [ ] Update `minDistance` and `bestMatch` if a closer match is found
+        - [ ] Handle edge case: empty `partyProfiles` list (e.g., throw an error or return a default)
+        - [ ] Handle edge case: single party in `partyProfiles` (return that party)
+        - [ ] Return `bestMatch` as `Party` type
+
+      - [ ] **Task 2: Write unit tests for `findBestMatch`**
+        - [ ] Create `src/lib/ideology/findBestMatch.test.ts`
+        - [ ] Test: Known user profile → verify correct party returned (AC: #3)
+        - [ ] Test: Distance calculation accuracy (AC: #4)
+        - [ ] Test: Edge case - empty party list (AC: #5)
+        - [ ] Test: Edge case - single party in list (AC: #5)
+        - [ ] Test: Verify algorithm uses Euclidean distance (AC: #2)
+        - [ ] Run `npm run test:unit` to verify tests pass
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. A function `findBestMatch(userProfile: UserIdeologicalProfile, partyProfiles: PartyIdeologicalProfile[]): Party` exists in `src/lib/ideology/`
+    2. The algorithm uses Euclidean distance metric to determine closeness between user and party profiles
+    3. The function returns the `Party` type (string literal) of the best match
+    4. Distance calculation correctly computes: `sqrt(sum((userScore[axis] - partyScore[axis])^2))`
+    5. Function handles edge cases: empty party list (throws error), single party (returns that party)
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>US2.5 - Matching Algorithm</section>
+        <snippet>As a system, I need an algorithm to compare the user's ideological profile (vector) with party ideological profiles to find the closest match.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>FR3.6 - Matching Algorithm Implementation</section>
+        <snippet>Implement the core algorithm to match user and party ideological profiles.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>Party Ideological Profiles</section>
+        <snippet>Each party will have a score (or vector) across all defined ideological axes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD): Integrated Profiling &amp; Narrative Ideology Matching Quiz</title>
+        <section>User Profile</section>
+        <snippet>Stores initial profiling answers and the calculated ideological axis scores.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>UserIdeologicalProfile</symbol>
+        <reason>Existing interface to be reused</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>file</kind>
+        <symbol>PartyIdeologicalProfile</symbol>
+        <reason>Existing interface to be reused</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/partyIdeologies.ts</path>
+        <kind>file</kind>
+        <symbol>partyIdeologies</symbol>
+        <reason>Array of existing party ideological profiles to be used for matching</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/parties.ts</path>
+        <kind>file</kind>
+        <symbol>Party</symbol>
+        <reason>Existing Party type to be returned</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/calculateUserIdeology.ts</path>
+        <kind>file</kind>
+        <symbol>calculateUserIdeology</symbol>
+        <reason>Dependency for UserIdeologicalProfile input</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@fontsource/lilita-one</package>
+        <version>^5.1.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@fontsource/roboto</package>
+        <version>^5.1.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@iconify/svelte</package>
+        <version>^4.2.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@iconify/utils</package>
+        <version>^2.2.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@libsql/client</package>
+        <version>^0.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tabler/icons-svelte</package>
+        <version>^3.29.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tailwindcss/forms</package>
+        <version>^0.5.10</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@tailwindcss/typography</package>
+        <version>^0.5.16</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>@types/sanitize-html</package>
+        <version>^2.13.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>caniuse-lite</package>
+        <version>^1.0.30001754</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>chartist</package>
+        <version>^1.3.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>d3</package>
+        <version>^7.9.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>lucide-svelte</package>
+        <version>^0.474.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm</ecosystem>
+        <package>sanitize-html</package>
+        <version>^2.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/fluent-mdl2</package>
+        <version>^1.2.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/icon-park</package>
+        <version>^1.2.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/icon-park-outline</package>
+        <version>^1.2.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify-json/tabler</package>
+        <version>^1.2.15</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@iconify/tailwind</package>
+        <version>^1.2.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@playwright/test</package>
+        <version>^1.50.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/adapter-auto</package>
+        <version>^4.0.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/adapter-static</package>
+        <version>^3.0.8</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/kit</package>
+        <version>^2.16.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>@sveltejs/vite-plugin-svelte</package>
+        <version>^5.0.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>autoprefixer</package>
+        <version>^10.4.20</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>daisyui</package>
+        <version>^4.12.23</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint</package>
+        <version>^9.19.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint-config-prettier</package>
+        <version>^10.0.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>eslint-plugin-svelte</package>
+        <version>^2.46.1</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>globals</package>
+        <version>^15.14.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>mdsvex</package>
+        <version>^0.12.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier</package>
+        <version>^3.4.2</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier-plugin-svelte</package>
+        <version>^3.3.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>prettier-plugin-tailwindcss</package>
+        <version>^0.6.11</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>svelte</package>
+        <version>^5.19.4</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>svelte-check</package>
+        <version>^4.1.4</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>tailwindcss</package>
+        <version>^3.4.17</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>typescript</package>
+        <version>^5.7.3</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>typescript-eslint</package>
+        <version>^8.22.0</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>vite</package>
+        <version>6.0.10</version>
+      </dependency>
+      <dependency>
+        <ecosystem>npm-dev</ecosystem>
+        <package>vitest</package>
+        <version>^3.0.4</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Algorithm</type>
+      <description>The matching algorithm must use the Euclidean distance metric.</description>
+    </constraint>
+    <constraint>
+      <type>Edge Case Handling</type>
+      <description>The `findBestMatch` function must handle empty party lists (e.g., throw an error) and single party lists (return that party).</description>
+    </constraint>
+    <constraint>
+      <type>Distance Calculation</type>
+      <description>The Euclidean distance must be correctly computed as `sqrt(sum((userScore[axis] - partyScore[axis])^2))`.</description>
+    </constraint>
+    <constraint>
+      <type>Type Safety</type>
+      <description>TypeScript strict mode must be enabled. No `any` types allowed in production code. All interfaces must be explicitly typed.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>UserIdeologicalProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface UserIdeologicalProfile { axis_scores: Record&lt;string, number&gt;; confidence?: Record&lt;string, number&gt;; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>PartyIdeologicalProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>export interface PartyIdeologicalProfile { party_id: string; axis_scores: Record&lt;string, number&gt;; }</signature>
+      <path>src/lib/ideology/types.ts</path>
+    </interface>
+    <interface>
+      <name>Party</name>
+      <kind>TypeScript Type</kind>
+      <signature>export type Party = 'AFD' | 'BSW' | 'CDU' | 'Die Linke' | 'FDP' | 'Die Grünen' | 'SPD';</signature>
+      <path>src/lib/parties.ts</path>
+    </interface>
+    <interface>
+      <name>findBestMatch</name>
+      <kind>TypeScript Function</kind>
+      <signature>export function findBestMatch(userProfile: UserIdeologicalProfile, partyProfiles: PartyIdeologicalProfile[]): Party</signature>
+      <path>src/lib/ideology/findBestMatch.ts</path>
+    </interface>
+    <interface>
+      <name>calculateEuclideanDistance</name>
+      <kind>TypeScript Function</kind>
+      <signature>function calculateEuclideanDistance(userScores: Record&lt;string, number&gt;, partyScores: Record&lt;string, number&gt;): number</signature>
+      <path>src/lib/ideology/findBestMatch.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>Unit Test Framework: Vitest (configured in package.json)</standard>
+      <standard>Testing Pattern: Co-located `.test.ts` files with comprehensive test coverage.</standard>
+      <standard>Test Coverage Goals: Line Coverage: 85% target, Branch Coverage: 80% target (from Epic Tech Spec)</standard>
+    </standards>
+    <locations>
+      <location>src/lib/ideology/findBestMatch.test.ts (new file)</location>
+      <location>Co-located with implementation files (e.g., `src/lib/ideology/types.test.ts`)</location>
+    </locations>
+    <ideas>
+      <idea>Test: Known user profile → verify correct party returned (AC: #3)</idea>
+      <idea>Test: Distance calculation accuracy (AC: #4)</idea>
+      <idea>Test: Edge case - empty party list (AC: #5)</idea>
+      <idea>Test: Edge case - single party in list (AC: #5)</idea>
+      <idea>Test: Verify algorithm uses Euclidean distance (AC: #2)</idea>
+    </ideas>
+  </tests>
+</story-context>
