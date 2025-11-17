@@ -17,13 +17,31 @@
 	let normalizedScores = $state<RankedParty[]>([]);
 	let showStats = $state(false);
 	let bestMatchPercentage = $state(0);
-	let trustScore = $state<{ rate: number; total: number; exceeded: number; partial: number; delayed: number; broken: number } | null>(null);
-	let consistencyScore = $state<{ rate: number; total: number; maintained: number; strengthened: number; weakened: number; abandoned: number } | null>(null);
+	let trustScore = $state<{
+		rate: number;
+		total: number;
+		exceeded: number;
+		partial: number;
+		delayed: number;
+		broken: number;
+	} | null>(null);
+	let consistencyScore = $state<{
+		rate: number;
+		total: number;
+		maintained: number;
+		strengthened: number;
+		weakened: number;
+		abandoned: number;
+	} | null>(null);
 	let showAlternative = $state(false);
-	let bestAlternative = $state<(RankedParty & { consistencyScore?: number; isCoalition: boolean }) | null>(null);
+	let bestAlternative = $state<
+		(RankedParty & { consistencyScore?: number; isCoalition: boolean }) | null
+	>(null);
 	let showEstablishmentWarning = $state(false);
 	let showAfdAlternative = $state(false);
 	let topMatches = $state<string[]>([]);
+
+	console.log(answerState.answerMap);
 
 	// Define smaller parties (not establishment, not AfD)
 	const smallerParties = ['Grüne', 'Die Linke', 'FDP', 'BSW'];
@@ -58,14 +76,14 @@
 		const answeredCategories = Object.keys(answerState.answerMap) as Category[];
 
 		return answeredCategories
-			.map(category => {
+			.map((category) => {
 				const answer = answerState.answerMap[category];
 				const weight = partyCategories[category]?.[answer as Answer<Category>] ?? 0;
 				return { category, weight };
 			})
 			.sort((a, b) => b.weight - a.weight)
 			.slice(0, 3)
-			.map(item => item.category);
+			.map((item) => item.category);
 	}
 
 	// Berechnet die Scores als Prozent des maximal erreichbaren Scores
@@ -113,8 +131,8 @@
 
 			if (isEstablishment || isAfd) {
 				const smallerPartyAlternatives = normalizedScores
-					.filter(ranked => smallerParties.includes(ranked.party.name))
-					.map(ranked => {
+					.filter((ranked) => smallerParties.includes(ranked.party.name))
+					.map((ranked) => {
 						const isCoalition = ranked.party.name === 'CDU' || ranked.party.name === 'SPD';
 						const cs = calculateConsistencyScore(ranked.party.name as Party).rate;
 						return {
@@ -163,22 +181,32 @@
 		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
 			<!-- PATH 1: BETTER ALTERNATIVE (Prioritized) -->
 			{#if showAlternative && bestAlternative}
-				<div class="card card-compact w-full border-2 border-success bg-base-100 shadow-xl transition-transform hover:scale-[1.02]">
+				<div
+					class="card card-compact w-full border-2 border-success bg-base-100 shadow-xl transition-transform hover:scale-[1.02]"
+				>
 					<div class="card-body">
 						<div class="card-title flex-col gap-4">
 							<h2 class="text-2xl font-bold">✨ Bessere Alternative</h2>
-							<img src={bestAlternative.party.logo} alt={bestAlternative.party.name} class="h-24 w-24 rounded-full object-contain" />
+							<img
+								src={bestAlternative.party.logo}
+								alt={bestAlternative.party.name}
+								class="h-24 w-24 rounded-full object-contain"
+							/>
 							<h3 class="text-3xl font-bold">{bestAlternative.party.name}</h3>
 						</div>
 
 						<div class="my-4 flex justify-around text-center">
 							<div>
-								<div class="text-3xl font-bold text-primary">{bestAlternative.percentage.toFixed(0)}%</div>
+								<div class="text-3xl font-bold text-primary">
+									{bestAlternative.percentage.toFixed(0)}%
+								</div>
 								<div class="text-sm text-gray-600">Übereinstimmung</div>
 							</div>
 							{#if bestAlternative.consistencyScore}
 								<div>
-									<div class="text-3xl font-bold text-success">{bestAlternative.consistencyScore.toFixed(0)}%</div>
+									<div class="text-3xl font-bold text-success">
+										{bestAlternative.consistencyScore.toFixed(0)}%
+									</div>
 									<div class="text-sm text-gray-600">Positions-Treue</div>
 								</div>
 							{/if}
@@ -186,7 +214,8 @@
 
 						<div class="text-sm">
 							<p class="mb-4">
-								Diese Partei hat eine hohe Übereinstimmung mit Ihren Ansichten und zeigt eine höhere Verlässlichkeit in ihren Positionen.
+								Diese Partei hat eine hohe Übereinstimmung mit Ihren Ansichten und zeigt eine höhere
+								Verlässlichkeit in ihren Positionen.
 							</p>
 							<h4 class="font-bold">Ihre Top-Übereinstimmungen:</h4>
 							<ul class="mt-2 list-inside list-disc space-y-1 text-xs">
@@ -203,11 +232,17 @@
 				</div>
 
 				<!-- PATH 2: FAMILIAR CHOICE -->
-				<div class="card card-compact w-full bg-base-200 shadow-lg transition-transform hover:scale-[1.02]">
+				<div
+					class="card card-compact w-full bg-base-200 shadow-lg transition-transform hover:scale-[1.02]"
+				>
 					<div class="card-body">
 						<div class="card-title flex-col gap-4">
 							<h2 class="text-2xl font-bold">Ihre gewohnte Wahl?</h2>
-							<img src={bestMatch.logo} alt={bestMatch.name} class="h-24 w-24 rounded-full object-contain opacity-70" />
+							<img
+								src={bestMatch.logo}
+								alt={bestMatch.name}
+								class="h-24 w-24 rounded-full object-contain opacity-70"
+							/>
 							<h3 class="text-3xl font-bold">{bestMatch.name}</h3>
 						</div>
 
@@ -225,7 +260,9 @@
 						</div>
 
 						<p class="text-sm">
-							Dies ist die Partei mit der höchsten Übereinstimmung in Ihren Antworten. Sie repräsentiert oft die etablierte Politik. Eine Stimme für kleinere Parteien kann jedoch mehr Veränderung bewirken.
+							Dies ist die Partei mit der höchsten Übereinstimmung in Ihren Antworten. Sie
+							repräsentiert oft die etablierte Politik. Eine Stimme für kleinere Parteien kann
+							jedoch mehr Veränderung bewirken.
 						</p>
 
 						<div class="card-actions mt-4 justify-center">
@@ -238,7 +275,11 @@
 				<div class="card card-compact w-full bg-base-100 shadow-xl lg:col-span-2">
 					<div class="card-body items-center text-center">
 						<h2 class="card-title text-3xl">Beste Übereinstimmung</h2>
-						<img src={bestMatch.logo} alt={bestMatch.name} class="my-4 h-32 w-32 rounded-full object-contain" />
+						<img
+							src={bestMatch.logo}
+							alt={bestMatch.name}
+							class="my-4 h-32 w-32 rounded-full object-contain"
+						/>
 						<h3 class="text-4xl font-bold">{bestMatch.name}</h3>
 						<div class="my-4">
 							<div class="text-5xl font-bold text-primary">{bestMatchPercentage.toFixed(0)}%</div>
@@ -246,7 +287,10 @@
 						</div>
 						{#if !['CDU', 'SPD'].includes(bestMatch.name)}
 							<div class="w-full max-w-md">
-								<OppositionReality matchedParty={bestMatch.name as Party} matchScore={bestMatchPercentage} />
+								<OppositionReality
+									matchedParty={bestMatch.name as Party}
+									matchScore={bestMatchPercentage}
+								/>
 							</div>
 						{/if}
 					</div>
