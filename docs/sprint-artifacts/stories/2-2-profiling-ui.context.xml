@@ -1,0 +1,178 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2</storyId>
+    <title>profiling-ui</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/tostu/Code/welche-partei/docs/sprint-artifacts/stories/2-2-profiling-ui.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to answer 4-7 simple profiling questions presented in a conversational flow</iWant>
+    <soThat>the quiz feels tailored to my needs without being overwhelming</soThat>
+    <tasks>
+      <task id="1" description="Create the ProfilingQuiz.svelte component.">
+        <subtask id="1.1" description="Create the file at src/lib/components/profiling/ProfilingQuiz.svelte."/>
+        <subtask id="1.2" description="Import getStartingQuestion and getQuestionById from src/lib/profiling/questions.ts."/>
+      </task>
+      <task id="2" description="Implement dynamic question rendering.">
+        <subtask id="2.1" description="Use a Svelte state variable to hold the current question object."/>
+        <subtask id="2.2" description="Initialize the component by calling getStartingQuestion() to load the first question."/>
+        <subtask id="2.3" description="Render the text of the current question."/>
+        <subtask id="2.4" description="Use an #each block to render a button for each answer in the answers array."/>
+      </task>
+      <task id="3" description="Implement navigation logic.">
+        <subtask id="3.1" description="Create an on:click handler for the answer buttons."/>
+        <subtask id="3.2" description="In the handler, get the next_question_id from the selected answer."/>
+        <subtask id="3.3" description="Call getQuestionById() with the next_question_id to get the next question."/>
+        <subtask id="3.4" description="Update the state variable to render the new question."/>
+        <subtask id="3.5" description="Handle the end of the quiz flow when next_question_id is undefined."/>
+      </task>
+      <task id="4" description="Style the component.">
+        <subtask id="4.1" description="Use TailwindCSS and DaisyUI classes for a clean, mobile-responsive layout."/>
+        <subtask id="4.2" description="Ensure the component is easy to use on both mobile and desktop screens."/>
+      </task>
+      <task id="5" description="Add end-to-end tests.">
+        <subtask id="5.1" description="Create a Playwright test file for the profiling quiz flow."/>
+        <subtask id="5.2" description="Write a test that simulates a user clicking through a complete path of the question tree."/>
+        <subtask id="5.3" description="Assert that the correct questions are displayed based on the selected answers."/>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">A Svelte component renders profiling questions dynamically.</ac>
+    <ac id="2">Navigation between questions is smooth and based on user answers.</ac>
+    <ac id="3">The UI is clean, mobile-responsive, and easy to use.</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>2. User Stories</section>
+        <snippet>US1.1 - Dynamic Initial Profiling: As a user, I want to answer 4-7 simple, dynamic profiling questions so that the quiz feels like an intelligent conversation tailored to my life situation.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>3. Functional Requirements</section>
+        <snippet>FR3.1 - Dynamic Profiling UI & Logic: Implement a UI for 4-7 profiling questions with conditional, branching logic. The answer to a question can determine the next question shown.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>4. Non-Functional Requirements</section>
+        <snippet>NFR4.4 - Usability: The quiz UI must be intuitive and accessible across devices (mobile-first design).</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/user_stories.md</path>
+        <title>User Stories for Integrated Profiling & Narrative Ideology Matching Quiz</title>
+        <section>Epic: New Quiz User Experience &gt; Feature: Dynamic Profiling Step</section>
+        <snippet>US: Profiling UI: As a user, I want to answer 4-7 simple profiling questions presented in a conversational flow, so that the quiz feels tailored to my needs without being overwhelming.</snippet>
+      </artifact>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/components/Counter.svelte</path>
+        <kind>svelte-component</kind>
+        <reason>Example of an existing Svelte component in the project, demonstrating component structure and basic Svelte usage.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/profiling/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>ProfilingQuestion, ProfilingAnswer</symbol>
+        <reason>Defines the data structures for profiling questions and answers, which this UI component will render.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/profiling/questions.ts</path>
+        <kind>data-and-helpers</kind>
+        <symbol>profilingQuestions, getStartingQuestion, getQuestionById</symbol>
+        <reason>Contains the actual profiling question data and helper functions for navigating the question tree, essential for the UI's logic.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js">
+        <package name="svelte" version="^5.0.0-next.1"/>
+        <package name="sveltekit" version="^2.0.0"/>
+        <package name="typescript" version="^5.0.0"/>
+        <package name="tailwindcss" version="^3.0.0"/>
+        <package name="daisyui" version="^4.0.0"/>
+        <package name="playwright" version="^1.0.0"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Frontend Framework</type>
+      <description>The UI component must be implemented using Svelte.</description>
+    </constraint>
+    <constraint>
+      <type>Styling</type>
+      <description>Styling must adhere to TailwindCSS and DaisyUI conventions for consistency and mobile responsiveness.</description>
+    </constraint>
+    <constraint>
+      <type>Component Location</type>
+      <description>The new Svelte component should be created in `src/lib/components/profiling/`.</description>
+    </constraint>
+    <constraint>
+      <type>Data Source</type>
+      <description>The component must utilize the `ProfilingQuestion` interface and helper functions (`getStartingQuestion`, `getQuestionById`) from `src/lib/profiling/` for question data and navigation logic.</description>
+    </constraint>
+    <constraint>
+      <type>User Experience</type>
+      <description>The UI should present questions in a conversational flow, avoiding overwhelming the user with too much information at once.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>getStartingQuestion</name>
+      <kind>Function</kind>
+      <signature>getStartingQuestion(): ProfilingQuestion</signature>
+      <path>src/lib/profiling/questions.ts</path>
+      <reason>Function to retrieve the initial profiling question to start the quiz flow.</reason>
+    </interface>
+    <interface>
+      <name>getQuestionById</name>
+      <kind>Function</kind>
+      <signature>getQuestionById(id: string): ProfilingQuestion | undefined</signature>
+      <path>src/lib/profiling/questions.ts</path>
+      <reason>Function to retrieve a specific profiling question by its ID, used for navigating the question tree.</reason>
+    </interface>
+    <interface>
+      <name>ProfilingQuestion</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface ProfilingQuestion {
+  id: string;
+  text: string;
+  answers: {
+    text: string;
+    next_question_id?: string;
+  }[];
+}
+        ]]>
+      </signature>
+      <path>src/lib/profiling/types.ts</path>
+      <reason>The data structure that the UI component will render.</reason>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      End-to-end tests should be written using Playwright. Test files should be placed in the `e2e/` directory. Focus on simulating user interactions and asserting correct UI behavior and navigation through the profiling quiz flow.
+    </standards>
+    <locations>
+      <location>e2e/*.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac-id="1,2,3">Write an end-to-end test that navigates through a complete path of the profiling question tree, asserting that each question and its answers are rendered correctly and that navigation proceeds as expected based on user selections.</idea>
+      <idea ac-id="3">Write an end-to-end test to verify the mobile responsiveness of the `ProfilingQuiz.svelte` component across different viewport sizes.</idea>
+    </ideas>
+  </tests>
+</story-context>

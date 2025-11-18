@@ -1,0 +1,173 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>4</storyId>
+    <title>dynamic-narrative-question-selection</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/tostu/Code/welche-partei/docs/sprint-artifacts/stories/2-4-dynamic-narrative-question-selection.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>system</asA>
+    <iWant>logic to select 7-8 relevant narrative questions from the bank based on the user's profiling answers</iWant>
+    <soThat>the main quiz feels highly personalized</soThat>
+    <tasks>
+      <task id="1" description="Define the UserProfile interface.">
+        <subtask id="1.1" description="In src/lib/profiling/types.ts, define a UserProfile interface that captures the answers from the profiling quiz."/>
+      </task>
+      <task id="2" description="Create the selection.ts file.">
+        <subtask id="2.1" description="Create the file at src/lib/narrative/selection.ts."/>
+      </task>
+      <task id="3" description="Implement the selectNarrativeQuestions function.">
+        <subtask id="3.1" description="Define the function signature selectNarrativeQuestions(userProfile: UserProfile): NarrativeQuestion[]."/>
+        <subtask id="3.2" description="Import narrativeQuestions from src/lib/narrative/questions.ts."/>
+      </task>
+      <task id="4" description="Implement the question selection logic.">
+        <subtask id="4.1" description="Create a mapping between userProfile answers and the demographic tags in the narrative questions."/>
+        <subtask id="4.2" description="Implement a scoring or weighting system to prioritize questions with matching tags."/>
+        <subtask id="4.3" description="Ensure the function returns a unique set of 7-8 questions."/>
+        <subtask id="4.4" description="Handle cases where there are not enough questions with matching tags."/>
+      </task>
+      <task id="5" description="Add unit tests.">
+        <subtask id="5.1" description="Create a test file src/lib/narrative/selection.test.ts."/>
+        <subtask id="5.2" description="Write tests with mock UserProfile objects to verify that the correct questions are prioritized and selected."/>
+        <subtask id="5.3" description="Write a test to ensure the function always returns 7-8 questions, if available."/>
+        <subtask id="5.4" description="Write a test to handle edge cases, such as an empty UserProfile."/>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">A function `selectNarrativeQuestions(userProfile: UserProfile): NarrativeQuestion[]` exists.</ac>
+    <ac id="2">The function prioritizes questions tagged with matching demographic indicators.</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>2. User Stories</section>
+        <snippet>US2.2 - Dynamic Question Selection Logic: As a system, I need to dynamically select 7-8 narrative questions from the question bank based on the user's initial profiling answers to ensure relevance.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/user_stories.md</path>
+        <title>User Stories for Integrated Profiling & Narrative Ideology Matching Quiz</title>
+        <section>Epic: New Quiz User Experience &gt; Feature: Narrative Ideology Quiz</section>
+        <snippet>US: Dynamic Narrative Question Selection: As a system, I need logic to select 7-8 relevant narrative questions from the bank based on the user's profiling answers, so that the main quiz feels highly personalized.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Ideological Matching Engine</title>
+        <section>Objectives and Scope</section>
+        <snippet>Dynamic question selection logic based on initial profiling.</snippet>
+      </artifact>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/narrative/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>NarrativeQuestion</symbol>
+        <reason>Defines the data structure for narrative questions, which this logic will select from.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/narrative/questions.ts</path>
+        <kind>data-and-helpers</kind>
+        <symbol>narrativeQuestions, getNarrativeQuestionsByTag</symbol>
+        <reason>Contains the question data bank and a helper function to filter questions by tag, which is essential for the selection logic.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/profiling/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>UserProfile</symbol>
+        <reason>Defines the input data structure for the selection logic, containing the user's profiling answers.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js">
+        <package name="svelte" version="^5.0.0-next.1"/>
+        <package name="sveltekit" version="^2.0.0"/>
+        <package name="typescript" version="^5.0.0"/>
+        <package name="vitest" version="^1.0.0"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Language</type>
+      <description>All logic must be implemented in TypeScript.</description>
+    </constraint>
+    <constraint>
+      <type>Location</type>
+      <description>The new selection logic should be placed in `src/lib/narrative/selection.ts`.</description>
+    </constraint>
+    <constraint>
+      <type>Function Signature</type>
+      <description>The function must have the signature `selectNarrativeQuestions(userProfile: UserProfile): NarrativeQuestion[]`.</description>
+    </constraint>
+    <constraint>
+      <type>Selection Logic</type>
+      <description>The function must prioritize questions from the `narrativeQuestions` bank that have demographic tags matching the user's profiling answers.</description>
+    </constraint>
+    <constraint>
+      <type>Output</type>
+      <description>The function must return a unique set of 7-8 questions.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>selectNarrativeQuestions</name>
+      <kind>Function</kind>
+      <signature>selectNarrativeQuestions(userProfile: UserProfile): NarrativeQuestion[]</signature>
+      <path>src/lib/narrative/selection.ts</path>
+      <reason>The primary function to be implemented in this story.</reason>
+    </interface>
+    <interface>
+      <name>UserProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface UserProfile {
+  [questionId: string]: string; // e.g., { 'age-group': 'under-30', 'employment-status-young': 'student' }
+}
+        ]]>
+      </signature>
+      <path>src/lib/profiling/types.ts</path>
+      <reason>The input data structure for the selection logic, containing the user's profiling answers.</reason>
+    </interface>
+    <interface>
+      <name>NarrativeQuestion</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface NarrativeQuestion {
+  id: number;
+  story_text: string;
+  optionA: NarrativeAnswerOption;
+  optionB: NarrativeAnswerOption;
+  tags: string[];
+}
+        ]]>
+      </signature>
+      <path>src/lib/narrative/types.ts</path>
+      <reason>The data structure that the selection logic will return.</reason>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      Unit tests should be written using Vitest. Test files should be co-located with the modules they test, following the pattern `*.test.ts`. Focus on testing the selection logic with various user profiles and asserting that the correct questions are prioritized and returned.
+    </standards>
+    <locations>
+      <location>src/lib/narrative/selection.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac-id="1,2">Write a unit test with a mock `UserProfile` to verify that the `selectNarrativeQuestions` function returns an array of `NarrativeQuestion` objects and that the returned questions have tags that match the user's profile.</idea>
+      <idea ac-id="2">Write a unit test to ensure that the function returns a unique set of 7-8 questions, even if there are more than 8 questions with matching tags.</idea>
+      <idea ac-id="2">Write a unit test to handle cases where there are fewer than 7-8 questions with matching tags, ensuring that the function still returns a full set of questions by including non-tagged questions.</idea>
+      <idea ac-id="1">Write a unit test to handle an empty or incomplete `UserProfile`, ensuring that the function returns a default set of questions.</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,192 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>5</storyId>
+    <title>narrative-quiz-ui-tournament-bracket</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/tostu/Code/welche-partei/docs/sprint-artifacts/stories/2-5-narrative-quiz-ui-tournament-bracket.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to interact with the narrative questions in a "this or that" tournament bracket style</iWant>
+    <soThat>the quiz is engaging and my choices feel impactful</soThat>
+    <tasks>
+      <task id="1" description="Create the NarrativeQuiz.svelte component.">
+        <subtask id="1.1" description="Create the file at src/lib/components/narrative/NarrativeQuiz.svelte."/>
+        <subtask id="1.2" description="Define a userProfile prop for the component."/>
+        <subtask id="1.3" description="On component initialization, call selectNarrativeQuestions to get the 8 questions for the tournament."/>
+      </task>
+      <task id="2" description="Implement the tournament bracket logic.">
+        <subtask id="2.1" description="Manage the state of the tournament, including the current round and the questions in each matchup."/>
+        <subtask id="2.2" description="In the first round, display the 4 matchups (8 questions)."/>
+        <subtask id="2.3" description="In the second round, display the 2 matchups with the winning options from the first round."/>
+        <subtask id="2.4" description="In the final round, display the final matchup."/>
+      </task>
+      <task id="3" description="Implement the 'this or that' UI.">
+        <subtask id="3.1" description="For the current matchup, display the two NarrativeAnswerOptions side-by-side as large, tappable cards."/>
+        <subtask id="3.2" description="Implement an on:click handler for each card to record the user's choice."/>
+        <subtask id="3.3" description="After a choice is made, advance to the next matchup or the next round."/>
+      </task>
+      <task id="4" description="Implement visual progression feedback.">
+        <subtask id="4.1" description="Create a progress bar or a series of dots to indicate the user's current stage in the tournament (e.g., 'Round 1 of 3')."/>
+        <subtask id="4.2" description="Use animations or transitions to make the progression feel smooth and engaging."/>
+      </task>
+      <task id="5" description="Style the component.">
+        <subtask id="5.1" description="Use TailwindCSS and DaisyUI for a clean, mobile-first layout that emphasizes the two choices."/>
+      </task>
+      <task id="6" description="Add end-to-end tests.">
+        <subtask id="6.1" description="Create a Playwright test file for the narrative quiz flow."/>
+        <subtask id="6.2" description="Write a test that simulates a user completing the entire tournament bracket."/>
+        <subtask id="6.3" description="Assert that the correct options are advanced to the next round based on user selections."/>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">A Svelte component presents two narrative options side-by-side.</ac>
+    <ac id="2">User taps on preferred option to advance.</ac>
+    <ac id="3">Visual feedback indicates progression through the "bracket."</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>2. User Stories</section>
+        <snippet>US1.3 - Engaging Choice Mechanism: As a user, I want to choose between two competing narrative scenarios (a "this or that" format) for each question so that I can easily express my priorities without high mental load.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>2. User Stories</section>
+        <snippet>US1.4 - Clear Progression: As a user, I want the quiz interaction to feel dynamic and progressive (e.g., like a tournament bracket) so that I remain engaged and understand how my choices are building towards a result.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>3. Functional Requirements</section>
+        <snippet>FR3.3 - Narrative Quiz UI: Develop a card-based "this or that" UI for narrative questions, supporting tap interactions.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/user_stories.md</path>
+        <title>User Stories for Integrated Profiling & Narrative Ideology Matching Quiz</title>
+        <section>Epic: New Quiz User Experience &gt; Feature: Narrative Ideology Quiz</section>
+        <snippet>US: Narrative Quiz UI (Tournament Bracket): As a user, I want to interact with the narrative questions in a "this or that" tournament bracket style, so that the quiz is engaging and my choices feel impactful.</snippet>
+      </artifact>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/components/profiling/ProfilingQuiz.svelte</path>
+        <kind>svelte-component</kind>
+        <reason>Example of an existing quiz component in the project, demonstrating component structure, state management, and dynamic question rendering.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/narrative/selection.ts</path>
+        <kind>logic</kind>
+        <symbol>selectNarrativeQuestions</symbol>
+        <reason>The function to be used to get the 8 narrative questions for the tournament.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/narrative/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>NarrativeQuestion</symbol>
+        <reason>Defines the data structure for the narrative questions that this UI component will render.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/profiling/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>UserProfile</symbol>
+        <reason>Defines the input data structure for the `selectNarrativeQuestions` function.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js">
+        <package name="svelte" version="^5.0.0-next.1"/>
+        <package name="sveltekit" version="^2.0.0"/>
+        <package name="typescript" version="^5.0.0"/>
+        <package name="tailwindcss" version="^3.0.0"/>
+        <package name="daisyui" version="^4.0.0"/>
+        <package name="playwright" version="^1.0.0"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Frontend Framework</type>
+      <description>The UI component must be implemented using Svelte.</description>
+    </constraint>
+    <constraint>
+      <type>Styling</type>
+      <description>Styling must adhere to TailwindCSS and DaisyUI conventions for a clean, mobile-first "this or that" experience.</description>
+    </constraint>
+    <constraint>
+      <type>Component Location</type>
+      <description>The new Svelte component should be created in `src/lib/components/narrative/`.</description>
+    </constraint>
+    <constraint>
+      <type>Data Source</type>
+      <description>The component must receive a `UserProfile` object as a prop and use the `selectNarrativeQuestions` function to get the 8 questions for the tournament.</description>
+    </constraint>
+    <constraint>
+      <type>User Experience</type>
+      <description>The UI must present questions in a "this or that" tournament bracket style, with clear visual feedback for progression.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>selectNarrativeQuestions</name>
+      <kind>Function</kind>
+      <signature>selectNarrativeQuestions(userProfile: UserProfile): NarrativeQuestion[]</signature>
+      <path>src/lib/narrative/selection.ts</path>
+      <reason>The function to be used to get the 8 narrative questions for the tournament.</reason>
+    </interface>
+    <interface>
+      <name>UserProfile</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface UserProfile {
+  [questionId: string]: string;
+}
+        ]]>
+      </signature>
+      <path>src/lib/profiling/types.ts</path>
+      <reason>The input data structure for the `selectNarrativeQuestions` function.</reason>
+    </interface>
+    <interface>
+      <name>NarrativeQuestion</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface NarrativeQuestion {
+  id: number;
+  story_text: string;
+  optionA: NarrativeAnswerOption;
+  optionB: NarrativeAnswerOption;
+  tags: string[];
+}
+        ]]>
+      </signature>
+      <path>src/lib/narrative/types.ts</path>
+      <reason>The data structure that the UI component will render.</reason>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      End-to-end tests should be written using Playwright. Test files should be placed in the `e2e/` directory. Focus on simulating user interactions and asserting correct UI behavior and navigation through the tournament bracket.
+    </standards>
+    <locations>
+      <location>e2e/*.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac-id="1,2">Write an end-to-end test that simulates a user completing the entire tournament bracket, asserting that the correct options are advanced to the next round based on user selections.</idea>
+      <idea ac-id="3">Write an end-to-end test to verify that the visual progression feedback (e.g., progress bar) updates correctly after each round.</idea>
+      <idea ac-id="1">Write an end-to-end test to verify the mobile responsiveness of the `NarrativeQuiz.svelte` component across different viewport sizes.</idea>
+    </ideas>
+  </tests>
+</story-context>

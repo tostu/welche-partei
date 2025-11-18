@@ -1,0 +1,181 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>3</storyId>
+    <title>narrative-question-data-structure</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/tostu/Code/welche-partei/docs/sprint-artifacts/stories/2-3-narrative-question-data-structure.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>a data structure (e.g., TypeScript interface and JSON/TS file) to define narrative questions, including story text, two answer options, and their impact on ideological axes</iWant>
+    <soThat>the quiz can present engaging dilemmas</soThat>
+    <tasks>
+      <task id="1" description="Define NarrativeQuestion interface in src/lib/narrative/types.ts.">
+        <subtask id="1.1" description="Include id, story_text, optionA, optionB properties."/>
+        <subtask id="1.2" description="Define NarrativeAnswerOption interface for optionA and optionB."/>
+      </task>
+      <task id="2" description="Implement ideological axis impact mapping.">
+        <subtask id="2.1" description="Ensure NarrativeAnswerOption includes an impacts: NarrativeAnswerImpact[] property."/>
+        <subtask id="2.2" description="Reference NarrativeAnswerImpact and IdeologicalAxis from src/lib/ideology/types.ts."/>
+      </task>
+      <task id="3" description="Create narrativeQuestions.ts data file.">
+        <subtask id="3.1" description="Create the file at src/lib/narrative/questions.ts."/>
+        <subtask id="3.2" description="Export an array of NarrativeQuestion objects."/>
+        <subtask id="3.3" description="Include tags: string[] property in NarrativeQuestion for demographic relevance."/>
+        <subtask id="3.4" description="Create at least 3 sample narrative questions with demographic tags and ideological impacts."/>
+      </task>
+      <task id="4" description="Add unit tests.">
+        <subtask id="4.1" description="Write a test to validate the schema of the NarrativeQuestion objects."/>
+        <subtask id="4.2" description="Write a test to verify that ideological impacts are correctly defined and within expected ranges."/>
+        <subtask id="4.3" description="Write a test to ensure demographic tags are present."/>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">A `NarrativeQuestion` interface includes `id`, `story_text`, `optionA`, `optionB`.</ac>
+    <ac id="2">Each option maps to changes in ideological axis scores.</ac>
+    <ac id="3">A `narrativeQuestions.ts` file exports a bank of `NarrativeQuestion` objects, tagged for demographic relevance.</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>2. User Stories</section>
+        <snippet>US2.1 - Ideological Question Bank: As an administrator, I want a bank of narrative questions, each tagged with relevant demographic indicators and designed to reveal a user's preference on specific ideological axes (e.g., Market vs. State, Individual vs. Collective).</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/quiz_redesign_prd.md</path>
+        <title>Product Requirements Document (PRD)</title>
+        <section>5. Data Model</section>
+        <snippet>Narrative Questions: Each question will include: Question text (story/scenario), Two answer options (A and B), Mapping for each option to its impact on ideological axis scores, Tags for demographic relevance (e.g., #homeowner, #parent).</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/user_stories.md</path>
+        <title>User Stories for Integrated Profiling & Narrative Ideology Matching Quiz</title>
+        <section>Epic: New Quiz User Experience &gt; Feature: Narrative Ideology Quiz</section>
+        <snippet>US: Narrative Question Data Structure: As a developer, I need a data structure (e.g., TypeScript interface and JSON/TS file) to define narrative questions, including story text, two answer options, and their impact on ideological axes, so that the quiz can present engaging dilemmas.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Ideological Matching Engine (Foundation First)</title>
+        <section>Data Models and Contracts</section>
+        <snippet>
+          <![CDATA[
+// Quiz Answer Impact (how narrative choices affect axes)
+export interface NarrativeAnswerImpact {
+  axis_id: string;
+  delta: number;                 // Change to apply (+/- value)
+}
+          ]]>
+        </snippet>
+      </artifact>
+    </docs>
+    <code>
+      <artifact>
+        <path>src/lib/ideology/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>IdeologicalAxis, NarrativeAnswerImpact</symbol>
+        <reason>Defines the data structures for ideological axes and answer impacts, which this story's data structure will reference.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/ideology/ideologicalAxes.ts</path>
+        <kind>data</kind>
+        <symbol>ideologicalAxes</symbol>
+        <reason>Provides the array of ideological axes that narrative questions will map to.</reason>
+      </artifact>
+      <artifact>
+        <path>src/lib/profiling/types.ts</path>
+        <kind>type-definitions</kind>
+        <symbol>ProfilingQuestion</symbol>
+        <reason>Example of a question data structure from a previous story, providing a pattern for the new NarrativeQuestion interface.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js">
+        <package name="svelte" version="^5.0.0-next.1"/>
+        <package name="sveltekit" version="^2.0.0"/>
+        <package name="typescript" version="^5.0.0"/>
+        <package name="vitest" version="^1.0.0"/>
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Language</type>
+      <description>All data structures and logic must be implemented in TypeScript.</description>
+    </constraint>
+    <constraint>
+      <type>Data Storage</type>
+      <description>Narrative questions should be stored in a TypeScript file (e.g., `src/lib/narrative/questions.ts`) as an exported array of objects.</description>
+    </constraint>
+    <constraint>
+      <type>Structure</type>
+      <description>The `NarrativeQuestion` data structure must include a mechanism to map each answer option to changes in ideological axis scores, referencing the `NarrativeAnswerImpact` interface.</description>
+    </constraint>
+    <constraint>
+      <type>Location</type>
+      <description>New files for narrative questions (types and data) should be placed in `src/lib/narrative/`.</description>
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>NarrativeQuestion</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+import type { NarrativeAnswerImpact } from '$lib/ideology/types';
+
+export interface NarrativeAnswerOption {
+  text: string;
+  impacts: NarrativeAnswerImpact[];
+}
+
+export interface NarrativeQuestion {
+  id: number;
+  story_text: string;
+  optionA: NarrativeAnswerOption;
+  optionB: NarrativeAnswerOption;
+  tags: string[];
+}
+        ]]>
+      </signature>
+      <path>src/lib/narrative/types.ts</path>
+      <reason>New interface required to define the structure of narrative questions, including ideological impacts and demographic tags.</reason>
+    </interface>
+    <interface>
+      <name>NarrativeAnswerImpact</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        <![CDATA[
+export interface NarrativeAnswerImpact {
+  axis_id: string;
+  delta: number;
+}
+        ]]>
+      </signature>
+      <path>src/lib/ideology/types.ts</path>
+      <reason>Existing interface that defines how an answer affects an ideological axis score. This will be used in the `NarrativeAnswerOption` interface.</reason>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      Unit tests should be written using Vitest. Test files should be co-located with the modules they test, following the pattern `*.test.ts`. Focus on validating the data schema and the correctness of the ideological impact mappings.
+    </standards>
+    <locations>
+      <location>src/lib/narrative/*.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac-id="1">Write a unit test to validate the schema of the `NarrativeQuestion` objects, ensuring all required properties are present and correctly typed.</idea>
+      <idea ac-id="2">Write a unit test to verify that the `impacts` array in each answer option correctly references valid `axis_id`s from `ideologicalAxes.ts` and that the `delta` values are within a reasonable range.</idea>
+      <idea ac-id="3">Write a unit test to ensure that each sample `NarrativeQuestion` has at least one demographic tag.</idea>
+    </ideas>
+  </tests>
+</story-context>
