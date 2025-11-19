@@ -32,17 +32,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 1,
-		story_text:
-			'In Ihrer Stadt steigen die Mieten dramatisch. Viele Menschen können sich ihre Wohnungen nicht mehr leisten und müssen wegziehen. Die Stadtregierung muss handeln.',
+		story_text: 'Ihre Miete steigt um 25%. Freunde müssen wegziehen.',
 		optionA: {
-			text: 'Eine strikte Mietpreisbremse einführen, um die Mieten zu deckeln',
+			text: 'Der Vermieter sollte das nicht dürfen',
 			impacts: [
 				{ axis_id: 'market-state', delta: +2.0 },
 				{ axis_id: 'individual-collective', delta: +1.2 }
 			]
 		},
 		optionB: {
-			text: 'Bauvorschriften lockern und mehr Wohnungen bauen lassen, damit der Markt das Problem löst',
+			text: 'Ich ziehe woanders hin, wo es günstiger ist',
 			impacts: [
 				{ axis_id: 'market-state', delta: -1.8 },
 				{ axis_id: 'ecology-economy', delta: -0.8 }
@@ -56,17 +55,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 2,
-		story_text:
-			'Ein großes Automobilwerk in Ihrer Region will eine neue Fabrik bauen. Das schafft 5.000 Arbeitsplätze, aber bedroht ein wichtiges Naturschutzgebiet.',
+		story_text: 'Neue Fabrik in Ihrer Region: 5.000 Jobs, aber der Wald muss weg.',
 		optionA: {
-			text: 'Das Naturschutzgebiet hat Vorrang – die Fabrik sollte woanders gebaut werden',
+			text: 'Der Wald bleibt',
 			impacts: [
 				{ axis_id: 'ecology-economy', delta: +2.5 },
 				{ axis_id: 'individual-collective', delta: +0.5 }
 			]
 		},
 		optionB: {
-			text: 'Die Arbeitsplätze sind wichtiger – mit Ausgleichsmaßnahmen kann man die Natur schützen',
+			text: 'Wir brauchen die Jobs',
 			impacts: [
 				{ axis_id: 'ecology-economy', delta: -2.0 },
 				{ axis_id: 'market-state', delta: -0.8 }
@@ -80,17 +78,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 3,
-		story_text:
-			'Die Kita-Plätze in Ihrer Gemeinde reichen nicht aus. Viele Eltern finden keinen Betreuungsplatz für ihre Kinder. Es gibt zwei Lösungsvorschläge.',
+		story_text: 'Sie finden keinen Kita-Platz für Ihr Kind.',
 		optionA: {
-			text: 'Der Staat sollte massiv in öffentliche Kitas investieren, um allen ein Angebot zu garantieren',
+			text: 'Jeder sollte einen Platz garantiert bekommen',
 			impacts: [
 				{ axis_id: 'market-state', delta: +1.8 },
 				{ axis_id: 'individual-collective', delta: +1.5 }
 			]
 		},
 		optionB: {
-			text: 'Eltern sollten Gutscheine bekommen und selbst entscheiden, ob sie öffentliche oder private Kitas nutzen',
+			text: 'Ich suche mir selbst eine Lösung',
 			impacts: [
 				{ axis_id: 'market-state', delta: -1.5 },
 				{ axis_id: 'individual-collective', delta: -1.0 }
@@ -104,17 +101,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 4,
-		story_text:
-			'Die Wartezeiten für Arzttermine werden immer länger. Manche Patienten warten Monate auf einen Termin beim Facharzt. Die Gesundheitspolitik muss reformiert werden.',
+		story_text: 'Drei Monate Wartezeit beim Facharzt. Mit Privatversicherung sofort.',
 		optionA: {
-			text: 'Private Zusatzversicherungen sollten erlaubt bleiben – wer zahlt, bekommt schneller einen Termin',
+			text: 'Wer mehr zahlt, kann auch mehr erwarten',
 			impacts: [
 				{ axis_id: 'individual-collective', delta: -1.8 },
 				{ axis_id: 'market-state', delta: -1.2 }
 			]
 		},
 		optionB: {
-			text: 'Alle Patienten sollten gleich behandelt werden – private Vorteile abschaffen',
+			text: 'Alle sollten gleich behandelt werden',
 			impacts: [
 				{ axis_id: 'individual-collective', delta: +2.0 },
 				{ axis_id: 'market-state', delta: +1.0 }
@@ -128,17 +124,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 5,
-		story_text:
-			'In Ihrer Stadt wollen Geflüchtete eine Moschee bauen. Einige Anwohner protestieren und berufen sich auf "christliche Tradition". Der Stadtrat muss entscheiden.',
+		story_text: 'In Ihrer Nachbarschaft soll eine Moschee gebaut werden.',
 		optionA: {
-			text: 'Religionsfreiheit gilt für alle – die Moschee sollte genehmigt werden',
+			text: 'Kein Problem, jeder darf seinen Glauben leben',
 			impacts: [
 				{ axis_id: 'progressive-conservative', delta: -2.2 },
 				{ axis_id: 'individual-collective', delta: -0.8 }
 			]
 		},
 		optionB: {
-			text: 'Die lokale Tradition sollte respektiert werden – erstmal Dialog mit Anwohnern',
+			text: 'Das passt nicht hierher',
 			impacts: [
 				{ axis_id: 'progressive-conservative', delta: +1.8 },
 				{ axis_id: 'individual-collective', delta: +1.0 }
@@ -152,17 +147,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 6,
-		story_text:
-			'Ein großer Online-Händler will in Ihrer Region ein Verteilzentrum eröffnen. Die Arbeitsbedingungen sind hart, die Bezahlung am gesetzlichen Minimum. Aber es entstehen 800 Jobs.',
+		story_text: 'Amazon bietet Ihnen einen Job: Mindestlohn, harte Bedingungen.',
 		optionA: {
-			text: 'Der Arbeitsmarkt regelt das – wenn die Bedingungen schlecht sind, finden sie keine Mitarbeiter',
+			text: 'Wenn es mir nicht passt, arbeite ich woanders',
 			impacts: [
 				{ axis_id: 'market-state', delta: -2.0 },
 				{ axis_id: 'individual-collective', delta: -1.0 }
 			]
 		},
 		optionB: {
-			text: 'Strengere Auflagen für Arbeitsbedingungen und Bezahlung müssen durchgesetzt werden',
+			text: 'Solche Bedingungen sollten verboten sein',
 			impacts: [
 				{ axis_id: 'market-state', delta: +1.8 },
 				{ axis_id: 'individual-collective', delta: +1.5 }
@@ -176,17 +170,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 7,
-		story_text:
-			'Große Tech-Konzerne sammeln massiv persönliche Daten ihrer Nutzer. Manche fordern strengere Regulierung, andere warnen vor Innovationsbremse.',
+		story_text: 'Google und Facebook wissen alles über Sie.',
 		optionA: {
-			text: 'Datenschutz ist Grundrecht – der Staat muss die Konzerne streng regulieren',
+			text: 'Das muss verboten werden',
 			impacts: [
 				{ axis_id: 'market-state', delta: +1.5 },
 				{ axis_id: 'individual-collective', delta: +0.8 }
 			]
 		},
 		optionB: {
-			text: 'Jeder kann selbst entscheiden, welche Dienste er nutzt – zu viel Regulierung schadet der Wirtschaft',
+			text: 'Ich entscheide selbst, was ich nutze',
 			impacts: [
 				{ axis_id: 'market-state', delta: -1.8 },
 				{ axis_id: 'individual-collective', delta: -1.2 }
@@ -200,17 +193,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 8,
-		story_text:
-			'Das Rentensystem steht vor dem Kollaps. Immer weniger Erwerbstätige müssen immer mehr Rentner finanzieren. Eine grundlegende Reform ist nötig.',
+		story_text: 'Mit 67 gehen Sie in Rente. Ihre Rente reicht kaum.',
 		optionA: {
-			text: 'Private Altersvorsorge stärken – jeder sollte selbst für seine Rente verantwortlich sein',
+			text: 'Ich hätte privat vorsorgen sollen',
 			impacts: [
 				{ axis_id: 'individual-collective', delta: -2.0 },
 				{ axis_id: 'market-state', delta: -1.5 }
 			]
 		},
 		optionB: {
-			text: 'Solidarisches Rentensystem erhalten – höhere Beiträge und Steuern für sichere Renten',
+			text: 'Ich habe mein Leben lang eingezahlt',
 			impacts: [
 				{ axis_id: 'individual-collective', delta: +2.2 },
 				{ axis_id: 'market-state', delta: +1.0 }
@@ -224,17 +216,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 9,
-		story_text:
-			'Um die Klimaziele zu erreichen, sollen die Benzinpreise deutlich steigen. Das trifft besonders Menschen auf dem Land, die auf das Auto angewiesen sind.',
+		story_text: 'Benzin kostet jetzt 3€ pro Liter. Sie pendeln täglich 50km.',
 		optionA: {
-			text: 'Klimaschutz geht vor – höhere Preise sind notwendig, auch wenn es wehtut',
+			text: 'Gut fürs Klima, ich finde Alternativen',
 			impacts: [
 				{ axis_id: 'ecology-economy', delta: +2.5 },
 				{ axis_id: 'individual-collective', delta: +1.0 }
 			]
 		},
 		optionB: {
-			text: 'Soziale Härten vermeiden – erst bessere Alternativen schaffen, dann Preise erhöhen',
+			text: 'Das kann ich mir nicht leisten',
 			impacts: [
 				{ axis_id: 'ecology-economy', delta: -1.5 },
 				{ axis_id: 'market-state', delta: +0.8 }
@@ -248,17 +239,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 10,
-		story_text:
-			'In Führungspositionen großer Unternehmen sind Frauen stark unterrepräsentiert. Es gibt verschiedene Vorschläge, das zu ändern.',
+		story_text: 'Ihr Unternehmen führt eine Frauenquote für Führungspositionen ein.',
 		optionA: {
-			text: 'Verbindliche Frauenquote einführen – nur so gibt es echte Gleichstellung',
+			text: 'Endlich echte Gleichberechtigung',
 			impacts: [
 				{ axis_id: 'market-state', delta: +1.5 },
 				{ axis_id: 'progressive-conservative', delta: -1.8 }
 			]
 		},
 		optionB: {
-			text: 'Leistung sollte zählen, nicht das Geschlecht – Quoten sind Diskriminierung',
+			text: 'Leistung sollte zählen, nicht Geschlecht',
 			impacts: [
 				{ axis_id: 'market-state', delta: -1.0 },
 				{ axis_id: 'progressive-conservative', delta: +1.5 }
@@ -272,17 +262,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 11,
-		story_text:
-			'Die Vermögensungleichheit in Deutschland wächst. Die reichsten 10% besitzen über 60% des Vermögens. Soll der Staat eingreifen?',
+		story_text: 'Die 10 reichsten Deutschen besitzen mehr als die ärmsten 50 Millionen.',
 		optionA: {
-			text: 'Vermögensteuer und höhere Erbschaftssteuer einführen, um Ungleichheit zu reduzieren',
+			text: 'Reiche sollten mehr Steuern zahlen',
 			impacts: [
 				{ axis_id: 'market-state', delta: +2.0 },
 				{ axis_id: 'individual-collective', delta: +1.8 }
 			]
 		},
 		optionB: {
-			text: 'Wer erfolgreich ist, sollte die Früchte ernten – hohe Steuern bremsen Leistungsbereitschaft',
+			text: 'Jeder ist seines Glückes Schmied',
 			impacts: [
 				{ axis_id: 'market-state', delta: -2.2 },
 				{ axis_id: 'individual-collective', delta: -1.5 }
@@ -296,17 +285,16 @@ export const narrativeQuestions: NarrativeQuestion[] = [
 	// ====================
 	{
 		id: 12,
-		story_text:
-			'An deutschen Gymnasien sind Kinder aus Akademikerfamilien stark überrepräsentiert. Arbeiterkinder haben deutlich schlechtere Bildungschancen.',
+		story_text: 'Ihr Kind bekommt eine Gymnasialempfehlung, aber die Freunde gehen zur Gesamtschule.',
 		optionA: {
-			text: 'Gesamtschulen statt dreigliedriges System – alle Kinder gemeinsam fördern',
+			text: 'Alle Kinder sollten zusammen lernen',
 			impacts: [
 				{ axis_id: 'progressive-conservative', delta: -1.8 },
 				{ axis_id: 'individual-collective', delta: +1.5 }
 			]
 		},
 		optionB: {
-			text: 'Das Gymnasium soll Leistungselite fördern – Begabung zählt, nicht Herkunft',
+			text: 'Gymnasium ist die beste Chance',
 			impacts: [
 				{ axis_id: 'progressive-conservative', delta: +1.5 },
 				{ axis_id: 'individual-collective', delta: -1.2 }
