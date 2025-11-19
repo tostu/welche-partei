@@ -41,7 +41,7 @@
 				</span>
 			</div>
 
-			<a href="/fragen/1">
+			<a href="/fragen">
 				<button class="btn btn-secondary h-full py-5 text-5xl text-neutral"
 					>Jetzt herausfinden!</button
 				>

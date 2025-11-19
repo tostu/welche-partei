@@ -1,85 +1,7 @@
-import type { UserQuizAnswers, UserIdeologicalProfile, NarrativeAnswerImpact } from './types';
+import type { UserQuizAnswers, UserIdeologicalProfile } from './types';
+import type { NarrativeQuestion } from '$lib/narrative/types';
 import { ideologicalAxes } from './ideologicalAxes';
-
-/**
- * Narrative Question Structure (Mock for Epic 2 dependency)
- *
- * This interface represents the expected structure of narrative questions from Epic 2.
- * Once Epic 2 is implemented, this should be imported from the actual narrative questions module.
- */
-interface NarrativeQuestion {
-	id: number;
-	question: string;
-	optionA: {
-		text: string;
-		impacts: NarrativeAnswerImpact[];
-	};
-	optionB: {
-		text: string;
-		impacts: NarrativeAnswerImpact[];
-	};
-}
-
-/**
- * Mock Narrative Questions (Placeholder for Epic 2)
- *
- * These mock questions allow the calculation logic to be implemented and tested
- * before the full narrative question bank is created in Epic 2.
- *
- * Each question presents two options with different ideological impacts.
- */
-export const mockNarrativeQuestions: NarrativeQuestion[] = [
-	{
-		id: 1,
-		question: 'How should the economy be regulated?',
-		optionA: {
-			text: 'Free market with minimal government intervention',
-			impacts: [
-				{ axis_id: 'market-state', delta: -2 }, // Toward free market
-				{ axis_id: 'individual-collective', delta: -1 } // Toward individual
-			]
-		},
-		optionB: {
-			text: 'Strong government regulation and oversight',
-			impacts: [
-				{ axis_id: 'market-state', delta: 2 }, // Toward state control
-				{ axis_id: 'individual-collective', delta: 1 } // Toward collective
-			]
-		}
-	},
-	{
-		id: 2,
-		question: 'What should be the priority for environmental policy?',
-		optionA: {
-			text: 'Economic growth, even if it impacts the environment',
-			impacts: [
-				{ axis_id: 'ecology-economy', delta: -2 } // Toward economy first
-			]
-		},
-		optionB: {
-			text: 'Environmental protection, even at the cost of economic growth',
-			impacts: [
-				{ axis_id: 'ecology-economy', delta: 2 } // Toward ecology first
-			]
-		}
-	},
-	{
-		id: 3,
-		question: 'How should social values evolve?',
-		optionA: {
-			text: 'Embrace progressive change and new social norms',
-			impacts: [
-				{ axis_id: 'progressive-conservative', delta: -2 } // Toward progressive
-			]
-		},
-		optionB: {
-			text: 'Preserve traditional values and customs',
-			impacts: [
-				{ axis_id: 'progressive-conservative', delta: 2 } // Toward conservative
-			]
-		}
-	}
-];
+import { narrativeQuestions } from '$lib/narrative/questions';
 
 /**
  * Clamp Utility Function
@@ -119,7 +41,7 @@ function clamp(value: number, min: number, max: number): number {
  */
 export function calculateUserIdeology(
 	quizAnswers: UserQuizAnswers,
-	narrativeQuestions: NarrativeQuestion[] = mockNarrativeQuestions
+	questions: NarrativeQuestion[] = narrativeQuestions
 ): UserIdeologicalProfile {
 	// Step 1: Initialize all axes at neutral midpoint
 	const axis_scores: Record<string, number> = {};
@@ -132,7 +54,7 @@ export function calculateUserIdeology(
 	// Step 2: Apply deltas from quiz answers
 	Object.entries(quizAnswers.narrative_choices).forEach(([questionIdStr, choice]) => {
 		const questionId = Number(questionIdStr);
-		const question = narrativeQuestions.find((q) => q.id === questionId);
+		const question = questions.find((q) => q.id === questionId);
 
 		// Graceful degradation: skip if question not found
 		if (!question) {
