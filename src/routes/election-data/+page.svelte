@@ -4,27 +4,135 @@
 
 	// CDU/CSU Campaign Promises with Fulfillment Status
 	const cduPromises = [
-		{ area: 'Immigration', promise: 'De facto immigration freeze', result: 'Coordinated EU approach', status: 'broken', importance: 'high' },
-		{ area: 'Social Welfare', promise: 'Abolish Bürgergeld entirely', result: 'Frozen but continues', status: 'broken', importance: 'high' },
-		{ area: 'Economy', promise: '25% corporate tax immediately', result: '25% phased 2028-2033', status: 'delayed', importance: 'medium' },
-		{ area: 'Defense', promise: 'Minimum 2% GDP', result: '5% GDP by 2029', status: 'exceeded', importance: 'high' },
-		{ area: 'Education', promise: 'Mandatory language tests', result: 'Not implemented', status: 'broken', importance: 'medium' },
-		{ area: 'Education', promise: 'Nationwide Abitur standard', result: 'Faces state resistance', status: 'broken', importance: 'low' },
-		{ area: 'Defense', promise: 'Escalating military service', result: 'Under study, not implemented', status: 'delayed', importance: 'low' },
-		{ area: 'Immigration', promise: 'Deportations to Syria/Afghanistan', result: 'Afghanistan only, Syria blocked', status: 'partial', importance: 'medium' }
+		{
+			area: 'Immigration',
+			promise: 'De facto immigration freeze',
+			result: 'Coordinated EU approach',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Social Welfare',
+			promise: 'Abolish Bürgergeld entirely',
+			result: 'Frozen but continues',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Economy',
+			promise: '25% corporate tax immediately',
+			result: '25% phased 2028-2033',
+			status: 'delayed',
+			importance: 'medium'
+		},
+		{
+			area: 'Defense',
+			promise: 'Minimum 2% GDP',
+			result: '5% GDP by 2029',
+			status: 'exceeded',
+			importance: 'high'
+		},
+		{
+			area: 'Education',
+			promise: 'Mandatory language tests',
+			result: 'Not implemented',
+			status: 'broken',
+			importance: 'medium'
+		},
+		{
+			area: 'Education',
+			promise: 'Nationwide Abitur standard',
+			result: 'Faces state resistance',
+			status: 'broken',
+			importance: 'low'
+		},
+		{
+			area: 'Defense',
+			promise: 'Escalating military service',
+			result: 'Under study, not implemented',
+			status: 'delayed',
+			importance: 'low'
+		},
+		{
+			area: 'Immigration',
+			promise: 'Deportations to Syria/Afghanistan',
+			result: 'Afghanistan only, Syria blocked',
+			status: 'partial',
+			importance: 'medium'
+		}
 	];
 
 	const spdPromises = [
-		{ area: 'Social Welfare', promise: '48% pension guarantee (RED LINE)', result: 'Vague protection only', status: 'broken', importance: 'high' },
-		{ area: 'Economy', promise: '€15 minimum wage by 2026 (RED LINE)', result: '€14.60 by 2027, commission decides', status: 'broken', importance: 'high' },
-		{ area: 'Climate', promise: '65% emissions cut by 2030', result: 'No specific 2030 target', status: 'broken', importance: 'high' },
-		{ area: 'Climate', promise: '75% renewable electricity by 2030', result: 'No target specified', status: 'broken', importance: 'high' },
-		{ area: 'Climate', promise: 'Coal phase-out 2030', result: 'Reverted to 2038', status: 'broken', importance: 'high' },
-		{ area: 'Economy', promise: 'Wealth tax on millionaires', result: 'Abandoned entirely', status: 'broken', importance: 'medium' },
-		{ area: 'Housing', promise: 'Permanent rent brake', result: 'Vague commitment', status: 'broken', importance: 'medium' },
-		{ area: 'Healthcare', promise: '€1,000/month care cost cap', result: 'Under study', status: 'partial', importance: 'medium' },
-		{ area: 'Education', promise: 'BAföG full grant (no loan)', result: 'Not adopted', status: 'broken', importance: 'low' },
-		{ area: 'Defense', promise: 'Minimum 2% GDP', result: '5% GDP by 2029', status: 'exceeded', importance: 'high' }
+		{
+			area: 'Social Welfare',
+			promise: '48% pension guarantee (RED LINE)',
+			result: 'Vague protection only',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Economy',
+			promise: '€15 minimum wage by 2026 (RED LINE)',
+			result: '€14.60 by 2027, commission decides',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Climate',
+			promise: '65% emissions cut by 2030',
+			result: 'No specific 2030 target',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Climate',
+			promise: '75% renewable electricity by 2030',
+			result: 'No target specified',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Climate',
+			promise: 'Coal phase-out 2030',
+			result: 'Reverted to 2038',
+			status: 'broken',
+			importance: 'high'
+		},
+		{
+			area: 'Economy',
+			promise: 'Wealth tax on millionaires',
+			result: 'Abandoned entirely',
+			status: 'broken',
+			importance: 'medium'
+		},
+		{
+			area: 'Housing',
+			promise: 'Permanent rent brake',
+			result: 'Vague commitment',
+			status: 'broken',
+			importance: 'medium'
+		},
+		{
+			area: 'Healthcare',
+			promise: '€1,000/month care cost cap',
+			result: 'Under study',
+			status: 'partial',
+			importance: 'medium'
+		},
+		{
+			area: 'Education',
+			promise: 'BAföG full grant (no loan)',
+			result: 'Not adopted',
+			status: 'broken',
+			importance: 'low'
+		},
+		{
+			area: 'Defense',
+			promise: 'Minimum 2% GDP',
+			result: '5% GDP by 2029',
+			status: 'exceeded',
+			importance: 'high'
+		}
 	];
 
 	// Aggregate promise data by status
@@ -54,31 +162,108 @@
 	const brokenPromisesTimeline = [
 		{ date: 'Campaign', event: 'CDU: "Abolish Bürgergeld"', status: 'promised', party: 'CDU' },
 		{ date: 'Campaign', event: 'SPD: "48% pension guarantee"', status: 'promised', party: 'SPD' },
-		{ date: 'Campaign', event: 'SPD: "€15 minimum wage by 2026"', status: 'promised', party: 'SPD' },
+		{
+			date: 'Campaign',
+			event: 'SPD: "€15 minimum wage by 2026"',
+			status: 'promised',
+			party: 'SPD'
+		},
 		{ date: 'Campaign', event: 'SPD: "Coal exit by 2030"', status: 'promised', party: 'SPD' },
-		{ date: 'April 2025', event: 'Coalition Agreement: Bürgergeld frozen, not abolished', status: 'broken', party: 'CDU' },
-		{ date: 'April 2025', event: 'Coalition Agreement: No 48% guarantee', status: 'broken', party: 'SPD' },
-		{ date: 'April 2025', event: 'Coalition Agreement: Commission decides minimum wage', status: 'broken', party: 'SPD' },
-		{ date: 'April 2025', event: 'Coalition Agreement: Coal 2038, not 2030', status: 'broken', party: 'SPD' },
+		{
+			date: 'April 2025',
+			event: 'Coalition Agreement: Bürgergeld frozen, not abolished',
+			status: 'broken',
+			party: 'CDU'
+		},
+		{
+			date: 'April 2025',
+			event: 'Coalition Agreement: No 48% guarantee',
+			status: 'broken',
+			party: 'SPD'
+		},
+		{
+			date: 'April 2025',
+			event: 'Coalition Agreement: Commission decides minimum wage',
+			status: 'broken',
+			party: 'SPD'
+		},
+		{
+			date: 'April 2025',
+			event: 'Coalition Agreement: Coal 2038, not 2030',
+			status: 'broken',
+			party: 'SPD'
+		},
 		{ date: 'Nov 2025', event: 'No climate legislation passed', status: 'ongoing', party: 'both' }
 	];
 
 	// Detailed promise comparison data
 	const detailedComparison = [
-		{ category: 'Climate Neutrality', cdu: '2045', spd: '2045 (65% by 2030)', result: '2045 (flexible path)', fulfillment: 40 },
-		{ category: 'Renewable Energy', cdu: 'No specific %', spd: '75% by 2030', result: 'No target specified', fulfillment: 0 },
-		{ category: 'Corporate Tax', cdu: '25% immediately', spd: 'Increase on wealthy', result: '25% phased 2028-2033', fulfillment: 40 },
-		{ category: 'Defense Spending', cdu: 'Min 2% GDP', spd: 'Min 2% GDP', result: '5% GDP by 2029', fulfillment: 150 },
-		{ category: 'Minimum Wage', cdu: 'Commission decides', spd: '€15 by 2026', result: 'Commission decides', fulfillment: 20 },
-		{ category: 'Pension Level', cdu: 'No specific %', spd: 'Min 48% guarantee', result: 'Vague protection', fulfillment: 10 },
-		{ category: 'Immigration', cdu: 'De facto freeze', spd: 'Humanitarian balance', result: 'Coordinated approach', fulfillment: 50 }
+		{
+			category: 'Climate Neutrality',
+			cdu: '2045',
+			spd: '2045 (65% by 2030)',
+			result: '2045 (flexible path)',
+			fulfillment: 40
+		},
+		{
+			category: 'Renewable Energy',
+			cdu: 'No specific %',
+			spd: '75% by 2030',
+			result: 'No target specified',
+			fulfillment: 0
+		},
+		{
+			category: 'Corporate Tax',
+			cdu: '25% immediately',
+			spd: 'Increase on wealthy',
+			result: '25% phased 2028-2033',
+			fulfillment: 40
+		},
+		{
+			category: 'Defense Spending',
+			cdu: 'Min 2% GDP',
+			spd: 'Min 2% GDP',
+			result: '5% GDP by 2029',
+			fulfillment: 150
+		},
+		{
+			category: 'Minimum Wage',
+			cdu: 'Commission decides',
+			spd: '€15 by 2026',
+			result: 'Commission decides',
+			fulfillment: 20
+		},
+		{
+			category: 'Pension Level',
+			cdu: 'No specific %',
+			spd: 'Min 48% guarantee',
+			result: 'Vague protection',
+			fulfillment: 10
+		},
+		{
+			category: 'Immigration',
+			cdu: 'De facto freeze',
+			spd: 'Humanitarian balance',
+			result: 'Coordinated approach',
+			fulfillment: 50
+		}
 	];
 
 	// Red lines data
 	const redLines = [
-		{ party: 'SPD', redline: '48% pension guarantee', result: 'Vague protection only', broken: true },
+		{
+			party: 'SPD',
+			redline: '48% pension guarantee',
+			result: 'Vague protection only',
+			broken: true
+		},
 		{ party: 'SPD', redline: '€15 minimum wage by 2026', result: '€14.60 by 2027', broken: true },
-		{ party: 'SPD', redline: 'Keep Bürgergeld', result: 'Frozen with stricter rules', broken: true },
+		{
+			party: 'SPD',
+			redline: 'Keep Bürgergeld',
+			result: 'Frozen with stricter rules',
+			broken: true
+		},
 		{ party: 'CDU', redline: 'Abolish Bürgergeld', result: 'Frozen but continues', broken: true },
 		{ party: 'CDU', redline: 'Immigration freeze', result: 'Coordinated EU approach', broken: true }
 	];
@@ -112,10 +297,7 @@
 
 		const x1 = d3.scaleBand().domain(statuses).rangeRound([0, x0.bandwidth()]).padding(0.05);
 
-		const y = d3
-			.scaleLinear()
-			.domain([0, 10])
-			.range([height, 0]);
+		const y = d3.scaleLinear().domain([0, 10]).range([height, 0]);
 
 		const color = d3
 			.scaleOrdinal()
@@ -223,10 +405,7 @@
 			.append('g')
 			.attr('transform', `translate(${margin.left},${margin.top})`);
 
-		const x = d3
-			.scaleLinear()
-			.domain([-3, 3])
-			.range([0, width]);
+		const x = d3.scaleLinear().domain([-3, 3]).range([0, width]);
 
 		const y = d3
 			.scaleBand()
@@ -235,10 +414,7 @@
 			.padding(0.2);
 
 		// X axis
-		svg
-			.append('g')
-			.attr('transform', `translate(0,${height})`)
-			.call(d3.axisBottom(x).ticks(6));
+		svg.append('g').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x).ticks(6));
 
 		// Y axis
 		svg.append('g').call(d3.axisLeft(y));
@@ -313,10 +489,24 @@
 		// Legend
 		const legend = svg.append('g').attr('transform', `translate(${width - 120}, -10)`);
 
-		legend.append('rect').attr('x', 0).attr('y', 0).attr('width', 20).attr('height', 15).attr('fill', '#000000').attr('opacity', 0.8);
+		legend
+			.append('rect')
+			.attr('x', 0)
+			.attr('y', 0)
+			.attr('width', 20)
+			.attr('height', 15)
+			.attr('fill', '#000000')
+			.attr('opacity', 0.8);
 		legend.append('text').attr('x', 25).attr('y', 12).text('CDU/CSU').style('font-size', '11px');
 
-		legend.append('rect').attr('x', 0).attr('y', 20).attr('width', 20).attr('height', 15).attr('fill', '#E3000F').attr('opacity', 0.8);
+		legend
+			.append('rect')
+			.attr('x', 0)
+			.attr('y', 20)
+			.attr('width', 20)
+			.attr('height', 15)
+			.attr('fill', '#E3000F')
+			.attr('opacity', 0.8);
 		legend.append('text').attr('x', 25).attr('y', 32).text('SPD').style('font-size', '11px');
 
 		// Title
@@ -375,7 +565,7 @@
 				.innerRadius(radius - 20)
 				.outerRadius(radius)
 				.startAngle(-Math.PI / 2)
-				.endAngle(((rate / 100) * Math.PI - Math.PI / 2));
+				.endAngle((rate / 100) * Math.PI - Math.PI / 2);
 
 			const backgroundArc = d3
 				.arc()
@@ -385,10 +575,14 @@
 				.endAngle(Math.PI / 2);
 
 			// Background
-			g.append('path').attr('d', backgroundArc as any).attr('fill', '#e0e0e0');
+			g.append('path')
+				.attr('d', backgroundArc as any)
+				.attr('fill', '#e0e0e0');
 
 			// Foreground
-			g.append('path').attr('d', arc as any).attr('fill', color);
+			g.append('path')
+				.attr('d', arc as any)
+				.attr('fill', color);
 
 			// Center text
 			g.append('text')
@@ -526,7 +720,12 @@
 		svg
 			.append('g')
 			.attr('transform', `translate(0,${height})`)
-			.call(d3.axisBottom(x).ticks(8).tickFormat((d) => d + '%'));
+			.call(
+				d3
+					.axisBottom(x)
+					.ticks(8)
+					.tickFormat((d) => d + '%')
+			);
 
 		// 100% reference line
 		svg
@@ -637,12 +836,7 @@
 				.innerRadius(0)
 				.outerRadius(radius / 2);
 
-			const arcs = pieG
-				.selectAll('.arc')
-				.data(pie(data))
-				.enter()
-				.append('g')
-				.attr('class', 'arc');
+			const arcs = pieG.selectAll('.arc').data(pie(data)).enter().append('g').attr('class', 'arc');
 
 			arcs
 				.append('path')
@@ -683,12 +877,7 @@
 				.attr('height', 15)
 				.attr('fill', color(status) as string);
 
-			legendRow
-				.append('text')
-				.attr('x', 20)
-				.attr('y', 12)
-				.style('font-size', '11px')
-				.text(status);
+			legendRow.append('text').attr('x', 20).attr('y', 12).style('font-size', '11px').text(status);
 		});
 
 		// Title
@@ -707,9 +896,7 @@
 	<div class="mx-auto max-w-7xl">
 		<!-- Header -->
 		<div class="mb-12 text-center">
-			<h1 class="mb-4 text-5xl font-bold text-slate-800">
-				Campaign Promises vs Reality
-			</h1>
+			<h1 class="mb-4 text-5xl font-bold text-slate-800">Campaign Promises vs Reality</h1>
 			<p class="text-xl text-slate-600">
 				Tracking how CDU/CSU and SPD delivered on their 2025 election commitments
 			</p>
@@ -720,22 +907,22 @@
 
 		<!-- Summary Cards -->
 		<div class="mb-12 grid grid-cols-1 gap-6 md:grid-cols-4">
-			<div class="rounded-lg bg-white p-6 shadow-lg border-l-4 border-red-500">
+			<div class="rounded-lg border-l-4 border-red-500 bg-white p-6 shadow-lg">
 				<div class="text-3xl font-bold text-red-600">12</div>
 				<div class="text-sm text-slate-600">Broken Promises</div>
 				<div class="mt-1 text-xs text-slate-500">Major commitments not delivered</div>
 			</div>
-			<div class="rounded-lg bg-white p-6 shadow-lg border-l-4 border-orange-500">
+			<div class="rounded-lg border-l-4 border-orange-500 bg-white p-6 shadow-lg">
 				<div class="text-3xl font-bold text-orange-600">2</div>
 				<div class="text-sm text-slate-600">Delayed Promises</div>
 				<div class="mt-1 text-xs text-slate-500">Implementation postponed</div>
 			</div>
-			<div class="rounded-lg bg-white p-6 shadow-lg border-l-4 border-yellow-500">
+			<div class="rounded-lg border-l-4 border-yellow-500 bg-white p-6 shadow-lg">
 				<div class="text-3xl font-bold text-yellow-600">2</div>
 				<div class="text-sm text-slate-600">Partial Fulfillment</div>
 				<div class="mt-1 text-xs text-slate-500">Watered down versions</div>
 			</div>
-			<div class="rounded-lg bg-white p-6 shadow-lg border-l-4 border-green-500">
+			<div class="rounded-lg border-l-4 border-green-500 bg-white p-6 shadow-lg">
 				<div class="text-3xl font-bold text-green-600">2</div>
 				<div class="text-sm text-slate-600">Exceeded Promises</div>
 				<div class="mt-1 text-xs text-slate-500">Surpassed commitments</div>
@@ -743,15 +930,15 @@
 		</div>
 
 		<!-- Red Lines Alert -->
-		<div class="mb-8 rounded-lg bg-red-50 border-2 border-red-300 p-6">
+		<div class="mb-8 rounded-lg border-2 border-red-300 bg-red-50 p-6">
 			<div class="flex items-start">
-				<div class="text-4xl mr-4">⚠️</div>
+				<div class="mr-4 text-4xl">⚠️</div>
 				<div>
-					<h3 class="text-xl font-bold text-red-800 mb-2">All "Red Line" Promises Broken</h3>
+					<h3 class="mb-2 text-xl font-bold text-red-800">All "Red Line" Promises Broken</h3>
 					<p class="text-red-700">
-						Both CDU and SPD failed to deliver on their core, non-negotiable campaign promises.
-						The SPD's 48% pension guarantee and €15 minimum wage - both declared as "red lines" -
-						were abandoned in coalition negotiations. The CDU's signature promise to abolish Bürgergeld
+						Both CDU and SPD failed to deliver on their core, non-negotiable campaign promises. The
+						SPD's 48% pension guarantee and €15 minimum wage - both declared as "red lines" - were
+						abandoned in coalition negotiations. The CDU's signature promise to abolish Bürgergeld
 						also failed, with the system merely frozen instead.
 					</p>
 				</div>
@@ -782,8 +969,8 @@
 			<div class="rounded-lg bg-white p-6 shadow-lg">
 				<div id="policy-area-chart" class="flex justify-center"></div>
 				<p class="mt-4 text-sm text-slate-600">
-					Climate policy saw the most broken promises (3 by SPD), followed by education.
-					Both parties share blame across multiple policy areas.
+					Climate policy saw the most broken promises (3 by SPD), followed by education. Both
+					parties share blame across multiple policy areas.
 				</p>
 			</div>
 
@@ -791,13 +978,13 @@
 			<div class="rounded-lg bg-white p-6 shadow-lg">
 				<div id="fulfillment-gauge" class="flex justify-center"></div>
 				<p class="mt-4 text-sm text-slate-600">
-					Overall fulfillment rates: CDU/CSU at 25%, SPD at 20%. These rates include only
-					fully exceeded or partially fulfilled promises.
+					Overall fulfillment rates: CDU/CSU at 25%, SPD at 20%. These rates include only fully
+					exceeded or partially fulfilled promises.
 				</p>
 			</div>
 
 			<!-- Detailed Comparison -->
-			<div class="rounded-lg bg-white p-6 shadow-lg col-span-1 xl:col-span-2">
+			<div class="col-span-1 rounded-lg bg-white p-6 shadow-lg xl:col-span-2">
 				<div id="detailed-comparison" class="flex justify-center"></div>
 				<p class="mt-4 text-sm text-slate-600">
 					Defense spending (150%) is the only area exceeding promises. Climate neutrality (40%),
@@ -806,11 +993,12 @@
 			</div>
 
 			<!-- Red Lines Chart -->
-			<div class="rounded-lg bg-white p-6 shadow-lg col-span-1 xl:col-span-2">
+			<div class="col-span-1 rounded-lg bg-white p-6 shadow-lg xl:col-span-2">
 				<div id="red-lines-chart" class="flex justify-center"></div>
 				<p class="mt-4 text-sm text-slate-600">
 					All five "red line" promises - the absolute non-negotiables declared by both parties -
-					were broken in coalition negotiations. This represents complete failure on core commitments.
+					were broken in coalition negotiations. This represents complete failure on core
+					commitments.
 				</p>
 			</div>
 		</div>
@@ -822,17 +1010,20 @@
 				<h3 class="mb-4 text-xl font-bold text-slate-800">CDU/CSU Campaign Promises</h3>
 				<div class="space-y-3">
 					{#each cduPromises as promise}
-						<div class="border-l-4 p-3 {
-							promise.status === 'exceeded' ? 'border-green-500 bg-green-50' :
-							promise.status === 'partial' ? 'border-yellow-500 bg-yellow-50' :
-							promise.status === 'delayed' ? 'border-orange-500 bg-orange-50' :
-							'border-red-500 bg-red-50'
-						}">
+						<div
+							class="border-l-4 p-3 {promise.status === 'exceeded'
+								? 'border-green-500 bg-green-50'
+								: promise.status === 'partial'
+									? 'border-yellow-500 bg-yellow-50'
+									: promise.status === 'delayed'
+										? 'border-orange-500 bg-orange-50'
+										: 'border-red-500 bg-red-50'}"
+						>
 							<div class="flex items-start justify-between">
 								<div class="flex-1">
-									<div class="text-xs font-semibold text-slate-500 mb-1">{promise.area}</div>
+									<div class="mb-1 text-xs font-semibold text-slate-500">{promise.area}</div>
 									<div class="font-semibold text-slate-700">{promise.promise}</div>
-									<div class="text-sm text-slate-600 mt-1">→ {promise.result}</div>
+									<div class="mt-1 text-sm text-slate-600">→ {promise.result}</div>
 								</div>
 								<div class="ml-3 text-2xl">
 									{#if promise.status === 'exceeded'}✓
@@ -852,17 +1043,20 @@
 				<h3 class="mb-4 text-xl font-bold text-slate-800">SPD Campaign Promises</h3>
 				<div class="space-y-3">
 					{#each spdPromises as promise}
-						<div class="border-l-4 p-3 {
-							promise.status === 'exceeded' ? 'border-green-500 bg-green-50' :
-							promise.status === 'partial' ? 'border-yellow-500 bg-yellow-50' :
-							promise.status === 'delayed' ? 'border-orange-500 bg-orange-50' :
-							'border-red-500 bg-red-50'
-						}">
+						<div
+							class="border-l-4 p-3 {promise.status === 'exceeded'
+								? 'border-green-500 bg-green-50'
+								: promise.status === 'partial'
+									? 'border-yellow-500 bg-yellow-50'
+									: promise.status === 'delayed'
+										? 'border-orange-500 bg-orange-50'
+										: 'border-red-500 bg-red-50'}"
+						>
 							<div class="flex items-start justify-between">
 								<div class="flex-1">
-									<div class="text-xs font-semibold text-slate-500 mb-1">{promise.area}</div>
+									<div class="mb-1 text-xs font-semibold text-slate-500">{promise.area}</div>
 									<div class="font-semibold text-slate-700">{promise.promise}</div>
-									<div class="text-sm text-slate-600 mt-1">→ {promise.result}</div>
+									<div class="mt-1 text-sm text-slate-600">→ {promise.result}</div>
 								</div>
 								<div class="ml-3 text-2xl">
 									{#if promise.status === 'exceeded'}✓
@@ -887,19 +1081,31 @@
 					<ul class="space-y-2 text-sm text-slate-700">
 						<li class="flex items-start">
 							<span class="mr-2 text-red-500">✗</span>
-							<span><strong>SPD's Climate Retreat:</strong> Abandoned 65% emissions cut by 2030, 75% renewable energy, and 2030 coal phase-out</span>
+							<span
+								><strong>SPD's Climate Retreat:</strong> Abandoned 65% emissions cut by 2030, 75% renewable
+								energy, and 2030 coal phase-out</span
+							>
 						</li>
 						<li class="flex items-start">
 							<span class="mr-2 text-red-500">✗</span>
-							<span><strong>SPD's Red Lines:</strong> Failed on 48% pension guarantee and €15 minimum wage - both declared non-negotiable</span>
+							<span
+								><strong>SPD's Red Lines:</strong> Failed on 48% pension guarantee and €15 minimum wage
+								- both declared non-negotiable</span
+							>
 						</li>
 						<li class="flex items-start">
 							<span class="mr-2 text-red-500">✗</span>
-							<span><strong>CDU's Welfare Promise:</strong> Bürgergeld frozen, not abolished - core campaign pledge broken</span>
+							<span
+								><strong>CDU's Welfare Promise:</strong> Bürgergeld frozen, not abolished - core campaign
+								pledge broken</span
+							>
 						</li>
 						<li class="flex items-start">
 							<span class="mr-2 text-red-500">✗</span>
-							<span><strong>CDU's Immigration Retreat:</strong> "De facto freeze" became "coordinated EU approach"</span>
+							<span
+								><strong>CDU's Immigration Retreat:</strong> "De facto freeze" became "coordinated EU
+								approach"</span
+							>
 						</li>
 					</ul>
 				</div>
@@ -908,22 +1114,31 @@
 					<ul class="space-y-2 text-sm text-slate-700">
 						<li class="flex items-start">
 							<span class="mr-2 text-green-500">✓</span>
-							<span><strong>Defense Spending:</strong> 5% GDP by 2029 vs promised 2% - 150% over-delivery</span>
+							<span
+								><strong>Defense Spending:</strong> 5% GDP by 2029 vs promised 2% - 150% over-delivery</span
+							>
 						</li>
 						<li class="flex items-start">
 							<span class="mr-2 text-green-500">✓</span>
-							<span><strong>Constitutional Reform:</strong> Debt brake reformed to enable €500B infrastructure fund</span>
+							<span
+								><strong>Constitutional Reform:</strong> Debt brake reformed to enable €500B infrastructure
+								fund</span
+							>
 						</li>
 					</ul>
 					<h3 class="mb-3 mt-6 font-bold text-orange-700">Partial Wins</h3>
 					<ul class="space-y-2 text-sm text-slate-700">
 						<li class="flex items-start">
 							<span class="mr-2 text-yellow-500">◐</span>
-							<span><strong>Immigration:</strong> SPD blocked extreme measures, but tightened controls implemented</span>
+							<span
+								><strong>Immigration:</strong> SPD blocked extreme measures, but tightened controls implemented</span
+							>
 						</li>
 						<li class="flex items-start">
 							<span class="mr-2 text-yellow-500">◐</span>
-							<span><strong>Care Costs:</strong> SPD's €1,000 cap under study but not legislated</span>
+							<span
+								><strong>Care Costs:</strong> SPD's €1,000 cap under study but not legislated</span
+							>
 						</li>
 					</ul>
 				</div>
@@ -931,20 +1146,27 @@
 
 			<div class="mt-8 border-t pt-6">
 				<h3 class="mb-3 font-bold text-slate-800">The Pattern</h3>
-				<p class="text-slate-700 leading-relaxed">
-					The data reveals a clear pattern: <strong>both parties delivered on security/defense but failed on domestic transformation.</strong>
-					The coalition prioritized fiscal stability and defense spending over social welfare, climate action, and economic reform.
-					Most tellingly, <strong>every single "red line" promise was broken</strong> - suggesting coalition compromises forced both
-					parties to abandon their core commitments. This mirrors the previous government's pattern: objective policy achievements
-					(64% fulfillment 2021-2024) contrasted with public perception of failure, driving coalition satisfaction from 52% (2021)
-					to 22% (Sep 2025) in just over three years.
+				<p class="leading-relaxed text-slate-700">
+					The data reveals a clear pattern: <strong
+						>both parties delivered on security/defense but failed on domestic transformation.</strong
+					>
+					The coalition prioritized fiscal stability and defense spending over social welfare, climate
+					action, and economic reform. Most tellingly,
+					<strong>every single "red line" promise was broken</strong> - suggesting coalition compromises
+					forced both parties to abandon their core commitments. This mirrors the previous government's
+					pattern: objective policy achievements (64% fulfillment 2021-2024) contrasted with public perception
+					of failure, driving coalition satisfaction from 52% (2021) to 22% (Sep 2025) in just over three
+					years.
 				</p>
 			</div>
 		</div>
 
 		<!-- Footer -->
 		<div class="mt-8 text-center text-sm text-slate-500">
-			<p>Data compiled from campaign manifestos, coalition agreement (April 2025), and implementation tracking (November 2025)</p>
+			<p>
+				Data compiled from campaign manifestos, coalition agreement (April 2025), and implementation
+				tracking (November 2025)
+			</p>
 			<p class="mt-1">Interactive visualizations created with D3.js v7</p>
 		</div>
 	</div>

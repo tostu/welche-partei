@@ -21,9 +21,7 @@
 
 	const totalSeats = seatData.reduce((sum, d) => sum + d.seats, 0);
 	const majoritySeats = 316;
-	const coalitionSeats = seatData
-		.filter((d) => d.inCoalition)
-		.reduce((sum, d) => sum + d.seats, 0);
+	const coalitionSeats = seatData.filter((d) => d.inCoalition).reduce((sum, d) => sum + d.seats, 0);
 
 	const isOpposition = !['CDU', 'SPD'].includes(matchedParty);
 
@@ -75,6 +73,7 @@
 			.attr('text-anchor', 'middle')
 			.style('font-size', '12px')
 			.style('font-weight', '600')
+			.style('fill', '#002422')
 			.text('Sitze im Bundestag');
 
 		// Majority line
@@ -111,7 +110,7 @@
 			.attr('height', (d) => height - yScale(d.seats))
 			.attr('fill', (d) => d.color)
 			.attr('opacity', (d) => (d.party === matchedParty ? 1 : 0.7))
-			.attr('stroke', (d) => (d.party === matchedParty ? '#000' : 'none'))
+			.attr('stroke', (d) => (d.party === matchedParty ? '#1e293b' : 'none'))
 			.attr('stroke-width', 3);
 
 		// Seat count labels
@@ -126,6 +125,7 @@
 			.attr('text-anchor', 'middle')
 			.style('font-weight', '700')
 			.style('font-size', '13px')
+			.style('fill', '#f8fafc')
 			.text((d) => d.seats);
 
 		// Highlight matched party
@@ -135,24 +135,22 @@
 				.attr('x', xScale(matchedParty)! + xScale.bandwidth() / 2)
 				.attr('y', yScale(seatData.find((d) => d.party === matchedParty)!.seats) - 25)
 				.attr('text-anchor', 'middle')
-				.style('fill', '#2563eb')
+				.style('fill', '#0284c7')
 				.style('font-weight', '700')
 				.style('font-size', '12px')
 				.text('← Ihre Wahl');
 		}
 	});
-</script>
-
-<div class="w-full rounded-lg bg-base-100 p-6 shadow-xl">
+</script><div class="w-full rounded-lg bg-base-200 border border-base-300/40 p-6 shadow-xl">
 	{#if isOpposition}
-		<div class="alert alert-info mb-4">
+		<div class="alert alert-info bg-sky-50 border-sky-200 text-sky-850 mb-4 shadow-sm">
 			<div class="flex flex-col gap-2">
 				<div class="flex items-center gap-2">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="h-6 w-6 shrink-0 stroke-current"
+						class="h-6 w-6 shrink-0 stroke-current text-sky-700"
 					>
 						<path
 							stroke-linecap="round"
@@ -161,14 +159,14 @@
 							d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 						></path>
 					</svg>
-					<h3 class="font-bold">
+					<h3 class="font-bold text-sky-900">
 						{matchedParty} ist in der Opposition ({matchScore.toFixed(0)}% Übereinstimmung)
 					</h3>
 				</div>
-				<div class="text-sm">
-					<p class="mb-2">
-						{matchedParty} stimmt zu {matchScore.toFixed(0)}% mit Ihren Ansichten überein.
-						Hier die aktuelle parlamentarische Situation:
+				<div class="text-sm text-slate-800">
+					<p class="mb-2 font-medium">
+						{matchedParty} stimmt zu {matchScore.toFixed(0)}% mit Ihren Ansichten überein. Hier die
+						aktuelle parlamentarische Situation:
 					</p>
 					<ul class="ml-5 list-disc space-y-1">
 						<li>
@@ -179,25 +177,26 @@
 							{coalitionSeats} Sitze
 						</li>
 						<li>
-							<strong>Oppositionsparteien gesamt:</strong> {totalSeats - coalitionSeats} Sitze
+							<strong>Oppositionsparteien gesamt:</strong>
+							{totalSeats - coalitionSeats} Sitze
 						</li>
-						<li class="text-info">
+						<li class="text-sky-900">
 							<strong>54.3% der Wähler</strong> haben Oppositionsparteien gewählt
 						</li>
 					</ul>
-					<p class="mt-3 text-xs opacity-70">
+					<p class="mt-3 text-xs opacity-75 font-semibold">
 						Die Tabs unten zeigen, welche Positionen {matchedParty} vertritt.
 					</p>
 				</div>
 			</div>
 		</div>
 	{:else}
-		<div class="alert alert-success mb-4">
+		<div class="alert alert-success bg-emerald-50 border-emerald-200 text-emerald-850 mb-4 shadow-sm">
 			<div class="flex flex-col gap-2">
 				<div class="flex items-center gap-2">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						class="h-6 w-6 shrink-0 stroke-current"
+						class="h-6 w-6 shrink-0 stroke-current text-emerald-700"
 						fill="none"
 						viewBox="0 0 24 24"
 					>
@@ -208,42 +207,43 @@
 							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 						></path>
 					</svg>
-					<h3 class="font-bold">
+					<h3 class="font-bold text-emerald-900">
 						{matchedParty} ist in der Regierung ({matchScore.toFixed(0)}% Übereinstimmung)
 					</h3>
 				</div>
-				<div class="text-sm">
+				<div class="text-sm text-emerald-900 font-medium">
 					<p>
-						Diese Partei ist in der Regierung und hat die Mehrheit im Bundestag. Die Tabs unten zeigen, wie sie ihre Versprechen umgesetzt hat.
+						Diese Partei ist in der Regierung und hat die Mehrheit im Bundestag. Die Tabs unten
+						zeigen, wie sie ihre Versprechen umgesetzt hat.
 					</p>
 				</div>
 			</div>
 		</div>
 	{/if}
 
-	<h3 class="mb-4 text-xl font-bold">Sitzverteilung im Bundestag 2025</h3>
+	<h3 class="mb-4 text-xl font-bold text-base-content">Sitzverteilung im Bundestag 2025</h3>
 	<div bind:this={chartContainer} class="w-full"></div>
 
 	<div class="mt-4 grid grid-cols-2 gap-2 text-sm md:grid-cols-4">
-		<div class="rounded-lg bg-base-200 p-3">
-			<div class="font-bold">Gesamt</div>
-			<div class="text-xl">{totalSeats}</div>
-			<div class="text-xs opacity-70">Sitze</div>
+		<div class="rounded-lg bg-base-300/40 border border-base-300/60 p-3">
+			<div class="font-bold text-base-content/70">Gesamt</div>
+			<div class="text-xl text-base-content font-bold">{totalSeats}</div>
+			<div class="text-xs text-base-content/60">Sitze</div>
 		</div>
-		<div class="rounded-lg bg-success/20 p-3">
-			<div class="font-bold">Koalition</div>
-			<div class="text-xl">{coalitionSeats}</div>
-			<div class="text-xs opacity-70">CDU + SPD</div>
+		<div class="rounded-lg bg-green-50 border border-green-200 p-3 shadow-sm">
+			<div class="font-bold text-green-800">Koalition</div>
+			<div class="text-xl text-green-700 font-bold">{coalitionSeats}</div>
+			<div class="text-xs text-green-600">CDU + SPD</div>
 		</div>
-		<div class="rounded-lg bg-info/20 p-3">
-			<div class="font-bold">Opposition</div>
-			<div class="text-xl">{totalSeats - coalitionSeats}</div>
-			<div class="text-xs opacity-70">Alle anderen</div>
+		<div class="rounded-lg bg-sky-50 border border-sky-200 p-3 shadow-sm">
+			<div class="font-bold text-sky-800">Opposition</div>
+			<div class="text-xl text-sky-700 font-bold">{totalSeats - coalitionSeats}</div>
+			<div class="text-xs text-sky-600">Alle anderen</div>
 		</div>
-		<div class="rounded-lg bg-error/20 p-3">
-			<div class="font-bold">Mehrheit</div>
-			<div class="text-xl">{majoritySeats}</div>
-			<div class="text-xs opacity-70">Benötigt</div>
+		<div class="rounded-lg bg-red-50 border border-red-200 p-3 shadow-sm">
+			<div class="font-bold text-red-800">Mehrheit</div>
+			<div class="text-xl text-red-700 font-bold">{majoritySeats}</div>
+			<div class="text-xs text-red-600">Benötigt</div>
 		</div>
 	</div>
 </div>
@@ -254,5 +254,14 @@
 	}
 	:global(.bar:hover) {
 		opacity: 1 !important;
+	}
+	:global(.domain) {
+		stroke: #cbd5e1 !important;
+	}
+	:global(.tick line) {
+		stroke: #cbd5e1 !important;
+	}
+	:global(.tick text) {
+		fill: #002422 !important;
 	}
 </style>

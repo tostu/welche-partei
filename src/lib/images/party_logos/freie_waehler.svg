@@ -1,0 +1,5 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="48" fill="#F39200"/>
+  <circle cx="50" cy="50" r="36" fill="#004B87"/>
+  <text x="50" y="58" font-family="'Outfit', 'Inter', sans-serif" font-size="22" font-weight="900" fill="#FFFFFF" text-anchor="middle">FW</text>
+</svg>

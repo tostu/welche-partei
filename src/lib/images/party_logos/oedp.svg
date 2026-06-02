@@ -1,0 +1,6 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="48" fill="#F8A51D"/>
+  <circle cx="50" cy="50" r="40" fill="#FFFFFF"/>
+  <circle cx="50" cy="50" r="30" fill="#F8A51D"/>
+  <text x="50" y="58" font-family="'Outfit', 'Inter', sans-serif" font-size="24" font-weight="900" fill="#5A3A1A" text-anchor="middle">ödp</text>
+</svg>

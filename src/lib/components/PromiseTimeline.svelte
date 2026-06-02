@@ -94,7 +94,7 @@
 				.attr('y1', y)
 				.attr('x2', width)
 				.attr('y2', y)
-				.attr('stroke', '#e5e7eb')
+				.attr('stroke', '#cbd5e1')
 				.attr('stroke-width', 2)
 				.attr('stroke-dasharray', '5,5');
 
@@ -105,7 +105,7 @@
 				.attr('cy', y)
 				.attr('r', 8)
 				.attr('fill', '#3b82f6')
-				.attr('stroke', '#fff')
+				.attr('stroke', '#0f172a')
 				.attr('stroke-width', 2);
 
 			// Coalition Agreement (Stage 2)
@@ -115,7 +115,7 @@
 				.attr('cy', y)
 				.attr('r', 8)
 				.attr('fill', '#8b5cf6')
-				.attr('stroke', '#fff')
+				.attr('stroke', '#0f172a')
 				.attr('stroke-width', 2);
 
 			// Result (Stage 3)
@@ -125,7 +125,7 @@
 				.attr('cy', y)
 				.attr('r', 10)
 				.attr('fill', colorScale(promise.status))
-				.attr('stroke', '#fff')
+				.attr('stroke', '#0f172a')
 				.attr('stroke-width', 2);
 
 			// Category label (left side)
@@ -136,8 +136,8 @@
 				.attr('text-anchor', 'end')
 				.attr('dominant-baseline', 'middle')
 				.attr('font-size', '12px')
-				.attr('font-weight', highlightCategories.includes(promise.category) ? '700' : '400')
-				.attr('fill', highlightCategories.includes(promise.category) ? '#1f2937' : '#6b7280')
+				.attr('font-weight', highlightCategories.includes(promise.category) ? '700' : '500')
+				.attr('fill', highlightCategories.includes(promise.category) ? '#000000' : '#002422')
 				.text(promise.displayName);
 
 			// Importance indicator
@@ -168,8 +168,8 @@
 				.attr('y', -15)
 				.attr('text-anchor', 'middle')
 				.attr('font-size', '13px')
-				.attr('font-weight', '600')
-				.attr('fill', '#374151')
+				.attr('font-weight', '700')
+				.attr('fill', '#002422')
 				.text(stage.label);
 		});
 	});
@@ -177,33 +177,33 @@
 
 <div class="w-full">
 	<div class="mb-6 grid grid-cols-2 gap-4 md:grid-cols-4">
-		<div class="rounded-lg bg-green-100 p-4">
+		<div class="rounded-lg bg-green-50 border border-green-200 p-4">
 			<div class="text-2xl font-bold text-green-700">{exceeded}</div>
-			<div class="text-sm text-green-600">Übertroffen</div>
+			<div class="text-sm text-green-600 font-semibold">Übertroffen</div>
 		</div>
-		<div class="rounded-lg bg-orange-100 p-4">
+		<div class="rounded-lg bg-orange-50 border border-orange-200 p-4">
 			<div class="text-2xl font-bold text-orange-700">{partial}</div>
-			<div class="text-sm text-orange-600">Teilweise</div>
+			<div class="text-sm text-orange-600 font-semibold">Teilweise</div>
 		</div>
-		<div class="rounded-lg bg-blue-100 p-4">
+		<div class="rounded-lg bg-blue-50 border border-blue-200 p-4">
 			<div class="text-2xl font-bold text-blue-700">{delayed}</div>
-			<div class="text-sm text-blue-600">Verzögert</div>
+			<div class="text-sm text-blue-600 font-semibold">Verzögert</div>
 		</div>
-		<div class="rounded-lg bg-red-100 p-4">
+		<div class="rounded-lg bg-red-50 border border-red-200 p-4">
 			<div class="text-2xl font-bold text-red-700">{broken}</div>
-			<div class="text-sm text-red-600">Gebrochen</div>
+			<div class="text-sm text-red-600 font-semibold">Gebrochen</div>
 		</div>
 	</div>
 
-	<div class="mb-4 rounded-lg bg-base-300 p-4">
-		<h3 class="mb-2 text-lg font-bold">Vertrauens-Score: {trustScore.toFixed(1)}%</h3>
-		<div class="h-4 w-full rounded-full bg-gray-200">
+	<div class="mb-4 rounded-xl bg-base-300/30 border border-base-300/40 p-5">
+		<h3 class="mb-2 text-lg font-bold text-base-content">Vertrauens-Score: {trustScore.toFixed(1)}%</h3>
+		<div class="h-4 w-full rounded-full bg-base-300/60 border border-base-300/30">
 			<div
 				class="h-4 rounded-full bg-gradient-to-r from-green-500 to-orange-500"
 				style="width: {trustScore}%"
 			></div>
 		</div>
-		<p class="mt-2 text-xs text-gray-600">
+		<p class="mt-2 text-xs text-base-content/60">
 			Berechnung: Übertroffen (100%) + Teilweise (50%) / Gesamtzahl
 		</p>
 	</div>
@@ -222,15 +222,15 @@
 			</thead>
 			<tbody>
 				{#each allPromises as promise}
-					<tr class={highlightCategories.includes(promise.category) ? 'bg-yellow-50' : ''}>
-						<td class="font-semibold">
+					<tr class={highlightCategories.includes(promise.category) ? 'bg-yellow-50/70 border-l-2 border-yellow-400' : ''}>
+						<td class="font-semibold text-base-content">
 							{promise.displayName}
 							{#if promise.importance === 'high'}
 								<span class="text-red-600">❗</span>
 							{/if}
 						</td>
-						<td class="max-w-xs">{promise.promise}</td>
-						<td class="max-w-xs">{promise.result}</td>
+						<td class="max-w-xs text-base-content/85">{promise.promise}</td>
+						<td class="max-w-xs text-base-content/85">{promise.result}</td>
 						<td>
 							{#if promise.status === 'exceeded'}
 								<span class="badge badge-success">Übertroffen</span>

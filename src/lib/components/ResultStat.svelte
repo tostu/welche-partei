@@ -1,5 +1,17 @@
 <script lang="ts">
-	let { rank, name, percentage }: { rank: number; name: string; percentage: number } = $props();
+	let {
+		rank,
+		name,
+		percentage,
+		basePercentage,
+		penalty = 0
+	}: {
+		rank: number;
+		name: string;
+		percentage: number;
+		basePercentage?: number;
+		penalty?: number;
+	} = $props();
 
 	let trend: number | undefined;
 
@@ -21,23 +33,40 @@
 
 <details
 	ontoggle={handleToggle}
-	class="collapse cursor-pointer rounded-lg bg-base-200 transition-all duration-150 hover:shadow-md"
+	class="collapse cursor-pointer rounded-lg bg-base-250 border border-base-300/40 transition-all duration-150 hover:shadow-md"
 >
 	<summary class="p-5">
 		<div class="flex w-full gap-x-6">
-			<span class="font-azeret text-frickeFont shrink-0 select-none text-7xl font-bold"
+			<span class="font-azeret shrink-0 select-none text-7xl font-bold text-base-content/80"
 				>{rank.toString().padStart(2, '0')}</span
 			>
 			<div class="flex w-full min-w-0 flex-col gap-2">
-				<div class="text-frickeFont flex w-full select-none justify-between text-2xl font-bold">
-					<span class="mr-4 overflow-hidden text-ellipsis">{name}</span>
-					<span class="shrink-0">{percentage.toFixed(0)} %</span>
+				<div
+					class="flex w-full select-none items-center justify-between text-2xl font-bold text-base-content"
+				>
+					<span class="mr-4 flex items-center gap-2 overflow-hidden text-ellipsis">
+						{name}
+						{#if penalty > 0}
+							<span
+								class="badge badge-error badge-sm py-1 text-[10px] font-bold uppercase text-white"
+								>-{penalty.toFixed(0)}% Abzug</span
+							>
+						{/if}
+					</span>
+					<span class="flex shrink-0 items-center gap-2">
+						{#if penalty > 0 && basePercentage !== undefined}
+							<span class="text-sm font-normal text-base-content/60 line-through"
+								>{basePercentage.toFixed(0)}%</span
+							>
+						{/if}
+						<span>{percentage.toFixed(0)} %</span>
+					</span>
 				</div>
 				<div class="relative w-full">
-					<progress class="progress progress-secondary h-7 w-full" value={percentage} max="100"
+					<progress class="progress progress-secondary h-7 w-full border border-base-300/30" value={percentage} max="100"
 					></progress>
 					<div
-						class="absolute left-0 right-0 top-0 flex select-none items-center justify-center font-bold text-gray-100"
+						class="absolute left-0 right-0 top-0 flex h-full select-none items-center justify-center font-bold text-slate-950"
 					>
 						{percentage.toFixed()}%
 					</div>

@@ -33,16 +33,16 @@
 	<div class="container mx-auto flex flex-1 flex-col justify-center">
 		<div class="flex flex-col items-center justify-center gap-y-16">
 			<div class="text-center">
-				<h1 class=" lilita-one-regular block text-9xl text-neutral drop-shadow-md">
+				<h1 class=" lilita-one-regular block text-9xl text-base-content drop-shadow-md">
 					Welche Partei?
 				</h1>
-				<span class="block text-5xl text-base-200 drop-shadow">
+				<span class="block text-5xl text-base-content drop-shadow">
 					<TextRolling textList={heroTextList} />
 				</span>
 			</div>
 
 			<a href="/fragen">
-				<button class="btn btn-secondary h-full py-5 text-5xl text-neutral"
+				<button class="btn btn-secondary h-full py-5 text-5xl text-slate-950 font-extrabold"
 					>Jetzt herausfinden!</button
 				>
 			</a>

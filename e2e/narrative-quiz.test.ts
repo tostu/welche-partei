@@ -1,215 +1,122 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Narrative Quiz Tournament Bracket', () => {
-	test.beforeEach(async ({ page }) => {
-		await page.goto('/narrative');
-	});
+// Helper to complete the profiling phase of the quiz
+async function completeProfiling(page) {
+	await page.goto('/fragen');
+	await expect(page).toHaveURL(/\/fragen\/profiling\/age-group/);
 
-	test('should display the initial question phase with story context', async ({ page }) => {
-		// Should show the first question's story context
-		await expect(page.locator('.card.bg-base-200')).toBeVisible();
+	// Select "30-50 Jahre"
+	await page.getByRole('button', { name: /30-50 Jahre/ }).click();
 
-		// Should show progress indicator
-		await expect(page.getByText(/Fragen - Auswahl 1 von 8/)).toBeVisible();
+	// Select "Ich bin angestellt"
+	await page.getByRole('button', { name: /Ich bin angestellt/ }).click();
 
-		// Should show two option buttons
-		const buttons = page.locator('button.card');
-		await expect(buttons).toHaveCount(2);
+	// Working priorities (slider): Click "Weiter" to finish profiling
+	await page.getByRole('button', { name: 'Weiter' }).click();
 
-		// Should show VS divider
-		await expect(page.getByText('VS')).toBeVisible();
-	});
+	// Verify we land on the narrative quiz start
+	await expect(page).toHaveURL(/\/fragen\/narrative\/0/);
+}
 
-	test('should advance through all 8 initial questions', async ({ page }) => {
-		// Answer all 8 questions in the initial phase
-		for (let i = 1; i <= 8; i++) {
-			// Verify we're on question i
-			await expect(page.getByText(`Fragen - Auswahl ${i} von 8`)).toBeVisible();
+// Robust helper to dynamically answer any narrative question depending on its UI type
+async function answerQuestion(page) {
+	// 1. Budget Allocation
+	const joinElements = page.locator('.join');
+	const joinCount = await joinElements.count();
+	if (joinCount > 0) {
+		const firstJoin = joinElements.first();
+		const plusButton = firstJoin.locator('button').last();
+		// Click plus button 5 times to allocate all points
+		for (let i = 0; i < 5; i++) {
+			await plusButton.click();
+			await page.waitForTimeout(50);
+		}
+		// Click the Weiter/Submit button
+		await page.getByRole('button', { name: 'Weiter' }).click();
+		return;
+	}
 
-			// Click the first option
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
+	// 2. Slider
+	const rangeInput = page.locator('input[type="range"]');
+	const rangeCount = await rangeInput.count();
+	if (rangeCount > 0) {
+		await page.getByRole('button', { name: 'Weiter' }).click();
+		return;
+	}
 
-			// Wait a bit for state update
+	// 3. Multiple Choice (Cards are buttons)
+	const cards = page.locator('button.card');
+	const cardCount = await cards.count();
+	if (cardCount > 0) {
+		await cards.first().click();
+		return;
+	}
+
+	throw new Error('No recognized question format (budget, slider, or card) found on the page');
+}
+
+test.describe('Narrative Quiz Flow', () => {
+	test('should complete the entire narrative quiz and display results', async ({ page }) => {
+		// Step 1: Run through profiling
+		await completeProfiling(page);
+
+		// Step 2: Loop through all selected narrative questions
+		let iteration = 0;
+		while (iteration < 20) {
+			const url = page.url();
+			if (url.includes('/ergebnis')) {
+				break;
+			}
+			await expect(page).toHaveURL(new RegExp(`/fragen/narrative/${iteration}`));
+			await answerQuestion(page);
 			await page.waitForTimeout(100);
+			iteration++;
 		}
 
-		// After 8 questions, should move to Round 1
-		await expect(page.getByText(/Runde 1 - Auswahl 1 von 4/)).toBeVisible();
-	});
+		// Step 3: Verify transition to results page
+		await expect(page).toHaveURL(/\/ergebnis/);
+		await expect(page.getByText('Ihr Ergebnis')).toBeVisible();
 
-	test('should complete the entire tournament bracket', async ({ page }) => {
-		// Phase 1: Answer all 8 questions
-		for (let i = 1; i <= 8; i++) {
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
+		// Step 4: Interact with results dashboard (select a party)
+		await expect(page.getByText('Alle Parteien im Vergleich')).toBeVisible();
+		const partyButtons = page.locator('button:has-text("%")');
+		const count = await partyButtons.count();
+		expect(count).toBeGreaterThan(0);
 
-		// Round 1: 4 matchups (8 winners → 4 winners)
-		for (let i = 1; i <= 4; i++) {
-			await expect(page.getByText(`Runde 1 - Auswahl ${i} von 4`)).toBeVisible();
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
+		// Click the first party in the comparison sidebar
+		await partyButtons.first().click();
 
-		// Round 2: 2 matchups (4 winners → 2 winners)
-		for (let i = 1; i <= 2; i++) {
-			await expect(page.getByText(`Runde 2 - Auswahl ${i} von 2`)).toBeVisible();
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
-
-		// Final: 1 matchup (2 winners → 1 winner)
-		await expect(page.getByText(/Finale - Auswahl 1 von 1/)).toBeVisible();
-		const buttons = page.locator('button.card');
-		await buttons.first().click();
-		await page.waitForTimeout(100);
-
-		// Should show completion screen
-		await expect(page.getByText('Quiz abgeschlossen!')).toBeVisible();
-		await expect(page.getByText('Ihre bevorzugte Position:')).toBeVisible();
-		await expect(page.locator('.alert.alert-success')).toBeVisible();
-	});
-
-	test('should track selected options correctly through rounds', async ({ page }) => {
-		// Answer all 8 questions, always selecting option A (first button)
-		const selectedTexts: string[] = [];
-
-		for (let i = 1; i <= 8; i++) {
-			const buttons = page.locator('button.card');
-			const firstButton = buttons.first();
-
-			// Get the text of the option we're selecting
-			const text = await firstButton.locator('p').textContent();
-			if (text) selectedTexts.push(text);
-
-			await firstButton.click();
-			await page.waitForTimeout(100);
-		}
-
-		// In Round 1, we should see the selected texts from Phase 1
-		// We always picked the first option in each matchup
-		await expect(page.getByText(/Runde 1 - Auswahl 1 von 4/)).toBeVisible();
-
-		// The first matchup in Round 1 should contain options from our Phase 1 selections
-		const round1Buttons = page.locator('button.card');
-		await expect(round1Buttons).toHaveCount(2);
-
-		// Verify that the buttons contain text (they should be our previous winners)
-		const option1Text = await round1Buttons.first().locator('p').textContent();
-		const option2Text = await round1Buttons.last().locator('p').textContent();
-
-		expect(option1Text).toBeTruthy();
-		expect(option2Text).toBeTruthy();
-		expect(option1Text).not.toBe(option2Text);
+		// Check that the tabs are visible on the right panel
+		await expect(page.getByRole('button', { name: /Werte/ })).toBeVisible();
+		await expect(page.getByRole('button', { name: /Wahl-Einfluss/ })).toBeVisible();
 	});
 
 	test('should update progress indicator correctly', async ({ page }) => {
-		// Check initial progress (Question 1 of 8)
-		await expect(page.getByText('Fragen - Auswahl 1 von 8')).toBeVisible();
-		const initialProgress = page.locator('progress');
-		await expect(initialProgress).toHaveAttribute('value', '1');
-		await expect(initialProgress).toHaveAttribute('max', '8');
+		await completeProfiling(page);
+
+		// Check initial progress (Question 1)
+		await expect(page.getByText(/Frage 1 von \d+/)).toBeVisible();
 
 		// Answer first question
-		const buttons = page.locator('button.card');
-		await buttons.first().click();
+		await answerQuestion(page);
 		await page.waitForTimeout(100);
 
-		// Check updated progress (Question 2 of 8)
-		await expect(page.getByText('Fragen - Auswahl 2 von 8')).toBeVisible();
-		await expect(initialProgress).toHaveAttribute('value', '2');
-		await expect(initialProgress).toHaveAttribute('max', '8');
-	});
-
-	test('should show different heading text for question phase vs bracket rounds', async ({ page }) => {
-		// In question phase, should show "Was würden Sie bevorzugen?"
-		await expect(page.getByText('Was würden Sie bevorzugen?')).toBeVisible();
-
-		// Answer all 8 questions to get to Round 1
-		for (let i = 1; i <= 8; i++) {
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
-
-		// In bracket rounds, should show "Welche Position bevorzugen Sie?"
-		await expect(page.getByText('Welche Position bevorzugen Sie?')).toBeVisible();
-	});
-
-	test('should hide story context during bracket rounds', async ({ page }) => {
-		// Initially should show story context
-		await expect(page.locator('.card.bg-base-200')).toBeVisible();
-
-		// Answer all 8 questions
-		for (let i = 1; i <= 8; i++) {
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
-
-		// In Round 1, story context should not be visible
-		await expect(page.locator('.card.bg-base-200')).not.toBeVisible();
+		// Check updated progress (Question 2)
+		await expect(page.getByText(/Frage 2 von \d+/)).toBeVisible();
 	});
 
 	test('should be mobile responsive', async ({ page }) => {
-		// Set mobile viewport
 		await page.setViewportSize({ width: 375, height: 667 });
+		await completeProfiling(page);
 
-		// Should still display all elements
-		await expect(page.locator('.card.bg-base-200')).toBeVisible();
-		await expect(page.getByText(/Fragen - Auswahl 1 von 8/)).toBeVisible();
-
-		const buttons = page.locator('button.card');
-		await expect(buttons).toHaveCount(2);
-		await expect(page.getByText('VS')).toBeVisible();
-
-		// Cards should be stacked vertically on mobile (flex-col)
-		const container = page.locator('.flex.flex-col.md\\:flex-row');
-		await expect(container).toBeVisible();
-	});
-
-	test('should handle alternating selections correctly', async ({ page }) => {
-		// Answer questions alternating between first and second option
-		for (let i = 1; i <= 8; i++) {
-			const buttons = page.locator('button.card');
-
-			if (i % 2 === 1) {
-				// Odd questions: select first option
-				await buttons.first().click();
-			} else {
-				// Even questions: select second option
-				await buttons.last().click();
-			}
-
-			await page.waitForTimeout(100);
-		}
-
-		// Should successfully reach Round 1
-		await expect(page.getByText(/Runde 1 - Auswahl 1 von 4/)).toBeVisible();
-
-		// Complete the rest of the tournament
-		for (let i = 1; i <= 4; i++) {
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
-
-		for (let i = 1; i <= 2; i++) {
-			const buttons = page.locator('button.card');
-			await buttons.first().click();
-			await page.waitForTimeout(100);
-		}
-
-		// Final
-		const buttons = page.locator('button.card');
-		await buttons.first().click();
+		// Check that elements render on mobile screen
+		await expect(page.getByText(/Frage 1 von \d+/)).toBeVisible();
+		
+		// Answer the first question
+		await answerQuestion(page);
 		await page.waitForTimeout(100);
 
-		// Should complete successfully
-		await expect(page.getByText('Quiz abgeschlossen!')).toBeVisible();
+		// Verify we advanced successfully on mobile viewport
+		await expect(page.getByText(/Frage 2 von \d+/)).toBeVisible();
 	});
 });
