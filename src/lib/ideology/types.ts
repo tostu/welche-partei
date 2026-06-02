@@ -76,6 +76,6 @@ export interface NarrativeAnswerImpact {
  * Maps question IDs to their selected option ('A' or 'B').
  */
 export interface UserQuizAnswers {
-	/** Map of question_id to selected option (e.g., { 1: 'A', 2: 'B', 3: 'A' }) */
-	narrative_choices: Record<number, 'A' | 'B'>;
+	/** Map of question_id to selected option (e.g., { 1: 'A', 2: 'B', 3: 'C' }) */
+	narrative_choices: Record<number, 'A' | 'B' | 'C'>;
 }

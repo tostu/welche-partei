@@ -85,10 +85,7 @@ export function findBestMatch(
 
 	// Find party with minimum Euclidean distance
 	for (const partyProfile of partyProfiles) {
-		const distance = calculateEuclideanDistance(
-			userProfile.axis_scores,
-			partyProfile.axis_scores
-		);
+		const distance = calculateEuclideanDistance(userProfile.axis_scores, partyProfile.axis_scores);
 
 		if (distance < minDistance) {
 			minDistance = distance;

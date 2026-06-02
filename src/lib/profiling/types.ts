@@ -25,24 +25,6 @@ export interface ProfilingAnswer {
  * Represents a single profiling question with dynamic branching logic.
  * Supports a tree/graph-like navigation where the next question depends
  * on the user's selected answer.
- *
- * **Branching Logic:**
- * - Each answer can specify a `next_question_id` to create conditional paths
- * - If no `next_question_id` is specified, the quiz uses the default flow
- * - This enables dynamic, context-aware questioning based on user responses
- *
- * @example
- * ```typescript
- * const question: ProfilingQuestion = {
- *   id: 'age-group',
- *   text: 'Which age group do you belong to?',
- *   answers: [
- *     { text: 'Under 30', next_question_id: 'young-priorities' },
- *     { text: '30-50', next_question_id: 'mid-priorities' },
- *     { text: 'Over 50', next_question_id: 'senior-priorities' }
- *   ]
- * };
- * ```
  */
 export interface ProfilingQuestion {
 	/** Unique identifier for the question (used for navigation and branching) */
@@ -51,20 +33,31 @@ export interface ProfilingQuestion {
 	/** The question text displayed to the user */
 	text: string;
 
-	/** Array of answer options for this question */
-	answers: ProfilingAnswer[];
+	/** Optional category or tag for the question (for analytics or organization) */
+	category?: string;
+
+	/** The question format paradigm */
+	type?: 'multiple_choice' | 'budget_allocation' | 'slider';
+
+	/** Array of answer options for this question (for multiple_choice) */
+	answers?: ProfilingAnswer[];
+
+	/** Max points allowed for allocation (for budget_allocation) */
+	max_points?: number;
+
+	/** Options to allocate budget points to (for budget_allocation) */
+	options?: { id: string; text: string }[];
+
+	/** Minimum extreme label (for slider) */
+	min_label?: string;
+
+	/** Maximum extreme label (for slider) */
+	max_label?: string;
 
 	/**
 	 * Optional default next question ID if no answer-specific next_question_id is set.
-	 * This allows for mixed branching where some answers branch and others follow the default path.
 	 */
 	default_next_question_id?: string;
-
-	/**
-	 * Optional category or tag for the question (for analytics or organization)
-	 * Examples: 'demographics', 'priorities', 'lifestyle'
-	 */
-	category?: string;
 }
 
 /**
@@ -72,22 +65,8 @@ export interface ProfilingQuestion {
  *
  * Stores the user's answers from the profiling quiz.
  * Maps question IDs to the selected answer values.
- *
- * This profile is used for:
- * - Personalizing narrative question selection (demographic matching)
- * - Analytics and user behavior tracking
- * - Potential future features (personalized recommendations, etc.)
- *
- * @example
- * ```typescript
- * const profile: UserProfile = {
- *   'age-group': 'under-30',
- *   'employment-status-young': 'student',
- *   'student-priorities': 'housing-bafög'
- * };
- * ```
  */
 export interface UserProfile {
 	/** Map of question IDs to selected answer values */
-	[questionId: string]: string | number | undefined;
+	[questionId: string]: string | number | Record<string, number> | undefined;
 }

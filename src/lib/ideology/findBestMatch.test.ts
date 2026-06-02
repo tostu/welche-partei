@@ -115,7 +115,12 @@ describe('Find Best Party Match', () => {
 				'Die Linke',
 				'FDP',
 				'Die Grünen',
-				'SPD'
+				'SPD',
+				'Volt',
+				'Freie Wähler',
+				'Tierschutzpartei',
+				'ÖDP',
+				'Piratenpartei'
 			];
 			expect(validParties).toContain(bestMatch);
 		});

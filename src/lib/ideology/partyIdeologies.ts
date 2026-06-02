@@ -79,5 +79,50 @@ export const partyIdeologies: PartyIdeologicalProfile[] = [
 			'progressive-conservative': 3, // Progressive values
 			'ecology-economy': 6 // Environmental concern
 		}
+	},
+	{
+		party_id: 'Volt' as Party,
+		axis_scores: {
+			'market-state': 5,
+			'individual-collective': 6,
+			'progressive-conservative': 2,
+			'ecology-economy': 8
+		}
+	},
+	{
+		party_id: 'Freie Wähler' as Party,
+		axis_scores: {
+			'market-state': 4,
+			'individual-collective': 5,
+			'progressive-conservative': 7,
+			'ecology-economy': 5
+		}
+	},
+	{
+		party_id: 'Tierschutzpartei' as Party,
+		axis_scores: {
+			'market-state': 7,
+			'individual-collective': 8,
+			'progressive-conservative': 3,
+			'ecology-economy': 9
+		}
+	},
+	{
+		party_id: 'ÖDP' as Party,
+		axis_scores: {
+			'market-state': 6,
+			'individual-collective': 7,
+			'progressive-conservative': 6,
+			'ecology-economy': 10
+		}
+	},
+	{
+		party_id: 'Piratenpartei' as Party,
+		axis_scores: {
+			'market-state': 6,
+			'individual-collective': 3,
+			'progressive-conservative': 2,
+			'ecology-economy': 7
+		}
 	}
 ];

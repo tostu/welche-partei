@@ -90,7 +90,12 @@ describe('Ideological Axes Configuration', () => {
 	});
 
 	describe('Required axes presence', () => {
-		const requiredAxes = ['market-state', 'individual-collective', 'progressive-conservative', 'ecology-economy'];
+		const requiredAxes = [
+			'market-state',
+			'individual-collective',
+			'progressive-conservative',
+			'ecology-economy'
+		];
 
 		requiredAxes.forEach((requiredId) => {
 			it(`should include required axis: ${requiredId}`, () => {

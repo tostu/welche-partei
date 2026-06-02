@@ -23,7 +23,6 @@ export interface NarrativeAnswerOption {
 
 	/**
 	 * Array of ideological axis impacts resulting from selecting this answer.
-	 * Each impact specifies which axis is affected and by how much (delta).
 	 */
 	impacts: NarrativeAnswerImpact[];
 }
@@ -32,57 +31,50 @@ export interface NarrativeAnswerOption {
  * Narrative Question
  *
  * Represents a narrative dilemma question in the ideology quiz.
- * Presents a story scenario with two answer options, where each option
- * affects the user's ideological profile differently.
- *
- * **Structure:**
- * - Engaging story scenario (`story_text`)
- * - Two answer options (A and B), each with ideological impacts
- * - Demographic tags for personalized question selection
- *
- * **Design Principles:**
- * - Questions should present realistic, relatable dilemmas
- * - Options should represent genuine ideological trade-offs
- * - Impacts should be balanced (not all options push in same direction)
- * - Tags enable demographic-based question filtering
- *
- * @example
- * ```typescript
- * const question: NarrativeQuestion = {
- *   id: 1,
- *   story_text: 'In Ihrer Stadt steigen die Mieten stark...',
- *   optionA: {
- *     text: 'Mietpreisbremse einführen',
- *     impacts: [{ axis_id: 'market-state', delta: +1.5 }]
- *   },
- *   optionB: {
- *     text: 'Mehr Wohnungen bauen',
- *     impacts: [{ axis_id: 'market-state', delta: -1.2 }]
- *   },
- *   tags: ['urban', 'housing', 'young-professional']
- * };
- * ```
  */
 export interface NarrativeQuestion {
 	/** Unique numeric identifier for the question */
 	id: number;
 
-	/**
-	 * The story text presenting the dilemma scenario.
-	 * Should be engaging, realistic, and relatable to the target demographic.
-	 */
+	/** The question format paradigm */
+	type: 'multiple_choice' | 'budget_allocation' | 'slider';
+
+	/** The story text presenting the dilemma scenario. */
 	story_text: string;
 
-	/** First answer option (typically represents one ideological perspective) */
-	optionA: NarrativeAnswerOption;
+	/** Optional fallback option A */
+	optionA?: NarrativeAnswerOption;
 
-	/** Second answer option (typically represents an opposing ideological perspective) */
-	optionB: NarrativeAnswerOption;
+	/** Optional fallback option B */
+	optionB?: NarrativeAnswerOption;
 
-	/**
-	 * Demographic and thematic tags for question filtering.
-	 * Examples: 'homeowner', 'parent', 'student', 'climate', 'economy'
-	 * Used to select personalized questions based on profiling answers.
-	 */
+	/** Optional fallback option C */
+	optionC?: NarrativeAnswerOption;
+
+	/** Multiple choice answers (each has text and impacts) */
+	answers?: {
+		text: string;
+		impacts: NarrativeAnswerImpact[];
+	}[];
+
+	/** Options to allocate budget points to (for budget_allocation) */
+	options?: {
+		id: string;
+		text: string;
+	}[];
+
+	/** Max points allowed for allocation (for budget_allocation) */
+	max_points?: number;
+
+	/** Minimum extreme label (for slider) */
+	min_label?: string;
+
+	/** Maximum extreme label (for slider) */
+	max_label?: string;
+
+	/** The axis ID directly affected (for slider) */
+	axis_id?: string;
+
+	/** Demographic and thematic tags for question filtering. */
 	tags: string[];
 }

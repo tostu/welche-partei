@@ -40,7 +40,9 @@ const consistencyScores: Record<Party, Score> = {
  * @returns The score object or a default object if not found.
  */
 export function calculateTrustScore(party: Party): Score {
-	return trustScores[party] ?? { rate: 0, total: 0, exceeded: 0, partial: 0, delayed: 0, broken: 0 };
+	return (
+		trustScores[party] ?? { rate: 0, total: 0, exceeded: 0, partial: 0, delayed: 0, broken: 0 }
+	);
 }
 
 /**
@@ -49,5 +51,14 @@ export function calculateTrustScore(party: Party): Score {
  * @returns The score object or a default object if not found.
  */
 export function calculateConsistencyScore(party: Party): Score {
-	return consistencyScores[party] ?? { rate: 0, total: 0, maintained: 0, strengthened: 0, weakened: 0, abandoned: 0 };
+	return (
+		consistencyScores[party] ?? {
+			rate: 0,
+			total: 0,
+			maintained: 0,
+			strengthened: 0,
+			weakened: 0,
+			abandoned: 0
+		}
+	);
 }

@@ -9,4 +9,3 @@ export const answerState = $state<{ answerMap: Record<Category, Answer<Category>
 		urbanisierung: undefined
 	}
 });
-

@@ -22,23 +22,28 @@ describe('Find Alternative Party Match', () => {
 		});
 
 		it('should correctly classify smaller parties', () => {
-			expect(smallerParties).toEqual(['Die Grünen', 'Die Linke', 'BSW']);
-			expect(smallerParties.length).toBe(3);
+			expect(smallerParties).toEqual([
+				'Die Grünen',
+				'Die Linke',
+				'BSW',
+				'Volt',
+				'Freie Wähler',
+				'Tierschutzpartei',
+				'ÖDP',
+				'Piratenpartei'
+			]);
+			expect(smallerParties.length).toBe(8);
 		});
 
 		it('should have all parties classified in exactly one category', () => {
-			const allClassifiedParties = [
-				...establishmentParties,
-				...farRightParties,
-				...smallerParties
-			];
+			const allClassifiedParties = [...establishmentParties, ...farRightParties, ...smallerParties];
 
-			// All 7 German parties should be classified
-			expect(allClassifiedParties.length).toBe(7);
+			// All 12 German parties should be classified
+			expect(allClassifiedParties.length).toBe(12);
 
 			// No duplicates
 			const uniqueParties = new Set(allClassifiedParties);
-			expect(uniqueParties.size).toBe(7);
+			expect(uniqueParties.size).toBe(12);
 		});
 	});
 
@@ -371,13 +376,28 @@ describe('Find Alternative Party Match', () => {
 	});
 
 	describe('Real-world scenarios', () => {
-		it('should suggest Die Grünen for eco-progressive user with CDU top match', () => {
+		it('should suggest Volt for eco-progressive user with CDU top match', () => {
 			const userProfile: UserIdeologicalProfile = {
 				axis_scores: {
 					'market-state': 5,
 					'individual-collective': 5,
 					'progressive-conservative': 3,
 					'ecology-economy': 8
+				}
+			};
+
+			const alternative = findAlternativeMatch(userProfile, 'CDU');
+
+			expect(alternative).toBe('Volt');
+		});
+
+		it('should suggest Die Grünen for strict green-progressive user with CDU top match', () => {
+			const userProfile: UserIdeologicalProfile = {
+				axis_scores: {
+					'market-state': 6,
+					'individual-collective': 7,
+					'progressive-conservative': 2,
+					'ecology-economy': 9.5
 				}
 			};
 

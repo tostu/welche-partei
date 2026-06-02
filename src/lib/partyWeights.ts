@@ -461,5 +461,291 @@ export const partyWeights: PartyWeights = {
 			besorgt: 7,
 			große_angst: 6
 		}
+	},
+
+	Volt: {
+		wohnen: { miete: 8, eigentum: 6 },
+		einkommen: { niedrig: 6, mittel: 8, hoch: 6, sehr_hoch: 5 },
+		lebenssituation: {
+			erwerbstaetig: 8,
+			selbstständig: 7,
+			studierend_auszubildend: 9,
+			arbeitslos_uebergangsphase: 6
+		},
+		familie: { kinderlos: 8, elternteil: 7, alleinerziehend: 8 },
+		urbanisierung: { grossstadt: 9, laendlich: 5 },
+		klima: { egal: 1, passiv: 3, mittel: 7, aktiv: 10 },
+		gesundheitskosten: {
+			keine_belastung: 5,
+			gering: 6,
+			mittel: 8,
+			hoch: 8,
+			sehr_hoch: 8
+		},
+		arbeitssicherheit: {
+			sicher: 7,
+			unsicher: 7,
+			befristet_prekär: 8,
+			existenzangst: 7
+		},
+		bildungszugang: {
+			sehr_gut: 8,
+			gut: 8,
+			eingeschränkt: 8,
+			schlecht: 9
+		},
+		pflege: {
+			nicht_betroffen: 6,
+			zukunft: 7,
+			aktuell_familienmitglied: 8,
+			selbst_pflegebedürftig: 8
+		},
+		digitalisierung: {
+			unwichtig: 2,
+			etwas_wichtig: 4,
+			wichtig: 8,
+			sehr_wichtig: 10
+		},
+		oeffentlicher_verkehr: {
+			nicht_nötig: 3,
+			gelegentlich: 6,
+			regelmäßig: 9,
+			täglich_angewiesen: 10
+		},
+		zukunftsangst: {
+			optimistisch: 7,
+			neutral: 7,
+			besorgt: 7,
+			große_angst: 6
+		}
+	},
+
+	'Freie Wähler': {
+		wohnen: { miete: 5, eigentum: 8 },
+		einkommen: { niedrig: 4, mittel: 8, hoch: 7, sehr_hoch: 6 },
+		lebenssituation: {
+			erwerbstaetig: 8,
+			selbstständig: 9,
+			studierend_auszubildend: 5,
+			arbeitslos_uebergangsphase: 4
+		},
+		familie: { kinderlos: 5, elternteil: 8, alleinerziehend: 6 },
+		urbanisierung: { grossstadt: 4, laendlich: 9 },
+		klima: { egal: 5, passiv: 7, mittel: 6, aktiv: 4 },
+		gesundheitskosten: {
+			keine_belastung: 7,
+			gering: 7,
+			mittel: 6,
+			hoch: 5,
+			sehr_hoch: 4
+		},
+		arbeitssicherheit: {
+			sicher: 8,
+			unsicher: 5,
+			befristet_prekär: 4,
+			existenzangst: 3
+		},
+		bildungszugang: {
+			sehr_gut: 7,
+			gut: 8,
+			eingeschränkt: 5,
+			schlecht: 4
+		},
+		pflege: {
+			nicht_betroffen: 6,
+			zukunft: 6,
+			aktuell_familienmitglied: 7,
+			selbst_pflegebedürftig: 6
+		},
+		digitalisierung: {
+			unwichtig: 4,
+			etwas_wichtig: 6,
+			wichtig: 8,
+			sehr_wichtig: 7
+		},
+		oeffentlicher_verkehr: {
+			nicht_nötig: 7,
+			gelegentlich: 7,
+			regelmäßig: 5,
+			täglich_angewiesen: 4
+		},
+		zukunftsangst: {
+			optimistisch: 6,
+			neutral: 7,
+			besorgt: 5,
+			große_angst: 4
+		}
+	},
+
+
+	Tierschutzpartei: {
+		wohnen: { miete: 9, eigentum: 4 },
+		einkommen: { niedrig: 8, mittel: 7, hoch: 4, sehr_hoch: 2 },
+		lebenssituation: {
+			erwerbstaetig: 6,
+			selbstständig: 5,
+			studierend_auszubildend: 8,
+			arbeitslos_uebergangsphase: 8
+		},
+		familie: { kinderlos: 7, elternteil: 7, alleinerziehend: 8 },
+		urbanisierung: { grossstadt: 8, laendlich: 5 },
+		klima: { egal: 1, passiv: 3, mittel: 6, aktiv: 10 },
+		gesundheitskosten: {
+			keine_belastung: 4,
+			gering: 5,
+			mittel: 7,
+			hoch: 9,
+			sehr_hoch: 9
+		},
+		arbeitssicherheit: {
+			sicher: 6,
+			unsicher: 7,
+			befristet_prekär: 8,
+			existenzangst: 8
+		},
+		bildungszugang: {
+			sehr_gut: 6,
+			gut: 7,
+			eingeschränkt: 8,
+			schlecht: 9
+		},
+		pflege: {
+			nicht_betroffen: 5,
+			zukunft: 6,
+			aktuell_familienmitglied: 8,
+			selbst_pflegebedürftig: 9
+		},
+		digitalisierung: {
+			unwichtig: 4,
+			etwas_wichtig: 5,
+			wichtig: 8,
+			sehr_wichtig: 8
+		},
+		oeffentlicher_verkehr: {
+			nicht_nötig: 3,
+			gelegentlich: 5,
+			regelmäßig: 8,
+			täglich_angewiesen: 10
+		},
+		zukunftsangst: {
+			optimistisch: 5,
+			neutral: 6,
+			besorgt: 8,
+			große_angst: 8
+		}
+	},
+
+	ÖDP: {
+		wohnen: { miete: 7, eigentum: 7 },
+		einkommen: { niedrig: 7, mittel: 8, hoch: 5, sehr_hoch: 3 },
+		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 6,
+			studierend_auszubildend: 7,
+			arbeitslos_uebergangsphase: 7
+		},
+		familie: { kinderlos: 5, elternteil: 9, alleinerziehend: 8 },
+		urbanisierung: { grossstadt: 6, laendlich: 8 },
+		klima: { egal: 1, passiv: 2, mittel: 6, aktiv: 10 },
+		gesundheitskosten: {
+			keine_belastung: 5,
+			gering: 6,
+			mittel: 7,
+			hoch: 8,
+			sehr_hoch: 8
+		},
+		arbeitssicherheit: {
+			sicher: 7,
+			unsicher: 6,
+			befristet_prekär: 7,
+			existenzangst: 7
+		},
+		bildungszugang: {
+			sehr_gut: 7,
+			gut: 8,
+			eingeschränkt: 7,
+			schlecht: 8
+		},
+		pflege: {
+			nicht_betroffen: 5,
+			zukunft: 7,
+			aktuell_familienmitglied: 9,
+			selbst_pflegebedürftig: 9
+		},
+		digitalisierung: {
+			unwichtig: 5,
+			etwas_wichtig: 7,
+			wichtig: 7,
+			sehr_wichtig: 6
+		},
+		oeffentlicher_verkehr: {
+			nicht_nötig: 4,
+			gelegentlich: 6,
+			regelmäßig: 9,
+			täglich_angewiesen: 10
+		},
+		zukunftsangst: {
+			optimistisch: 5,
+			neutral: 6,
+			besorgt: 8,
+			große_angst: 8
+		}
+	},
+
+	Piratenpartei: {
+		wohnen: { miete: 8, eigentum: 5 },
+		einkommen: { niedrig: 8, mittel: 7, hoch: 5, sehr_hoch: 3 },
+		lebenssituation: {
+			erwerbstaetig: 7,
+			selbstständig: 7,
+			studierend_auszubildend: 9,
+			arbeitslos_uebergangsphase: 8
+		},
+		familie: { kinderlos: 8, elternteil: 6, alleinerziehend: 8 },
+		urbanisierung: { grossstadt: 8, laendlich: 5 },
+		klima: { egal: 3, passiv: 4, mittel: 7, aktiv: 9 },
+		gesundheitskosten: {
+			keine_belastung: 5,
+			gering: 6,
+			mittel: 7,
+			hoch: 8,
+			sehr_hoch: 8
+		},
+		arbeitssicherheit: {
+			sicher: 7,
+			unsicher: 7,
+			befristet_prekär: 8,
+			existenzangst: 8
+		},
+		bildungszugang: {
+			sehr_gut: 7,
+			gut: 8,
+			eingeschränkt: 8,
+			schlecht: 9
+		},
+		pflege: {
+			nicht_betroffen: 5,
+			zukunft: 6,
+			aktuell_familienmitglied: 8,
+			selbst_pflegebedürftig: 8
+		},
+		digitalisierung: {
+			unwichtig: 1,
+			etwas_wichtig: 2,
+			wichtig: 7,
+			sehr_wichtig: 10
+		},
+		oeffentlicher_verkehr: {
+			nicht_nötig: 4,
+			gelegentlich: 6,
+			regelmäßig: 8,
+			täglich_angewiesen: 9
+		},
+		zukunftsangst: {
+			optimistisch: 6,
+			neutral: 7,
+			besorgt: 7,
+			große_angst: 6
+		}
 	}
 };

@@ -1,0 +1,174 @@
+[
+  {
+    "id": "age-group",
+    "category": "demographics",
+    "type": "multiple_choice",
+    "text": "Zu welcher Altersgruppe gehörst du?",
+    "answers": [
+      {
+        "text": "Unter 30 Jahre",
+        "value": "under-30",
+        "next_question_id": "employment-status-young"
+      },
+      {
+        "text": "30-50 Jahre",
+        "value": "30-50",
+        "next_question_id": "employment-status-mid"
+      },
+      {
+        "text": "Über 50 Jahre",
+        "value": "over-50",
+        "next_question_id": "retirement-status"
+      }
+    ]
+  },
+  {
+    "id": "employment-status-young",
+    "category": "demographics",
+    "type": "multiple_choice",
+    "text": "Was beschreibt deine aktuelle Situation am besten?",
+    "answers": [
+      {
+        "text": "Ich bin Student/in oder in Ausbildung",
+        "value": "student",
+        "next_question_id": "student-priorities"
+      },
+      {
+        "text": "Ich arbeite (angestellt oder selbstständig)",
+        "value": "employed",
+        "next_question_id": "young-worker-priorities"
+      },
+      {
+        "text": "Ich suche Arbeit",
+        "value": "unemployed",
+        "next_question_id": "young-worker-priorities"
+      }
+    ]
+  },
+  {
+    "id": "student-priorities",
+    "category": "priorities",
+    "type": "budget_allocation",
+    "max_points": 5,
+    "text": "Das Budget ist knapp, die Zukunft ungewiss. Wo setzt du im Studien- oder Ausbildungsalltag deine Prioritäten? Verteile 5 Punkte:",
+    "options": [
+      {
+        "id": "focus-career",
+        "text": "Fokus Abschluss: Schnell durchziehen, Bestnoten, perfekter Lebenslauf."
+      },
+      {
+        "id": "focus-lifestyle",
+        "text": "Fokus Lebensgefühl: Bloß kein Burnout, Zeit mit Freunden, Erfahrungen sammeln."
+      },
+      {
+        "id": "focus-independence",
+        "text": "Fokus Unabhängigkeit: Viel nebenher arbeiten, um finanziell komplett auf eigenen Beinen zu stehen."
+      }
+    ]
+  },
+  {
+    "id": "young-worker-priorities",
+    "category": "priorities",
+    "type": "slider",
+    "text": "Wie nimmst du deine aktuelle Rolle auf dem Arbeitsmarkt wahr?",
+    "min_label": "Karriere & Aufstieg: Ich will Gas geben und finanziell vorankommen.",
+    "max_label": "Sinn & Flexibilität: Der Job muss zu meinem Leben passen, nicht umgekehrt."
+  },
+  {
+    "id": "employment-status-mid",
+    "category": "demographics",
+    "type": "multiple_choice",
+    "text": "Wie sieht deine berufliche Situation aus?",
+    "answers": [
+      {
+        "text": "Ich bin angestellt",
+        "value": "employed",
+        "next_question_id": "working-priorities"
+      },
+      {
+        "text": "Ich bin selbstständig",
+        "value": "self-employed",
+        "next_question_id": "economic-concerns"
+      },
+      {
+        "text": "Ich bin arbeitssuchend",
+        "value": "unemployed",
+        "next_question_id": "economic-concerns"
+      }
+    ]
+  },
+  {
+    "id": "working-priorities",
+    "category": "priorities",
+    "type": "slider",
+    "text": "In der Rushhour des Lebens (Familie, Job, Verpflichtungen): Was leitet dich aktuell?",
+    "min_label": "Sicherheits-Fokus: Bloß keine Experimente, Stabilität geht über alles.",
+    "max_label": "Selbstverwirklichung: Ich suche neue Herausforderungen, auch mit Risiko."
+  },
+  {
+    "id": "economic-concerns",
+    "category": "priorities",
+    "type": "multiple_choice",
+    "text": "Was beschreibt deine größte Sorge im Umgang mit Geld, Bürokratie und System am besten?",
+    "answers": [
+      {
+        "text": "Die Bürokratie und Abgaben fressen meine Energie. Ich will einfach machen dürfen.",
+        "value": "over-regulated"
+      },
+      {
+        "text": "Wenn ich ausfalle, fängt mich kaum ein Netz auf. Die finanzielle Unsicherheit stresst.",
+        "value": "existential-anxiety"
+      },
+      {
+        "text": "Es läuft okay, man beißt sich halt pragmatisch durch die Excel-Tabellen und Anträge durch.",
+        "value": "pragmatic-handling"
+      }
+    ]
+  },
+  {
+    "id": "retirement-status",
+    "category": "demographics",
+    "type": "multiple_choice",
+    "text": "Sind Sie bereits im Ruhestand?",
+    "answers": [
+      {
+        "text": "Ja, ich bin im Ruhestand",
+        "value": "retired",
+        "next_question_id": "retirement-priorities"
+      },
+      {
+        "text": "Nein, ich arbeite noch",
+        "value": "working",
+        "next_question_id": "senior-working-priorities"
+      }
+    ]
+  },
+  {
+    "id": "retirement-priorities",
+    "category": "priorities",
+    "type": "slider",
+    "text": "Wo liegt Ihr Hauptfokus im wohlverdienten Ruhestand?",
+    "min_label": "Eigener Lebensabend: Gesundheit, Reisen, den eigenen Wohlstand genießen.",
+    "max_label": "Generations-Fokus: Die Familie unterstützen, Enkel absichern, Zukunft mitgestalten."
+  },
+  {
+    "id": "senior-working-priorities",
+    "category": "priorities",
+    "type": "multiple_choice",
+    "text": "Wie blicken Sie auf die letzten Meter Ihres Berufslebens?",
+    "answers": [
+      {
+        "text": "Wenn es finanziell irgendwie geht, bin ich lieber heute als morgen weg aus dem Job.",
+        "value": "early-exit"
+      },
+      {
+        "text": "Ich arbeite gern, meine Erfahrung wird geschätzt und ich will geistig fit bleiben.",
+        "value": "keep-going"
+      },
+      {
+        "text": "Die Belastung ist hoch, aber ich muss wegen der Rentenpunkte bis zum Schluss durchhalten.",
+        "value": "endure"
+      }
+    ]
+  }
+]

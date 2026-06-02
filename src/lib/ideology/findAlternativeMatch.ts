@@ -21,7 +21,16 @@ export const establishmentParties: Party[] = ['CDU', 'SPD', 'FDP'];
 export const farRightParties: Party[] = ['AFD'];
 
 /** Smaller parties (not establishment, not far-right) */
-export const smallerParties: Party[] = ['Die Grünen', 'Die Linke', 'BSW'];
+export const smallerParties: Party[] = [
+	'Die Grünen',
+	'Die Linke',
+	'BSW',
+	'Volt',
+	'Freie Wähler',
+	'Tierschutzpartei',
+	'ÖDP',
+	'Piratenpartei'
+];
 
 /**
  * Find Alternative Party Match

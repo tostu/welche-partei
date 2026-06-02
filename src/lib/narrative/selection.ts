@@ -74,15 +74,60 @@ const PROFILE_TO_TAG_MAPPING: Record<string, string[]> = {
 function extractTagsFromProfile(userProfile: UserProfile): Set<string> {
 	const tags = new Set<string>();
 
-	// Extract all answer values from the profile
-	const answerValues = Object.values(userProfile).filter(
-		(value): value is string => typeof value === 'string'
-	);
+	Object.entries(userProfile).forEach(([key, value]) => {
+		if (typeof value === 'string') {
+			// String multiple choice
+			const mappedTags = PROFILE_TO_TAG_MAPPING[value] || [];
+			mappedTags.forEach((tag) => tags.add(tag));
+		} else if (typeof value === 'number') {
+			// Slider questions
+			if (key === 'young-worker-priorities') {
+				if (value < 45) {
+					tags.add('work-culture');
+					tags.add('economy');
+				} else if (value > 55) {
+					tags.add('lifestyle');
+					tags.add('mental-health');
+				}
+			} else if (key === 'working-priorities') {
+				if (value < 45) {
+					tags.add('finance');
+					tags.add('equality');
+				} else if (value > 55) {
+					tags.add('work-culture');
+					tags.add('economy');
+				}
+			} else if (key === 'retirement-priorities') {
+				if (value < 45) {
+					tags.add('lifestyle');
+					tags.add('healthcare');
+				} else if (value > 55) {
+					tags.add('family');
+					tags.add('climate');
+					tags.add('environment');
+				}
+			}
+		} else if (value && typeof value === 'object') {
+			// Budget allocation questions
+			if (key === 'student-priorities') {
+				const career = value['focus-career'] || 0;
+				const lifestyle = value['focus-lifestyle'] || 0;
+				const independence = value['focus-independence'] || 0;
 
-	// Map each answer value to its corresponding demographic tags
-	answerValues.forEach((value) => {
-		const mappedTags = PROFILE_TO_TAG_MAPPING[value] || [];
-		mappedTags.forEach((tag) => tags.add(tag));
+				if (career >= 2) {
+					tags.add('employment');
+					tags.add('work-culture');
+				}
+				if (lifestyle >= 2) {
+					tags.add('lifestyle');
+					tags.add('mental-health');
+				}
+				if (independence >= 2) {
+					tags.add('finance');
+					tags.add('consumer-behavior');
+				}
+			}
+		}
 	});
 
 	return tags;
@@ -173,49 +218,42 @@ export function selectNarrativeQuestions(
 		return [];
 	}
 
-	// Edge case: Fewer questions than target
-	if (narrativeQuestions.length <= targetCount) {
-		return shuffleArray(narrativeQuestions);
+	// If profiling has not run yet (empty profile), return targetCount shuffled questions (maintaining default/test behavior)
+	if (Object.keys(userProfile).length === 0) {
+		if (narrativeQuestions.length <= targetCount) {
+			return shuffleArray(narrativeQuestions);
+		}
+		return shuffleArray(narrativeQuestions).slice(0, targetCount);
 	}
 
 	// Extract demographic tags from user profile
 	const profileTags = extractTagsFromProfile(userProfile);
 
-	// Score all questions based on profile match
-	const scoredQuestions = narrativeQuestions.map((question) => ({
-		question,
-		score: scoreQuestion(question, profileTags)
-	}));
+	const MAPPABLE_TAGS = new Set([
+		'young-professional', 'student', 'young-worker', 'young-family',
+		'middle-aged', 'parent', 'worker', 'senior',
+		'education', 'employment', 'economy', 'retirement',
+		'housing', 'urban', 'climate', 'environment',
+		'digital', 'technology', 'labor', 'family',
+		'workplace', 'work-culture', 'childcare', 'pension',
+		'social-security', 'taxation', 'equality', 'finance',
+		'lifestyle', 'mental-health', 'consumer-behavior',
+		'healthcare', 'privacy', 'digital-life'
+	]);
 
-	// Sort by score (highest first), with random shuffle for ties
-	scoredQuestions.sort((a, b) => {
-		if (b.score !== a.score) {
-			return b.score - a.score;
+	// Filter out questions where mappable tags exist but none matched the user's profile
+	const filteredQuestions = narrativeQuestions.filter((question) => {
+		const questionMappableTags = question.tags.filter((tag) => MAPPABLE_TAGS.has(tag));
+
+		// If the question has no mappable tags, it's a general question that cannot be deemed "not important"
+		if (questionMappableTags.length === 0) {
+			return true;
 		}
-		// Randomize order for questions with equal scores
-		return Math.random() - 0.5;
+
+		// If it has mappable tags, it must match at least one tag in the user's profile
+		return questionMappableTags.some((tag) => profileTags.has(tag));
 	});
 
-	// Select top questions
-	const selectedQuestions = scoredQuestions.slice(0, targetCount).map((item) => item.question);
-
-	// If we selected exactly targetCount, return them
-	if (selectedQuestions.length === targetCount) {
-		return selectedQuestions;
-	}
-
-	// If we have fewer than targetCount, try to select one more
-	// This handles the case where targetCount=8 but we only got 7
-	if (selectedQuestions.length < targetCount && selectedQuestions.length < narrativeQuestions.length) {
-		const remainingQuestions = scoredQuestions
-			.slice(targetCount)
-			.map((item) => item.question);
-
-		if (remainingQuestions.length > 0) {
-			const additionalQuestion = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
-			selectedQuestions.push(additionalQuestion);
-		}
-	}
-
-	return selectedQuestions;
+	// Return all selected questions shuffled
+	return shuffleArray(filteredQuestions);
 }

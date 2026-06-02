@@ -1,7 +1,55 @@
 import { describe, it, expect } from 'vitest';
-import { calculateUserIdeology, mockNarrativeQuestions } from './calculateUserIdeology';
+import { calculateUserIdeology } from './calculateUserIdeology';
 import { ideologicalAxes } from './ideologicalAxes';
-import type { UserQuizAnswers, UserIdeologicalProfile, NarrativeAnswerImpact } from './types';
+import type { UserQuizAnswers } from './types';
+
+export const mockNarrativeQuestions = [
+	{
+		id: 1,
+		story_text: 'Mock Question 1',
+		optionA: {
+			text: 'Option A1',
+			impacts: [
+				{ axis_id: 'market-state', delta: -2.0 },
+				{ axis_id: 'individual-collective', delta: -1.0 }
+			]
+		},
+		optionB: {
+			text: 'Option B1',
+			impacts: [
+				{ axis_id: 'market-state', delta: 2.0 },
+				{ axis_id: 'individual-collective', delta: 1.0 }
+			]
+		},
+		tags: ['housing']
+	},
+	{
+		id: 2,
+		story_text: 'Mock Question 2',
+		optionA: {
+			text: 'Option A2',
+			impacts: [{ axis_id: 'ecology-economy', delta: -2.0 }]
+		},
+		optionB: {
+			text: 'Option B2',
+			impacts: [{ axis_id: 'ecology-economy', delta: 2.0 }]
+		},
+		tags: ['climate']
+	},
+	{
+		id: 3,
+		story_text: 'Mock Question 3',
+		optionA: {
+			text: 'Option A3',
+			impacts: [{ axis_id: 'progressive-conservative', delta: -2.0 }]
+		},
+		optionB: {
+			text: 'Option B3',
+			impacts: [{ axis_id: 'progressive-conservative', delta: 2.0 }]
+		},
+		tags: ['family']
+	}
+];
 
 describe('Calculate User Ideological Profile', () => {
 	describe('Initialization at neutral midpoint (AC #4)', () => {
@@ -10,7 +58,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: {}
 			};
 
-			const profile = calculateUserIdeology(emptyAnswers);
+			const profile = calculateUserIdeology(emptyAnswers, mockNarrativeQuestions);
 
 			// All axes should be at midpoint (5.5 for 1-10 range)
 			ideologicalAxes.forEach((axis) => {
@@ -24,7 +72,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: {}
 			};
 
-			const profile = calculateUserIdeology(emptyAnswers);
+			const profile = calculateUserIdeology(emptyAnswers, mockNarrativeQuestions);
 
 			ideologicalAxes.forEach((axis) => {
 				expect(profile.axis_scores).toHaveProperty(axis.id);
@@ -41,7 +89,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			// market-state should be 5.5 (midpoint) + 2 = 7.5
 			expect(profile.axis_scores['market-state']).toBe(7.5);
@@ -58,7 +106,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			expect(profile.axis_scores['market-state']).toBe(7.5);
 			expect(profile.axis_scores['ecology-economy']).toBe(7.5);
@@ -74,7 +122,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			// market-state should be 5.5 (midpoint) - 2 = 3.5
 			expect(profile.axis_scores['market-state']).toBe(3.5);
@@ -91,7 +139,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			expect(profile.axis_scores['market-state']).toBe(3.5);
 			expect(profile.axis_scores['progressive-conservative']).toBe(7.5);
@@ -104,7 +152,7 @@ describe('Calculate User Ideological Profile', () => {
 			const extremeQuestions = [
 				{
 					id: 99,
-					question: 'Extreme test',
+					story_text: 'Extreme test',
 					optionA: {
 						text: 'A',
 						impacts: [{ axis_id: 'market-state', delta: 10 }] // 5.5 + 10 = 15.5, should clamp to 10
@@ -112,7 +160,8 @@ describe('Calculate User Ideological Profile', () => {
 					optionB: {
 						text: 'B',
 						impacts: []
-					}
+					},
+					tags: ['test']
 				}
 			];
 
@@ -130,7 +179,7 @@ describe('Calculate User Ideological Profile', () => {
 			const extremeQuestions = [
 				{
 					id: 98,
-					question: 'Extreme test',
+					story_text: 'Extreme test',
 					optionA: {
 						text: 'A',
 						impacts: [{ axis_id: 'market-state', delta: -10 }] // 5.5 - 10 = -4.5, should clamp to 1
@@ -138,7 +187,8 @@ describe('Calculate User Ideological Profile', () => {
 					optionB: {
 						text: 'B',
 						impacts: []
-					}
+					},
+					tags: ['test']
 				}
 			];
 
@@ -158,7 +208,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			expect(profile.axis_scores['market-state']).toBe(3.5);
 			expect(profile.axis_scores['market-state']).toBeGreaterThanOrEqual(1);
@@ -172,7 +222,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: { 1: 'A' }
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			expect(profile).toHaveProperty('axis_scores');
 			expect(typeof profile.axis_scores).toBe('object');
@@ -183,7 +233,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: { 1: 'A', 2: 'B' }
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			Object.entries(profile.axis_scores).forEach(([key, value]) => {
 				expect(typeof key).toBe('string');
@@ -196,7 +246,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: { 1: 'A', 2: 'B', 3: 'A' }
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			Object.values(profile.axis_scores).forEach((score) => {
 				expect(Number.isFinite(score)).toBe(true);
@@ -215,7 +265,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			// Should still process valid questions
 			expect(profile.axis_scores['market-state']).toBe(3.5);
@@ -228,7 +278,7 @@ describe('Calculate User Ideological Profile', () => {
 			const badQuestions = [
 				{
 					id: 97,
-					question: 'Test',
+					story_text: 'Test',
 					optionA: {
 						text: 'A',
 						impacts: [
@@ -239,7 +289,8 @@ describe('Calculate User Ideological Profile', () => {
 					optionB: {
 						text: 'B',
 						impacts: []
-					}
+					},
+					tags: ['test']
 				}
 			];
 
@@ -261,7 +312,7 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: {}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			// All scores should be at midpoint
 			expect(profile.axis_scores['market-state']).toBe(5.5);
@@ -281,7 +332,7 @@ describe('Calculate User Ideological Profile', () => {
 				}
 			};
 
-			const profile = calculateUserIdeology(answers);
+			const profile = calculateUserIdeology(answers, mockNarrativeQuestions);
 
 			expect(profile.axis_scores['market-state']).toBe(3.5); // 5.5 - 2
 			expect(profile.axis_scores['individual-collective']).toBe(4.5); // 5.5 - 1
@@ -298,16 +349,71 @@ describe('Calculate User Ideological Profile', () => {
 				narrative_choices: { 1: 'B', 2: 'B', 3: 'B' }
 			};
 
-			const profileA = calculateUserIdeology(answersA);
-			const profileB = calculateUserIdeology(answersB);
+			const profileA = calculateUserIdeology(answersA, mockNarrativeQuestions);
+			const profileB = calculateUserIdeology(answersB, mockNarrativeQuestions);
 
 			// Profiles should be different
-			expect(profileA.axis_scores['market-state']).not.toBe(
-				profileB.axis_scores['market-state']
-			);
+			expect(profileA.axis_scores['market-state']).not.toBe(profileB.axis_scores['market-state']);
 			expect(profileA.axis_scores['ecology-economy']).not.toBe(
 				profileB.axis_scores['ecology-economy']
 			);
+		});
+	});
+
+	describe('Initialization with profiling starting shifts', () => {
+		it('should shift start values based on profiling demographics', () => {
+			const emptyAnswers: UserQuizAnswers = {
+				narrative_choices: {}
+			};
+			const profilingProfile = {
+				'age-group': '30-50',
+				'employment-status-mid': 'employed'
+			};
+
+			const profile = calculateUserIdeology(emptyAnswers, mockNarrativeQuestions, profilingProfile);
+
+			// For 30-50 (-0.2) + employed (-0.6) = -0.8 shift on market-state
+			// Midpoint is 5.5. 5.5 - 0.8 = 4.7
+			expect(profile.axis_scores['market-state']).toBeCloseTo(4.7);
+		});
+
+		it('should shift start values for student profile', () => {
+			const emptyAnswers: UserQuizAnswers = {
+				narrative_choices: {}
+			};
+			const profilingProfile = {
+				'age-group': 'under-30',
+				'employment-status-young': 'student'
+			};
+
+			const profile = calculateUserIdeology(emptyAnswers, mockNarrativeQuestions, profilingProfile);
+
+			// For under-30 (-0.5) + student (-1.0) = -1.5 shift on progressive-conservative
+			// Midpoint is 5.5. 5.5 - 1.5 = 4.0
+			expect(profile.axis_scores['progressive-conservative']).toBeCloseTo(4.0);
+		});
+	});
+
+	describe('Option C (Compromise) scoring', () => {
+		it('should apply zero deltas for Option C', () => {
+			const questionsWithOptionsC = [
+				{
+					id: 1,
+					story_text: 'Miete',
+					optionA: { text: 'A', impacts: [{ axis_id: 'market-state', delta: 1.0 }] },
+					optionB: { text: 'B', impacts: [{ axis_id: 'market-state', delta: -1.0 }] },
+					optionC: { text: 'C', impacts: [] },
+					tags: []
+				}
+			];
+			const answers: UserQuizAnswers = {
+				narrative_choices: { 1: 'C' }
+			};
+
+			const profile = calculateUserIdeology(answers, questionsWithOptionsC);
+
+			// Midpoint 5.5, option C delta is 0, should remain 5.5
+			expect(profile.axis_scores['market-state']).toBe(5.5);
 		});
 	});
 
@@ -317,7 +423,7 @@ describe('Calculate User Ideological Profile', () => {
 
 			mockNarrativeQuestions.forEach((question) => {
 				expect(question).toHaveProperty('id');
-				expect(question).toHaveProperty('question');
+				expect(question).toHaveProperty('story_text');
 				expect(question).toHaveProperty('optionA');
 				expect(question).toHaveProperty('optionB');
 

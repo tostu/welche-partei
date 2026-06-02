@@ -11,13 +11,26 @@ describe('Party Ideological Profiles Configuration', () => {
 			expect(Array.isArray(partyIdeologies)).toBe(true);
 		});
 
-		it('should have exactly 7 parties defined', () => {
-			expect(partyIdeologies.length).toBe(7);
+		it('should have exactly 12 parties defined', () => {
+			expect(partyIdeologies.length).toBe(12);
 		});
 	});
 
-	describe('All 7 parties present', () => {
-		const expectedParties = ['AFD', 'BSW', 'CDU', 'Die Linke', 'FDP', 'Die Grünen', 'SPD'];
+	describe('All 12 parties present', () => {
+		const expectedParties = [
+			'AFD',
+			'BSW',
+			'CDU',
+			'Die Linke',
+			'FDP',
+			'Die Grünen',
+			'SPD',
+			'Volt',
+			'Freie Wähler',
+			'Tierschutzpartei',
+			'ÖDP',
+			'Piratenpartei'
+		];
 
 		expectedParties.forEach((partyName) => {
 			it(`should include party: ${partyName}`, () => {
@@ -35,7 +48,12 @@ describe('Party Ideological Profiles Configuration', () => {
 	});
 
 	describe('Complete axis coverage', () => {
-		const requiredAxes = ['market-state', 'individual-collective', 'progressive-conservative', 'ecology-economy'];
+		const requiredAxes = [
+			'market-state',
+			'individual-collective',
+			'progressive-conservative',
+			'ecology-economy'
+		];
 
 		it('should have all 4 axes for each party', () => {
 			partyIdeologies.forEach((party) => {
