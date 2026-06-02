@@ -15,11 +15,13 @@ Round to nearest 10 for grid alignment.
 **CRITICAL:** When creating shapes with labels:
 
 1. Generate unique IDs:
+
    - `shape-id` for the shape
    - `text-id` for the text
    - `group-id` for the group
 
 2. Shape element must have:
+
    - `groupIds: [group-id]`
    - `boundElements: [{type: "text", id: text-id}]`
 
@@ -84,11 +86,11 @@ After creating arrow, update `boundElements` on both connected shapes:
 
 ```json
 {
-  "id": "shape-id",
-  "boundElements": [
-    { "type": "text", "id": "text-id" },
-    { "type": "arrow", "id": "arrow-id" }
-  ]
+	"id": "shape-id",
+	"boundElements": [
+		{ "type": "text", "id": "text-id" },
+		{ "type": "arrow", "id": "arrow-id" }
+	]
 }
 ```
 
