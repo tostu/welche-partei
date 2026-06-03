@@ -90,56 +90,69 @@
 	}
 </script>
 
-<div class="m-5 flex h-full flex-col items-center justify-center gap-5 md:gap-10">
+<div class="m-5 flex h-full flex-col items-center justify-center gap-8 md:gap-12">
 	<!-- Progress indicator -->
-	<div class="text-center text-sm font-semibold uppercase tracking-wider text-white opacity-80">
-		Frage {data.index + 1} von {data.totalQuestions}
+	<div class="w-full max-w-[600px] flex flex-col gap-2 items-center">
+		<div class="flex justify-between w-full text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+			<span>Dilemma {data.index + 1}</span>
+			<span>{Math.round(((data.index + 1) / data.totalQuestions) * 100)}% abgeschlossen</span>
+		</div>
+		<div class="w-full h-1.5 bg-primary/10 rounded-full overflow-hidden">
+			<div class="h-full bg-primary transition-all duration-700 ease-out" style="width: {((data.index + 1) / data.totalQuestions) * 100}%"></div>
+		</div>
 	</div>
 
 	<!-- Story/Scenario text -->
-	<h1 class="max-w-[900px] text-center text-2xl font-black text-white md:text-4xl leading-snug" in:fade={{ duration: 200 }}>
-		{data.question.story_text}
-	</h1>
+	<div class="space-y-6 text-center">
+		<span class="badge badge-secondary font-black uppercase tracking-widest text-[10px] px-4 py-3 shadow-glow-secondary">Ideologie Check</span>
+		<h1 class="max-w-[900px] text-2xl font-black text-primary md:text-4xl leading-snug">
+			{data.question.story_text}
+		</h1>
+	</div>
 
 	<!-- MULTIPLE CHOICE TYPE -->
 	{#if data.question.type === 'multiple_choice'}
-		<div class="flex w-full max-w-[1000px] flex-wrap justify-center gap-6" in:fade={{ duration: 200 }}>
+		<div class="flex w-full max-w-[1000px] flex-wrap justify-center gap-6">
 			{#each data.question.answers || [] as answer, idx}
 				<button
 					onclick={() => saveAnswer(idx === 0 ? 'A' : idx === 1 ? 'B' : 'C')}
-					class="card w-full sm:w-[300px] min-h-60 cursor-pointer bg-secondary text-secondary-content border border-white/10 hover:border-white/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 text-center flex flex-col items-center justify-center p-6 backdrop-blur-sm"
+					class="glass-card group w-full sm:w-[320px] min-h-[320px] cursor-pointer hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-glow active:translate-y-0 flex flex-col items-center justify-between p-8 rounded-[2.5rem]"
 				>
-					<div class="mb-4 text-5xl font-black opacity-30 select-none text-secondary-content">
+					<div class="w-16 h-16 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center text-3xl font-black text-primary/30 group-hover:bg-primary group-hover:text-white transition-all duration-300">
 						{idx === 0 ? 'A' : idx === 1 ? 'B' : 'C'}
 					</div>
-					<h2 class="lilita-one-regular text-xl font-medium leading-snug text-secondary-content">
+					<h2 class="lilita-one-regular text-2xl text-center leading-tight text-primary mt-6 mb-auto">
 						{answer.text}
 					</h2>
+					<div class="mt-8 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+						<span>Wählen</span>
+						<ArrowRight class="h-4 w-4" />
+					</div>
 				</button>
 			{/each}
 		</div>
 
 	<!-- BUDGET ALLOCATION TYPE -->
 	{:else if data.question.type === 'budget_allocation'}
-		<div class="w-full max-w-[700px] flex flex-col gap-6" in:fade={{ duration: 200 }}>
+		<div class="w-full max-w-[700px] flex flex-col gap-8">
 			<!-- Budget Counter Header -->
-			<div class="flex items-center justify-between p-4 bg-base-200 border border-base-300/40 rounded-2xl backdrop-blur-md">
+			<div class="flex items-center justify-between p-6 glass-card rounded-3xl">
 				<div class="flex flex-col">
-					<span class="text-xs text-base-content/60 uppercase tracking-wider font-bold">Verfügbares Budget</span>
-					<span class="text-base-content text-sm font-semibold">Punkte übrig</span>
+					<span class="text-xs text-primary/60 uppercase tracking-widest font-bold">Verfügbares Budget</span>
+					<span class="text-primary text-xl font-black">Punkte verteilen</span>
 				</div>
-				<div class="flex items-center gap-3">
-					<div class="flex gap-1.5">
+				<div class="flex items-center gap-4">
+					<div class="flex gap-2">
 						{#each Array(maxPoints) as _, i}
 							<div 
-								class="h-3 w-3 rounded-full border transition-all duration-300 {i < remainingPoints 
-									? 'bg-accent border-accent scale-110 animate-pulse' 
-									: 'bg-base-300/40 border-base-300'}"
+								class="h-4 w-4 rounded-full border-2 transition-all duration-300 {i < remainingPoints 
+									? 'bg-accent border-accent scale-110 shadow-glow' 
+									: 'bg-primary/5 border-primary/20'}"
 							></div>
 						{/each}
 					</div>
-					<span class="badge badge-lg bg-accent text-accent-content border-none font-extrabold text-sm px-3.5 py-3">
-						{remainingPoints} übrig
+					<span class="badge badge-lg bg-primary text-white border-none font-black text-sm px-4 py-4 rounded-xl">
+						{remainingPoints}
 					</span>
 				</div>
 			</div>
@@ -147,40 +160,37 @@
 			<!-- Options list -->
 			<div class="flex flex-col gap-4">
 				{#each data.question.options || [] as option}
-					<div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-secondary border border-white/10 rounded-2xl gap-4 backdrop-blur-sm hover:border-white/30 transition-all duration-300">
-						<div class="flex-1 space-y-1">
-							<p class="text-secondary-content font-bold text-lg">{option.text}</p>
+					<div class="flex flex-col sm:flex-row sm:items-center justify-between p-5 glass-card rounded-3xl gap-4 hover:bg-white/15 transition-all">
+						<div class="flex-1">
+							<p class="text-primary font-bold text-xl">{option.text}</p>
 						</div>
 						
-						<div class="flex items-center justify-between sm:justify-end gap-4">
-							<!-- Points Dots allocated to this option -->
-							<div class="flex gap-1 w-20 justify-center">
-								{#each Array(allocatedPointsMap[option.id] || 0) as _}
-									<div class="h-2 w-2 rounded bg-white"></div>
-								{/each}
-								{#each Array(maxPoints - (allocatedPointsMap[option.id] || 0)) as _}
-									<div class="h-2 w-2 rounded bg-white/20"></div>
+						<div class="flex items-center justify-between sm:justify-end gap-6">
+							<!-- Points Indicator -->
+							<div class="flex gap-1.5 w-24 justify-center">
+								{#each Array(maxPoints) as _, i}
+									<div class="h-2.5 w-2.5 rounded-full transition-all {i < (allocatedPointsMap[option.id] || 0) ? 'bg-primary' : 'bg-primary/10'}"></div>
 								{/each}
 							</div>
 
 							<!-- Plus/Minus controls -->
-							<div class="join bg-white/10 border border-white/20">
+							<div class="flex items-center gap-1 bg-primary/5 p-1 rounded-2xl border border-primary/10">
 								<button 
-									class="btn btn-ghost btn-sm join-item px-2.5 hover:bg-white/10 disabled:opacity-20 text-secondary-content" 
+									class="btn btn-circle btn-ghost btn-sm text-primary hover:bg-primary/10 disabled:opacity-20" 
 									onclick={() => removePoint(option.id)}
 									disabled={(allocatedPointsMap[option.id] || 0) === 0}
 								>
-									<Minus class="h-3.5 w-3.5" />
+									<Minus class="h-4 w-4" />
 								</button>
-								<span class="join-item bg-transparent text-secondary-content font-mono font-bold text-sm w-8 flex items-center justify-center select-none">
+								<span class="text-primary font-black text-lg w-8 text-center select-none">
 									{allocatedPointsMap[option.id] || 0}
 								</span>
 								<button 
-									class="btn btn-ghost btn-sm join-item px-2.5 hover:bg-white/10 disabled:opacity-20 text-secondary-content" 
+									class="btn btn-circle btn-ghost btn-sm text-primary hover:bg-primary/10 disabled:opacity-20" 
 									onclick={() => addPoint(option.id)}
 									disabled={remainingPoints === 0}
 								>
-									<Plus class="h-3.5 w-3.5" />
+									<Plus class="h-4 w-4" />
 								</button>
 							</div>
 						</div>
@@ -192,71 +202,73 @@
 			<button 
 				onclick={submitBudgetAllocation}
 				disabled={remainingPoints > 0}
-				class="btn btn-primary w-full py-4 text-primary-content font-extrabold text-lg tracking-wide rounded-2xl transition-all duration-300 hover:shadow-lg disabled:opacity-30 flex items-center justify-center gap-2"
+				class="btn btn-primary w-full py-5 h-auto text-white font-black text-xl tracking-wide rounded-3xl transition-all duration-300 shadow-premium hover:shadow-glow disabled:opacity-30 group"
 			>
-				Weiter <ArrowRight class="h-5 w-5" />
+				<span>Weiter</span>
+				<ArrowRight class="h-6 w-6 group-hover:translate-x-1 transition-transform" />
 			</button>
 		</div>
 
 	<!-- SLIDER TYPE -->
 	{:else if data.question.type === 'slider'}
-		<div class="w-full max-w-[800px] flex flex-col gap-8 bg-base-200 border border-base-300/40 rounded-2xl p-6 md:p-8 backdrop-blur-md" in:fade={{ duration: 200 }}>
+		<div class="w-full max-w-[800px] flex flex-col gap-10 glass-card rounded-[2.5rem] p-8 md:p-12">
 			
-			<div class="py-6 px-4 bg-base-300/20 rounded-2xl flex flex-col gap-6 relative overflow-hidden">
+			<div class="space-y-12">
 				<!-- Label extremes -->
-				<div class="flex justify-between items-stretch gap-4 text-xs font-bold uppercase text-base-content/85 px-2 select-none">
-					<div class="flex flex-col items-start gap-1 w-1/2">
-						<span class="text-primary text-left text-sm font-semibold">
+				<div class="flex justify-between items-start gap-8">
+					<div class="flex-1 p-6 rounded-3xl bg-primary/5 border border-primary/10 text-center">
+						<span class="text-primary font-black text-lg leading-tight block">
 							{data.question.min_label}
 						</span>
 					</div>
-					<div class="flex flex-col items-end gap-1 w-1/2 text-right">
-						<span class="text-secondary text-right text-sm font-semibold">
+					<div class="flex-1 p-6 rounded-3xl bg-secondary/10 border border-secondary/20 text-center">
+						<span class="text-secondary font-black text-lg leading-tight block">
 							{data.question.max_label}
 						</span>
 					</div>
 				</div>
 
-				<!-- Visual connection line -->
-				<div class="flex items-center px-4 my-2">
-					<div class="flex-1 h-2 bg-base-300/50 rounded-full relative overflow-hidden">
-						<div 
-							class="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-primary via-accent to-secondary transition-all duration-150"
-							style="width: {sliderVal}%"
-						></div>
-					</div>
-				</div>
-
-				<!-- Range Input -->
-				<div class="px-2">
+				<!-- Stepper Slider Control -->
+				<div class="w-full max-w-xl mx-auto">
 					<input 
 						type="range" 
 						min="0" 
 						max="100" 
 						bind:value={sliderVal} 
-						class="range range-primary range-sm border-0 bg-transparent" 
+						class="range range-primary" 
+						step="25"
 					/>
-					<div class="flex justify-between text-[10px] text-base-content/50 font-mono mt-2">
-						<span>Mitte</span>
+					<div class="flex justify-between px-2.5 mt-2 text-xs text-primary font-bold">
+						<span>|</span>
+						<span>|</span>
+						<span>|</span>
+						<span>|</span>
+						<span>|</span>
+					</div>
+					<div class="flex justify-between px-2 text-sm text-primary font-black mt-1">
+						<span>1</span>
+						<span>2</span>
+						<span>3</span>
+						<span>4</span>
+						<span>5</span>
 					</div>
 				</div>
 			</div>
 
-			<!-- Dynamic indicator depending on where the slider is -->
-			<div class="p-4 bg-base-200 border border-base-300/40 rounded-2xl flex flex-col gap-1 text-center font-sans">
-				<div class="text-base-content text-base font-bold flex items-center justify-center gap-2">
-					<Sparkles class="h-4 w-4 text-accent animate-pulse" />
-					Gewichtung: 
-					<span class="badge bg-base-300/50 text-base-content border-0 font-mono text-sm">{sliderVal}%</span>
-				</div>
+			<!-- Dynamic indicator -->
+			<div class="p-6 bg-primary/5 border border-primary/10 rounded-3xl flex items-center justify-center gap-4">
+				<Sparkles class="h-6 w-6 text-accent" />
+				<span class="text-primary text-lg font-bold">Gewichtung:</span>
+				<span class="text-3xl font-black text-primary font-mono">{Math.round(sliderVal / 25) + 1}</span>
 			</div>
 
 			<!-- Action button -->
 			<button 
 				onclick={submitSlider}
-				class="btn btn-primary w-full py-4 text-primary-content font-extrabold text-lg tracking-wide rounded-2xl transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2"
+				class="btn btn-primary w-full py-5 h-auto text-white font-black text-xl tracking-wide rounded-3xl transition-all duration-300 shadow-premium hover:shadow-glow group"
 			>
-				Weiter <ArrowRight class="h-5 w-5" />
+				<span>Weiter</span>
+				<ArrowRight class="h-6 w-6 group-hover:translate-x-1 transition-transform" />
 			</button>
 		</div>
 	{/if}

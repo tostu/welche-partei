@@ -20,5 +20,5 @@
 </script>
 
 {#key index}
-	<h2 transition:slide>{textList[index]}</h2>
+	<h2>{textList[index]}</h2>
 {/key}

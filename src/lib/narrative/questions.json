@@ -1,160 +1,681 @@
 [
-  {
-    "id": 1,
-    "type": "budget_allocation",
-    "max_points": 5,
-    "story_text": "Deine Miete steigt drastisch, das Viertel wird teurer. Wie reagierst du auf diese veränderte Lebensrealität? Verteile 5 Punkte auf deine Strategien:",
-    "options": [
-      {
-        "id": "action",
-        "text": "Ich wehre mich: Beitritt zu Genossenschaften/Initiativen, um gemeinschaftlich bezahlbaren Raum zu verteidigen."
-      },
-      {
-        "id": "adapt",
-        "text": "Ich akzeptiere den Markt: Fokus auf Einkommenssteigerung, um Schritt zu halten, oder Verkleinerung."
-      },
-      {
-        "id": "retreat",
-        "text": "Ich ziehe weg: Pragmatischer Rückzug ins Umland. Längeres Pendeln nehme ich für mehr Ruhe in Kauf."
-      }
-    ],
-    "tags": ["housing", "lifestyle", "urban"]
-  },
-  {
-    "id": 2,
-    "type": "slider",
-    "story_text": "In deiner Region soll eine neue Fabrik entstehen. Sie bringt dringend benötigte Jobs, erfordert aber die Rodung eines lokalen Naherholungswaldes. Deine Haltung?",
-    "min_label": "Natur & Lebensqualität vor Ort sind unantastbar – kein Baum weicht für Industrie.",
-    "max_label": "Wirtschaftliche Sicherheit und Arbeitsplätze gehen vor – die Region braucht Perspektive.",
-    "axis_id": "ecology-economy",
-    "tags": ["environment", "employment", "regional"]
-  },
-  {
-    "id": 3,
-    "type": "multiple_choice",
-    "story_text": "Du findest trotz Rechtsanspruch keinen Kita-Platz für dein Kind oder wartest ewig auf einen wichtigen Amtsbescheid. Welchen Weg gehst du?",
-    "answers": [
-      {
-        "text": "Ich klage mein Recht ein und erstreite mir den Anspruch über den harten, offiziellen Weg.",
-        "impacts": [{"axis_id": "market-state", "delta": 0.8}]
-      },
-      {
-        "text": "Ich suche private Alternativen (Tageseltern, private Netzwerke), um flexibel und unabhängig zu bleiben.",
-        "impacts": [{"axis_id": "market-state", "delta": -0.8}]
-      },
-      {
-        "text": "Ich stecke im Alltag zurück (z.B. Arbeitszeit reduzieren), um das Problem intern aufzufangen.",
-        "impacts": []
-      }
-    ],
-    "tags": ["family", "bureaucracy", "pragmatism"]
-  },
-  {
-    "id": 4,
-    "type": "slider",
-    "story_text": "Medizinische Versorgung: Für Routine-Termine beim Facharzt wartest du Monate, während Privatversicherte sofort drankommen. Wie gehst du mit diesem System um?",
-    "min_label": "Das System frustriert mich zutiefst. Ich erwarte absolute Gleichbehandlung für jeden Körper.",
-    "max_label": "Ich sorge privat vor oder zahle extra, um für mich und meine Familie die schnellste Heilung zu sichern.",
-    "axis_id": "individual-collective",
-    "tags": ["healthcare", "fairness"]
-  },
-  {
-    "id": 5,
-    "type": "slider",
-    "story_text": "Nachhaltigkeit im Alltag: Klimafreundliche Produkte (Bio-Lebensmittel, faire Kleidung) sind deutlich teurer als Discounter-Ware, das Monatsbudget ist jedoch endlich.",
-    "min_label": "Ich kaufe konsequent nach Preis und Praktikabilität. Mein persönliches Budget hat absolute Priorität.",
-    "max_label": "Ich schränke mich in anderen Bereichen massiv ein, um meinen Konsum ökologisch sauber zu halten.",
-    "axis_id": "consumption-ecology",
-    "tags": ["climate", "consumer-behavior", "finance"]
-  },
-  {
-    "id": 6,
-    "type": "multiple_choice",
-    "story_text": "Ein riesiger Logistik-Konzern baut ein Zentrum vor deiner Stadt. Die Arbeitsbedingungen dort sind extrem hart (Akkord, Mindestlohn), aber es stellt jeden ein. Wie bewertest du das?",
-    "answers": [
-      {
-        "text": "Ausbeutung. Solche Bedingungen gehören gesetzlich verboten und schärfer kontrolliert.",
-        "impacts": [{"axis_id": "market-state", "delta": 0.9}]
-      },
-      {
-        "text": "Es gilt Vertragsfreiheit. Niemand wird gezwungen, dort zu arbeiten. Jeder ist seines eigenen Glückes Schmied.",
-        "impacts": [{"axis_id": "market-state", "delta": -0.9}]
-      },
-      {
-        "text": "Es ist eine wichtige Brücke. Für Menschen ohne Ausbildung ist es eine echte Chance auf schnelles Geld.",
-        "impacts": []
-      }
-    ],
-    "tags": ["employment", "labor", "economy"]
-  },
-  {
-    "id": 7,
-    "type": "multiple_choice",
-    "story_text": "Digitale Souveränität: Große Tech-Konzerne tracken deine Alltagsdaten auf Schritt und Tritt, bieten dafür aber exzellenten Komfort im Alltag (Maps, Bezahlfunktionen, KI-Assistenten).",
-    "answers": [
-      {
-        "text": "Digital Detox / Privacy First: Ich weiche gezielt auf lokale, datenschutzfreundliche Open-Source-Software aus.",
-        "impacts": [{"axis_id": "privacy-comfort", "delta": -1.0}]
-      },
-      {
-        "text": "Maximale Effizienz: Ich nutze alle smarten Tools bedenkenlos aus, um meinen Alltag perfekt zu optimieren.",
-        "impacts": [{"axis_id": "privacy-comfort", "delta": 1.0}]
-      },
-      {
-        "text": "Pragmatische Akzeptanz: Ich weiß, dass ich bezahle, aber die Bequemlichkeit im Alltag überwiegt einfach.",
-        "impacts": []
-      }
-    ],
-    "tags": ["technology", "privacy", "digital-life"]
-  },
-  {
-    "id": 8,
-    "type": "slider",
-    "story_text": "Leistungsgesellschaft: Dein Umfeld und dein Job verlangen ständige Erreichbarkeit und stetige Selbstoptimierung. Wie reagiert deine Psyche darauf?",
-    "min_label": "Radikaler Fokus auf Mental Health: Ich schalte bewusst ab und verweigere mich dem Optimierungsdruck.",
-    "max_label": "Ehrgeiz treibt mich an: Ich nutze den Druck, um resilienter zu werden und persönlich zu wachsen.",
-    "axis_id": "mental-health-performance",
-    "tags": ["mental-health", "work-culture"]
-  },
-  {
-    "id": 9,
-    "type": "multiple_choice",
-    "story_text": "Veränderungen im eigenen Wohnumfeld: In deiner direkten Nachbarschaft verändert sich durch Zuzug oder neue kulturelle/religiöse Einrichtungen das gewohnte Straßenbild.",
-    "answers": [
-      {
-        "text": "Bereicherung: Ich suche den offenen Dialog und freue mich über neue Impulse im Viertel.",
-        "impacts": [{"axis_id": "progressive-conservative", "delta": -0.9}]
-      },
-      {
-        "text": "Skepsis: Mir ist der Erhalt lokaler Traditionen und die gewohnte Identität meines Umfelds wichtig.",
-        "impacts": [{"axis_id": "progressive-conservative", "delta": 0.9}]
-      },
-      {
-        "text": "Neutralität: Solange meine persönliche Ruhe nicht gestört wird, lebt jeder nach seiner Facon.",
-        "impacts": []
-      }
-    ],
-    "tags": ["culture", "values", "neighborhood"]
-  },
-  {
-    "id": 10,
-    "type": "budget_allocation",
-    "max_points": 5,
-    "story_text": "Die Schere zwischen Arm und Reich geht gefühlt weiter auseinander. Wo siehst du den effektivsten Hebel für eine gerechtere Gesellschaft? Verteile 5 Punkte:",
-    "options": [
-      {
-        "id": "taxation",
-        "text": "Staatliche Umverteilung: Hohe Vermögen und Erbschaften müssen spürbar besteuert werden, um das Kollektiv zu stärken."
-      },
-      {
-        "id": "education",
-        "text": "Chancengleichheit von unten: Massive Investitionen in Bildung und Kitas, damit Herkunft keine Rolle mehr spielt."
-      },
-      {
-        "id": "free-market",
-        "text": "Eigenverantwortung stärken: Vermögensaufbau für breite Massen erleichtern (z.B. Aktien, Freibeträge), statt Leistung zu bestrafen."
-      }
-    ],
-    "tags": ["economy", "equality", "wealth"]
-  }
+	{
+		"id": 1,
+		"type": "budget_allocation",
+		"max_points": 5,
+		"story_text": "Deine Miete steigt drastisch, das Viertel wird teurer. Wie reagierst du auf diese veränderte Lebensrealität? Verteile 5 Punkte auf deine Strategien:",
+		"options": [
+			{
+				"id": "action",
+				"text": "Ich wehre mich: Beitritt zu Genossenschaften/Initiativen, um gemeinschaftlich bezahlbaren Raum zu verteidigen."
+			},
+			{
+				"id": "adapt",
+				"text": "Ich akzeptiere den Markt: Fokus auf Einkommenssteigerung, um Schritt zu halten, oder Verkleinerung."
+			},
+			{
+				"id": "retreat",
+				"text": "Ich ziehe weg: Pragmatischer Rückzug ins Umland. Längeres Pendeln nehme ich für mehr Ruhe in Kauf."
+			}
+		],
+		"tags": [
+			"housing",
+			"lifestyle",
+			"urban"
+		]
+	},
+	{
+		"id": 2,
+		"type": "slider",
+		"story_text": "In deiner Region soll eine neue Fabrik entstehen. Sie bringt dringend benötigte Jobs, erfordert aber die Rodung eines lokalen Naherholungswaldes. Deine Haltung?",
+		"min_label": "Natur & Lebensqualität vor Ort sind unantastbar – kein Baum weicht für Industrie.",
+		"max_label": "Wirtschaftliche Sicherheit und Arbeitsplätze gehen vor – die Region braucht Perspektive.",
+		"axis_id": "ecology-economy",
+		"tags": [
+			"environment",
+			"employment",
+			"regional"
+		]
+	},
+	{
+		"id": 3,
+		"type": "multiple_choice",
+		"story_text": "Du findest trotz Rechtsanspruch keinen Kita-Platz für dein Kind oder wartest ewig auf einen wichtigen Amtsbescheid. Welchen Weg gehst du?",
+		"answers": [
+			{
+				"text": "Ich klage mein Recht ein und erstreite mir den Anspruch über den harten, offiziellen Weg.",
+				"impacts": [
+					{
+						"axis_id": "market-state",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Ich suche private Alternativen (Tageseltern, private Netzwerke), um flexibel und unabhängig zu bleiben.",
+				"impacts": [
+					{
+						"axis_id": "market-state",
+						"delta": -0.8
+					}
+				]
+			},
+			{
+				"text": "Ich stecke im Alltag zurück (z.B. Arbeitszeit reduzieren), um das Problem intern aufzufangen.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"family",
+			"bureaucracy",
+			"pragmatism"
+		]
+	},
+	{
+		"id": 4,
+		"type": "slider",
+		"story_text": "Medizinische Versorgung: Für Routine-Termine beim Facharzt wartest du Monate, während Privatversicherte sofort drankommen. Wie gehst du mit diesem System um?",
+		"min_label": "Das System frustriert mich zutiefst. Ich erwarte absolute Gleichbehandlung für jeden Körper.",
+		"max_label": "Ich sorge privat vor oder zahle extra, um für mich und meine Familie die schnellste Heilung zu sichern.",
+		"axis_id": "individual-collective",
+		"tags": [
+			"healthcare",
+			"fairness"
+		]
+	},
+	{
+		"id": 5,
+		"type": "slider",
+		"story_text": "Nachhaltigkeit im Alltag: Klimafreundliche Produkte (Bio-Lebensmittel, faire Kleidung) sind deutlich teurer als Discounter-Ware, das Monatsbudget ist jedoch endlich.",
+		"min_label": "Ich kaufe konsequent nach Preis und Praktikabilität. Mein persönliches Budget hat absolute Priorität.",
+		"max_label": "Ich schränke mich in anderen Bereichen massiv ein, um meinen Konsum ökologisch sauber zu halten.",
+		"axis_id": "consumption-ecology",
+		"tags": [
+			"climate",
+			"consumer-behavior",
+			"finance"
+		]
+	},
+	{
+		"id": 6,
+		"type": "multiple_choice",
+		"story_text": "Ein riesiger Logistik-Konzern baut ein Zentrum vor deiner Stadt. Die Arbeitsbedingungen dort sind extrem hart (Akkord, Mindestlohn), aber es stellt jeden ein. Wie bewertest du das?",
+		"answers": [
+			{
+				"text": "Ausbeutung. Solche Bedingungen gehören gesetzlich verboten und schärfer kontrolliert.",
+				"impacts": [
+					{
+						"axis_id": "market-state",
+						"delta": 0.9
+					}
+				]
+			},
+			{
+				"text": "Es gilt Vertragsfreiheit. Niemand wird gezwungen, dort zu arbeiten. Jeder ist seines eigenen Glückes Schmied.",
+				"impacts": [
+					{
+						"axis_id": "market-state",
+						"delta": -0.9
+					}
+				]
+			},
+			{
+				"text": "Es ist eine wichtige Brücke. Für Menschen ohne Ausbildung ist es eine echte Chance auf schnelles Geld.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"employment",
+			"labor",
+			"economy"
+		]
+	},
+	{
+		"id": 7,
+		"type": "multiple_choice",
+		"story_text": "Digitale Souveränität: Große Tech-Konzerne tracken deine Alltagsdaten auf Schritt und Tritt, bieten dafür aber exzellenten Komfort im Alltag (Maps, Bezahlfunktionen, KI-Assistenten).",
+		"answers": [
+			{
+				"text": "Digital Detox / Privacy First: Ich weiche gezielt auf lokale, datenschutzfreundliche Open-Source-Software aus.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": -1.0
+					}
+				]
+			},
+			{
+				"text": "Maximale Effizienz: Ich nutze alle smarten Tools bedenkenlos aus, um meinen Alltag perfekt zu optimieren.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": 1.0
+					}
+				]
+			},
+			{
+				"text": "Pragmatische Akzeptanz: Ich weiß, dass ich bezahle, aber die Bequemlichkeit im Alltag überwiegt einfach.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"technology",
+			"privacy",
+			"digital-life"
+		]
+	},
+	{
+		"id": 8,
+		"type": "slider",
+		"story_text": "Leistungsgesellschaft: Dein Umfeld und dein Job verlangen ständige Erreichbarkeit und stetige Selbstoptimierung. Wie reagiert deine Psyche darauf?",
+		"min_label": "Radikaler Fokus auf Mental Health: Ich schalte bewusst ab und verweigere mich dem Optimierungsdruck.",
+		"max_label": "Ehrgeiz treibt mich an: Ich nutze den Druck, um resilienter zu werden und persönlich zu wachsen.",
+		"axis_id": "mental-health-performance",
+		"tags": [
+			"mental-health",
+			"work-culture"
+		]
+	},
+	{
+		"id": 9,
+		"type": "multiple_choice",
+		"story_text": "Veränderungen im eigenen Wohnumfeld: In deiner direkten Nachbarschaft verändert sich durch Zuzug oder neue kulturelle/religiöse Einrichtungen das gewohnte Straßenbild.",
+		"answers": [
+			{
+				"text": "Bereicherung: Ich suche den offenen Dialog und freue mich über neue Impulse im Viertel.",
+				"impacts": [
+					{
+						"axis_id": "progressive-conservative",
+						"delta": -0.9
+					}
+				]
+			},
+			{
+				"text": "Skepsis: Mir ist der Erhalt lokaler Traditionen und die gewohnte Identität meines Umfelds wichtig.",
+				"impacts": [
+					{
+						"axis_id": "progressive-conservative",
+						"delta": 0.9
+					}
+				]
+			},
+			{
+				"text": "Neutralität: Solange meine persönliche Ruhe nicht gestört wird, lebt jeder nach seiner Facon.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"culture",
+			"values",
+			"neighborhood"
+		]
+	},
+	{
+		"id": 10,
+		"type": "budget_allocation",
+		"max_points": 5,
+		"story_text": "Die Schere zwischen Arm und Reich geht gefühlt weiter auseinander. Wo siehst du den effektivsten Hebel für eine gerechtere Gesellschaft? Verteile 5 Punkte:",
+		"options": [
+			{
+				"id": "taxation",
+				"text": "Staatliche Umverteilung: Hohe Vermögen und Erbschaften müssen spürbar besteuert werden, um das Kollektiv zu stärken."
+			},
+			{
+				"id": "education",
+				"text": "Chancengleichheit von unten: Massive Investitionen in Bildung und Kitas, damit Herkunft keine Rolle mehr spielt."
+			},
+			{
+				"id": "free-market",
+				"text": "Eigenverantwortung stärken: Vermögensaufbau für breite Massen erleichtern (z.B. Aktien, Freibeträge), statt Leistung zu bestrafen."
+			}
+		],
+		"tags": [
+			"economy",
+			"equality",
+			"wealth"
+		]
+	},
+	{
+		"id": 11,
+		"type": "slider",
+		"story_text": "Mobilität der Zukunft: Deine Stadt plant, die Innenstadt komplett autofrei zu gestalten. Parkplätze fallen weg, dafür gibt es mehr Radwege und Grünflächen.",
+		"min_label": "Ein massiver Einschnitt in meine Freiheit und Alltagslogistik. Das Auto bleibt unverzichtbar.",
+		"max_label": "Genau richtig. Lebenswerte Städte entstehen erst, wenn wir den Blechlawinen den Platz nehmen.",
+		"axis_id": "mobility-ecology",
+		"tags": [
+			"mobility",
+			"urban",
+			"climate"
+		]
+	},
+	{
+		"id": 12,
+		"type": "multiple_choice",
+		"story_text": "Künstliche Intelligenz am Arbeitsplatz: Eine neue Software könnte Teile deines Jobs oder deiner Zuarbeit automatisieren. Wie positionierst du dich?",
+		"answers": [
+			{
+				"text": "Absoluter Fokus auf Weiterbildung: Ich lerne sofort, die KI als Werkzeug zu beherrschen, um meinen Wert zu steigern.",
+				"impacts": [
+					{
+						"axis_id": "mental-health-performance",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Skepsis und Schutz: Ich fordere (ggf. über den Betriebsrat) klare Regeln und Garantien gegen den Arbeitsplatzabbau.",
+				"impacts": [
+					{
+						"axis_id": "market-state",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Gelassenheit: Menschliche Intuition und Empathie lassen sich in meinem Bereich nicht so einfach ersetzen.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"technology",
+			"employment",
+			"future-of-work"
+		]
+	},
+	{
+		"id": 13,
+		"type": "budget_allocation",
+		"max_points": 5,
+		"story_text": "Das Rentensystem steht unter Druck. Wie sollte die Gesellschaft auf den demografischen Wandel reagieren, um Altersarmut zu verhindern? Verteile 5 Punkte:",
+		"options": [
+			{
+				"id": "tax-funded",
+				"text": "Steuerzuschüsse erhöhen: Reiche und Beamte mit in die Pflicht nehmen, um das Rentenniveau stabil zu halten."
+			},
+			{
+				"id": "private-provision",
+				"text": "Mehr Eigenvorsorge: Den Bürgerinnen mehr Anreize und steuerfreie Wege für private Altersvorsorge bieten."
+			},
+			{
+				"id": "longer-worklife",
+				"text": "Länger arbeiten: Das Renteneintrittsalter dynamisch an die steigende Lebenserwartung koppeln."
+			}
+		],
+		"tags": [
+			"economy",
+			"generation",
+			"social-security"
+		]
+	},
+	{
+		"id": 14,
+		"type": "slider",
+		"story_text": "Ernährung und Steuern: Um Volkskrankheiten und CO2-Ausstoß zu senken, wird über eine spürbare Fleisch- und Zuckersteuer nachgedacht.",
+		"min_label": "Staatliche Bevormundung. Was auf meinen Teller kommt, ist allein meine Entscheidung.",
+		"max_label": "Sinnvolle Lenkungssteuer. Der Staat muss ungesunde und klimaschädliche Reize eindämmen.",
+		"axis_id": "market-state",
+		"tags": [
+			"food",
+			"healthcare",
+			"lifestyle"
+		]
+	},
+	{
+		"id": 15,
+		"type": "multiple_choice",
+		"story_text": "Umgang mit Energieknappheit: Ein neuer Windpark soll in Sichtweite deines Hauses gebaut werden, um sauberen Strom für die Region zu sichern.",
+		"answers": [
+			{
+				"text": "Uneingeschränkte Zustimmung: Die Energiewende funktioniert nur, wenn wir alle die optischen Folgen mittragen.",
+				"impacts": [
+					{
+						"axis_id": "ecology-economy",
+						"delta": -0.9
+					}
+				]
+			},
+			{
+				"text": "Ablehnung/Verschiebung: Grundsätzlich ja, aber nicht so nah an Wohngebieten (Infraschall, Naturschutz vor Ort).",
+				"impacts": [
+					{
+						"axis_id": "ecology-economy",
+						"delta": 0.9
+					}
+				]
+			},
+			{
+				"text": "Kompromiss: Nur bei direkter finanzieller Beteiligung der Anwohner (z.B. durch günstigeren Regionalstrom).",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"environment",
+			"energy",
+			"regional"
+		]
+	},
+	{
+		"id": 16,
+		"type": "slider",
+		"story_text": "Sprache und Wandel: In öffentlich-rechtlichen Medien und Behörden wird zunehmend geschlechtergerechte Sprache (z.B. Gender-Sternchen) genutzt.",
+		"min_label": "Künstliche Ideologie, die die Sprache verunstaltet und die Mehrheit der Menschen ignoriert.",
+		"max_label": "Ein wichtiger und einfacher Schritt, um alle Identitäten sichtbar zu machen und einzubinden.",
+		"axis_id": "progressive-conservative",
+		"tags": [
+			"culture",
+			"values",
+			"society"
+		]
+	},
+	{
+		"id": 17,
+		"type": "multiple_choice",
+		"story_text": "Schulsystem und Digitalisierung: An der Schule deines Kindes sollen traditionelle Schulbücher komplett durch Tablets und KI-Lernsoftware ersetzt werden.",
+		"answers": [
+			{
+				"text": "Fortschritt begrüßen: Das bereitet die Kinder perfekt auf die digitale und automatisierte Welt vor.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Fokus aufs Analoge: Kritische Medienkompetenz ja, aber die Basis müssen Haptik, Schreiben mit der Hand und Konzentration sein.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": -0.8
+					}
+				]
+			},
+			{
+				"text": "Sorge um Chancengleichheit: Funktioniert nur, wenn der Staat die Geräte stellt und niemand abgehängt wird.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"education",
+			"technology",
+			"family"
+		]
+	},
+	{
+		"id": 18,
+		"type": "slider",
+		"story_text": "Bargeld vs. Digitales Bezahlen: Immer mehr Geschäfte und Cafés in deiner Stadt akzeptieren aus Effizienzgründen kein Bargeld mehr ('Card only').",
+		"min_label": "Gefährlich. Bargeld ist gedruckte Freiheit und schützt vor lückenloser digitaler Überwachung.",
+		"max_label": "Überfällig. Es ist hygienischer, schneller und spart lästiges Kleingeld-Suchen.",
+		"axis_id": "privacy-comfort",
+		"tags": [
+			"finance",
+			"technology",
+			"privacy"
+		]
+	},
+	{
+		"id": 19,
+		"type": "budget_allocation",
+		"max_points": 5,
+		"story_text": "Fachkräftemangel im Handwerk und in der Pflege: Wie lösen wir die kritische Lücke in den kommenden Jahren? Verteile 5 Punkte auf deine Prioritäten:",
+		"options": [
+			{
+				"id": "immigration",
+				"text": "Gezielte Zuwanderung: Bürokratiehürden massiv senken, um qualifizierte Arbeitskräfte aus dem Ausland anzulocken."
+			},
+			{
+				"id": "wages",
+				"text": "Löhne und Bedingungen: Diese Berufe durch spürbar höhere Gehälter und bessere Arbeitszeiten attraktiver machen."
+			},
+			{
+				"id": "prestige",
+				"text": "Akademisierung stoppen: Das gesellschaftliche Ansehen von Ausbildungsberufen gegenüber dem Studium stärken."
+			}
+		],
+		"tags": [
+			"employment",
+			"labor",
+			"immigration"
+		]
+	},
+	{
+		"id": 20,
+		"type": "slider",
+		"story_text": "Umgang mit Kriminalität und Sicherheit: Nach Vorfällen an zentralen Plätzen in deiner Stadt wird über eine flächendeckende Videoüberwachung mit Gesichtserkennung diskutiert.",
+		"min_label": "Prävention geht vor. Wer nichts zu verbergen hat, profitiert von mehr Sicherheit auf der Straße.",
+		"max_label": "Ein massiver Schritt Richtung Überwachungsstaat. Der öffentliche Raum muss frei von Generalverdacht sein.",
+		"axis_id": "privacy-comfort",
+		"tags": [
+			"privacy",
+			"security",
+			"urban"
+		]
+	},
+	{
+		"id": 21,
+		"type": "multiple_choice",
+		"story_text": "Internationale Lieferketten: Ein Produkt, das du dringend brauchst, ist aus heimischer, fairer Produktion teuer und lieferverzögert, im globalen Onlinehandel aber billig und sofort da.",
+		"answers": [
+			{
+				"text": "Patriotisch & Fair: Ich warte und zahle mehr, um lokale Unternehmen und faire Arbeitsbedingungen zu stützen.",
+				"impacts": [
+					{
+						"axis_id": "individual-collective",
+						"delta": -0.8
+					}
+				]
+			},
+			{
+				"text": "Pragmatisch globalisiert: Der Markt ist global. Ich kaufe dort, wo Preis und Leistung für mich am besten matchen.",
+				"impacts": [
+					{
+						"axis_id": "individual-collective",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Zähneknirschend billig: Mein Budget lässt mir aktuell schlicht keine andere Wahl, als das günstigere Angebot zu nehmen.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"consumption-ecology",
+			"finance",
+			"globalization"
+		]
+	},
+	{
+		"id": 22,
+		"type": "slider",
+		"story_text": "Erbschaft und Gerechtigkeit: Jemand erbt mehrere Immobilien, während ein anderer trotz Vollzeitjob niemals Wohneigentum besitzen wird. Wie stehst du zu diesem Start-Unterschied?",
+		"min_label": "Familienbesitz muss geschützt werden. Was Eltern erwirtschaften, gehört ohne staatlichen Zugriff den Kindern.",
+		"max_label": "Ungerecht. Hohe Erbschaften müssen extrem stark besteuert werden, um allen Kindern gleiche Chancen zu finanzieren.",
+		"axis_id": "individual-collective",
+		"tags": [
+			"wealth",
+			"equality",
+			"family"
+		]
+	},
+	{
+		"id": 23,
+		"type": "multiple_choice",
+		"story_text": "Umgang mit Protesten: Klimaaktivisten blockieren Hauptstraßen im Berufsverkehr, um die Politik zum Handeln zu zwingen. Wie reagierst du als Betroffene(r)?",
+		"answers": [
+			{
+				"text": "Absolutes Unverständnis: Das ist Nötigung und spaltet die Gesellschaft, statt dem Klimaschutz zu helfen.",
+				"impacts": [
+					{
+						"axis_id": "progressive-conservative",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Volles Verständnis: Die Klimakrise ist so akut, dass radikale Aufmerksamkeit und ziviler Ungehorsam legitim sind.",
+				"impacts": [
+					{
+						"axis_id": "progressive-conservative",
+						"delta": -0.8
+					}
+				]
+			},
+			{
+				"text": "Inhaltliche Zustimmung, methodische Ablehnung: Das Ziel ist richtig, aber die Blockade unschuldiger Pendler ist der falsche Weg.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"climate",
+			"values",
+			"society"
+		]
+	},
+	{
+		"id": 24,
+		"type": "slider",
+		"story_text": "Umgang mit Fehlern der Vergangenheit (Cancel Culture / Denkkmäler): Statuen historischer Persönlichkeiten, die aus heutiger Sicht rassistische oder koloniale Werte vertraten, stehen zur Debatte.",
+		"min_label": "Abreißen oder ins Museum verbannen: Der öffentliche Raum sollte keine Werte von gestern verherrlichen.",
+		"max_label": "Stehen lassen und kontextualisieren: Geschichte lässt sich nicht nachträglich reinwaschen, sie gehört zum Stadtbild.",
+		"axis_id": "progressive-conservative",
+		"tags": [
+			"culture",
+			"history",
+			"values"
+		]
+	},
+	{
+		"id": 25,
+		"type": "budget_allocation",
+		"max_points": 5,
+		"story_text": "Forschung und Innovation: Der Staat vergibt Fördergelder für die technologische Entwicklung. Wohin sollte das meiste Geld fließen? Verteile 5 Punkte:",
+		"options": [
+			{
+				"id": "green-tech",
+				"text": "Klimaforschung & Erneuerbare Energien: Kernproblem der Menschheit lösen (Fusionsenergie, CO2-Speicherung)."
+			},
+			{
+				"id": "biotech-pharma",
+				"text": "Medizin & Biotechnologie: Heilung von Krebs, Volkskrankheiten und Erforschung von gesundem Altern."
+			},
+			{
+				"id": "defense-security",
+				"text": "Sicherheit & Verteidigung: Cyber-Abwehr und moderne Wehrtechnik in einer instabilen geopolitischen Lage."
+			}
+		],
+		"tags": [
+			"technology",
+			"future",
+			"state-funding"
+		]
+	},
+	{
+		"id": 26,
+		"type": "slider",
+		"story_text": "Subventionen in der Krise: Wenn ein traditioneller Großkonzern (z.B. Automobilbau oder Stahl) vor der Pleite steht, fordern Gewerkschaften staatliche Rettungsmilliarden.",
+		"min_label": "Staatliche Rettungspflicht: Es geht um tausende Familienschicksale und das industrielle Rückgrat des Landes.",
+		"max_label": "Marktwirtschaftliche Härte: Wer sich nicht an den Wandel anpasst, muss weichen. Steuergelder sind kein Insolvenzschutz.",
+		"axis_id": "market-state",
+		"tags": [
+			"economy",
+			"employment",
+			"finance"
+		]
+	},
+	{
+		"id": 27,
+		"type": "multiple_choice",
+		"story_text": "Organspende: Der Staat diskutiert die 'Widerspruchslösung' – jeder ist automatisch Spender, es sei denn, man widerspricht zu Lebzeiten aktiv.",
+		"answers": [
+			{
+				"text": "Richtiger Schritt: Das rettet tausende Leben und nimmt den Angehörigen in einer schweren Stunde die Entscheidung ab.",
+				"impacts": [
+					{
+						"axis_id": "individual-collective",
+						"delta": -0.8
+					}
+				]
+			},
+			{
+				"text": "Falscher Schritt: Mein Körper gehört mir. Der Staat darf kein automatisches Zugriffsrecht auf meine Organe haben.",
+				"impacts": [
+					{
+						"axis_id": "individual-collective",
+						"delta": 0.8
+					}
+				]
+			},
+			{
+				"text": "Unentschieden: Die Absicht ist gut, aber die Aufklärung und Information der Bevölkerung muss absolut lückenlos sein.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"healthcare",
+			"values",
+			"bureaucracy"
+		]
+	},
+	{
+		"id": 28,
+		"type": "slider",
+		"story_text": "Psychische Belastung bei Kindern und Jugendlichen: Durch Social Media und Leistungsdruck steigen die Zahlen mentaler Krisen. Wo liegt die Hauptverantwortung?",
+		"min_label": "Im Elternhaus und bei der Eigenverantwortung: Medienzeiten regulieren, Resilienz stärken und familiären Rückhalt bieten.",
+		"max_label": "In den Strukturen: Schulen müssen Druck abbauen, Social-Media-Konzerne müssen gesetzlich scharf reguliert werden.",
+		"axis_id": "mental-health-performance",
+		"tags": [
+			"mental-health",
+			"family",
+			"technology"
+		]
+	},
+	{
+		"id": 29,
+		"type": "multiple_choice",
+		"story_text": "Infrastruktur im ländlichen Raum: In einem kleinen Dorf schließt der letzte Supermarkt. Der Bürgermeister schlägt einen rein digitalen, personalfreien 24/7-Mini-Markt vor.",
+		"answers": [
+			{
+				"text": "Großartige Lösung: Moderne Technik sichert die Versorgung im ländlichen Raum unkompliziert ab.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": 0.7
+					}
+				]
+			},
+			{
+				"text": "Verlust von Lebensqualität: Ohne Personal stirbt der letzte soziale Treffpunkt im Dorf. Ich will Menschen hinter der Kasse.",
+				"impacts": [
+					{
+						"axis_id": "privacy-comfort",
+						"delta": -0.7
+					}
+				]
+			},
+			{
+				"text": "Skeptisch, aber nötig: Besser als gar keine Versorgung mehr zu haben, auch wenn der Charme verloren geht.",
+				"impacts": []
+			}
+		],
+		"tags": [
+			"regional",
+			"urban",
+			"technology"
+		]
+	},
+	{
+		"id": 30,
+		"type": "slider",
+		"story_text": "Wohnen und Alter: Viele ältere Menschen leben allein in sehr großen Wohnungen oder Häusern, während junge Familien keinen Platz finden. Wie sollte die Gesellschaft damit umgehen?",
+		"min_label": "Absoluter Schutz des Wohnstatus: Wer jahrzehntelang Miete zahlt oder sein Haus abbezahlt hat, hat das Recht auf ungestörten Verbleib.",
+		"max_label": "Anreize zum Tausch: Der Staat sollte ältere Menschen gezielt steuerlich und logistisch unterstützen, in kleinere Wohnungen umzuziehen.",
+		"axis_id": "individual-collective",
+		"tags": [
+			"housing",
+			"generation",
+			"urban"
+		]
+	}
 ]

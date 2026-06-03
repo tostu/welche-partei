@@ -14,6 +14,7 @@
 	import { parties } from '$lib/parties';
 	import { realityChecks, calculatePartyPenalty } from '$lib/ideology/realityChecks';
 	import { profilingQuestions } from '$lib/profiling/questions';
+	import { Sparkles, RotateCcw } from 'lucide-svelte';
 
 	let allMatches = $state<PartyMatch[]>([]);
 	let showResults = $state(false);
@@ -22,13 +23,6 @@
 
 	let selectedPartyId = $state<string>('');
 	let activeTab = $state<'comparison' | 'haertetest' | 'impact'>('comparison');
-
-	// Set initial selected party to the best match when available
-	$effect(() => {
-		if (showResults && !selectedPartyId && adjustedMatches.length > 0) {
-			selectedPartyId = adjustedMatches[0].partyId;
-		}
-	});
 
 	// Select statements for the selected party
 	let selectedStatements = $derived(realityChecks.filter((s) => s.partyId === selectedPartyId));
@@ -94,18 +88,6 @@
 		openExplanations[stmtId] = !openExplanations[stmtId];
 	}
 
-	const smallerParties = [
-		'Die Grünen',
-		'Die Linke',
-		'FDP',
-		'BSW',
-		'Volt',
-		'Freie Wähler',
-		'Tierschutzpartei',
-		'ÖDP',
-		'Piratenpartei'
-	];
-
 	// Derived adjusted matches
 	let adjustedMatches = $derived.by(() => {
 		const matches = allMatches.map((match) => {
@@ -128,19 +110,16 @@
 	// Select the match data for the selected party
 	let selectedMatch = $derived(adjustedMatches.find((m) => m.partyId === selectedPartyId) || null);
 
-	let alternativeMatch = $derived.by(() => {
-		if (!bestMatch) return null;
-		const isEstablishment = bestMatch.partyId === 'CDU' || bestMatch.partyId === 'SPD';
-		const isAfd = bestMatch.partyId === 'AFD';
+	let showAllParties = $state(false);
+	let displayedMatches = $derived(showAllParties ? adjustedMatches : adjustedMatches.slice(0, 5));
 
-		if (isEstablishment || isAfd) {
-			const smallerAlternatives = adjustedMatches.filter((m) => smallerParties.includes(m.partyId));
-			return smallerAlternatives[0] || null;
+
+	// Set initial selected party to the best match when available
+	$effect(() => {
+		if (showResults && !selectedPartyId && adjustedMatches.length > 0) {
+			selectedPartyId = adjustedMatches[0].partyId;
 		}
-		return null;
 	});
-
-	let showAlternative = $derived(alternativeMatch !== null);
 
 	onMount(() => {
 		// Check if quiz is complete
@@ -175,451 +154,278 @@
 		if (value > 7) return axis.max_label;
 		return 'Ausgewogen';
 	}
-</script><div class="mx-6 mt-6 flex min-h-full w-full flex-col items-center gap-8 lg:mx-[10vw] xl:mx-[15vw]">
-	<div class="text-center">
-		<h1 class="text-4xl font-bold text-base-content">Ihr Ergebnis</h1>
-		<p class="mt-2 text-lg text-base-content/85">
-			Basierend auf Ihren ideologischen Positionen haben wir Ihre beste Übereinstimmung gefunden.
+</script><div class="mx-auto mt-12 flex w-full max-w-7xl flex-col items-center gap-12 px-6 lg:px-12">
+	<div class="text-center space-y-4">
+		<span class="badge badge-primary font-black uppercase tracking-widest text-xs px-6 py-4 shadow-glow">Auswertung abgeschlossen</span>
+		<h1 class="text-5xl md:text-7xl font-black text-primary leading-tight">Ihr Ergebnis</h1>
+		<p class="max-w-2xl mx-auto text-lg md:text-xl font-medium text-primary/70 leading-relaxed">
+			Basierend auf Ihren Werten und Entscheidungen haben wir die Parteien gefunden, die am besten zu Ihnen passen.
 		</p>
-		<button
-			class="btn btn-outline btn-sm mt-4 text-base-content border-base-content/30 hover:bg-base-content/10"
-			onclick={() => {
-				resetQuiz();
-				goto('/fragen');
-			}}
-		>
-			Quiz neu starten
-		</button>
 	</div>
 
 	{#if showResults && bestMatch}
-		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
-			<!-- ALTERNATIVE (Better Option) -->
-			{#if showAlternative && alternativeMatch}
-				<div
-					class="card card-compact w-full border-2 border-success bg-base-150 shadow-xl transition-transform hover:scale-[1.02]"
-				>
-					<div class="card-body">
-						<div class="card-title flex-col gap-4">
-							<h2 class="text-2xl font-bold">✨ Empfohlene Alternative</h2>
-							<img
-								src={alternativeMatch.party.logo}
-								alt={alternativeMatch.party.name}
-								class="h-24 w-24 rounded-full object-contain"
-							/>
-							<h3 class="text-3xl font-bold">{alternativeMatch.party.name}</h3>
-						</div>
-
-						<div class="my-4 text-center">
-							<div class="flex items-center justify-center gap-2 text-5xl font-bold text-success">
-								{alternativeMatch.matchPercentage.toFixed(0)}%
-								<div class="flex flex-col gap-1">
-									{#if alternativeMatch.penalty > 0}
-										<span class="badge badge-error badge-sm text-[10px] text-white"
-											>-{alternativeMatch.penalty}% Abzug</span
-										>
-									{/if}
-								</div>
-							</div>
-							<div class="text-sm text-base-content/70">Ideologische Übereinstimmung</div>
-						</div>
-
-						<div class="text-sm">
-							<p class="mb-4">
-								Diese Partei hat eine hohe ideologische Übereinstimmung mit Ihren Werten und kann
-								durch eine direkte Stimme mehr Veränderung bewirken als etablierte Großparteien.
-							</p>
-						</div>
-
-						<div class="card-actions mt-4 justify-center">
-							<button class="btn btn-success btn-wide">Mehr erfahren</button>
-						</div>
-					</div>
+		<div class="grid w-full grid-cols-1 gap-8 items-stretch">
+			<!-- SINGLE RESULT -->
+			<div class="glass-card rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center text-center relative overflow-hidden border-accent/20">
+				<div class="absolute top-0 right-0 p-6 opacity-10">
+					<Sparkles class="h-32 w-32 text-accent animate-pulse-slow" />
 				</div>
-
-				<!-- BEST MATCH (Familiar Choice) -->
-				<div
-					class="card card-compact w-full bg-base-200 shadow-lg transition-transform hover:scale-[1.02]"
-				>
-					<div class="card-body">
-						<div class="card-title flex-col gap-4">
-							<h2 class="text-2xl font-bold">Beste Übereinstimmung</h2>
-							<img
-								src={bestMatch.party.logo}
-								alt={bestMatch.party.name}
-								class="h-24 w-24 rounded-full object-contain opacity-70"
-							/>
-							<h3 class="text-3xl font-bold">{bestMatch.party.name}</h3>
-						</div>
-
-						<div class="my-4 text-center">
-							<div class="flex items-center justify-center gap-2 text-4xl font-bold">
-								{bestMatch.matchPercentage.toFixed(0)}%
-								<div class="flex flex-col gap-1">
-									{#if bestMatch.penalty > 0}
-										<span class="badge badge-error badge-sm text-[10px] text-white"
-											>-{bestMatch.penalty}% Abzug</span
-										>
-									{/if}
-								</div>
-							</div>
-							<div class="text-sm text-base-content/70">Übereinstimmung</div>
-						</div>
-
-						<p class="text-sm">
-							Dies ist die Partei mit der höchsten ideologischen Übereinstimmung. Sie repräsentiert
-							oft die etablierte Politik. Eine Stimme für kleinere Parteien kann jedoch mehr
-							Veränderung bewirken.
-						</p>
-
-						<div class="card-actions mt-4 justify-center">
-							<button class="btn btn-ghost btn-wide">Details</button>
-						</div>
+				<h2 class="text-lg font-black text-primary/70 uppercase tracking-widest mb-6">Beste Übereinstimmung</h2>
+				<img
+					src={bestMatch.party.logo}
+					alt={bestMatch.party.name}
+					class="mb-6 h-32 w-32 rounded-full object-contain bg-white p-4 shadow-premium border-4 border-white animate-float"
+				/>
+				<h3 class="text-4xl md:text-5xl font-black text-primary mb-4">{bestMatch.party.name}</h3>
+				<div class="mb-8">
+					<div class="flex items-center justify-center gap-3">
+						<span class="text-7xl font-black text-primary tracking-tighter">{bestMatch.matchPercentage.toFixed(0)}%</span>
+						{#if bestMatch.penalty > 0}
+							<span class="badge badge-error font-black text-xs text-white py-3 px-4 rounded-xl shadow-md">-{bestMatch.penalty}%</span>
+						{/if}
 					</div>
+					<div class="text-xs font-black uppercase tracking-widest text-primary/30 mt-2">Gesamt-Übereinstimmung</div>
 				</div>
-			{:else}
-				<!-- SINGLE RESULT (No alternative) -->
-				<div class="card card-compact w-full bg-base-100 shadow-xl lg:col-span-2">
-					<div class="card-body items-center text-center">
-						<h2 class="card-title text-3xl">Beste Übereinstimmung</h2>
-						<img
-							src={bestMatch.party.logo}
-							alt={bestMatch.party.name}
-							class="my-4 h-32 w-32 rounded-full object-contain"
-						/>
-						<h3 class="text-4xl font-bold">{bestMatch.party.name}</h3>
-						<div class="my-4">
-							<div class="flex items-center justify-center gap-2 text-5xl font-bold text-primary">
-								{bestMatch.matchPercentage.toFixed(0)}%
-								<div class="flex flex-col gap-1">
-									{#if bestMatch.penalty > 0}
-										<span class="badge badge-error badge-sm text-[10px] text-white"
-											>-{bestMatch.penalty}% Abzug</span
-										>
-									{/if}
-								</div>
-							</div>
-							<div class="text-lg text-base-content/70">Ideologische Übereinstimmung</div>
-						</div>
-					</div>
-				</div>
-			{/if}
+				<button class="btn btn-primary btn-lg h-auto py-4 px-10 rounded-2xl text-lg text-white font-black shadow-premium hover:shadow-glow transition-all">
+					Wahlprogramm entdecken
+				</button>
+			</div>
 		</div>
 
 		<!-- INTERACTIVE RESULTS DASHBOARD -->
-		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 pt-4">
+		<div class="grid w-full grid-cols-1 gap-12 lg:grid-cols-12 pt-12">
 			<!-- LEFT PANEL: Alle Parteien im Vergleich -->
-			<div class="flex flex-col gap-4 lg:col-span-4">
-				<div class="rounded-2xl border border-base-300/40 bg-base-250 p-6 shadow-md">
-					<h2 class="text-xl font-black text-base-content">Alle Parteien im Vergleich</h2>
-					<p class="text-xs text-base-content/70 mt-1">Wählen Sie eine Partei, um Details anzuzeigen</p>
+			<div class="flex flex-col gap-6 lg:col-span-4">
+				<div class="glass-card rounded-[2.5rem] p-8 border-white/30">
+					<div class="space-y-2">
+						<h2 class="text-2xl font-black text-primary">Ranking</h2>
+						<p class="text-xs font-bold text-primary/70 uppercase tracking-widest">Alle 24 Parteien im Vergleich</p>
+					</div>
 					
-					<div class="mt-6 flex flex-col gap-3">
-						{#each adjustedMatches as match, index}
+					<div class="mt-8 flex flex-col gap-3">
+						{#each displayedMatches as match, index}
 							{@const isSelected = selectedPartyId === match.partyId}
 							<button
 								onclick={() => selectedPartyId = match.partyId}
-								class="flex w-full items-center justify-between gap-4 rounded-xl border-2 p-4 text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 {isSelected 
-									? 'border-primary bg-base-200/50 shadow-lg shadow-primary/5 scale-[1.01]' 
-									: 'border-base-300/20 bg-base-200 hover:border-base-300/40 hover:bg-base-200/80 hover:shadow-sm'}"
+								class="group flex w-full items-center justify-between gap-4 rounded-3xl border-2 p-5 text-left transition-all duration-300 {isSelected 
+									? 'border-primary bg-primary text-white shadow-premium scale-[1.05] z-10' 
+									: 'border-white/20 bg-white/10 hover:border-white/40 hover:bg-white/20'}"
 							>
-								<div class="flex items-center gap-3 min-w-0">
-									<span class="font-azeret shrink-0 text-xl font-bold text-base-content/60 select-none">
+								<div class="flex items-center gap-4 min-w-0">
+									<span class="font-black shrink-0 text-xl opacity-30">
 										{(index + 1).toString().padStart(2, '0')}
 									</span>
 									{#if match.party.logo}
-										<img
-											src={match.party.logo}
-											alt={match.party.name}
-											class="h-9 w-9 rounded-full bg-white border border-base-300/30 object-contain p-0.5"
-										/>
+										<div class="h-10 w-10 rounded-full bg-white p-1 shrink-0 shadow-sm border border-white/50">
+											<img
+												src={match.party.logo}
+												alt={match.party.name}
+												class="h-full w-full object-contain"
+											/>
+										</div>
 									{/if}
 									<div class="min-w-0">
-										<div class="font-bold text-base-content text-base flex flex-wrap items-center gap-1.5 leading-tight">
-											<span class="truncate">{match.party.name}</span>
-											{#if match.penalty > 0}
-												<span class="badge badge-error badge-xs py-1.5 text-[8px] font-bold text-white uppercase tracking-wider shrink-0">
-													-{match.penalty.toFixed(0)}%
-												</span>
-											{/if}
+										<div class="font-black text-lg truncate leading-tight">
+											{match.party.name}
 										</div>
-										<div class="text-[10px] text-base-content/60 mt-0.5">Rang {index + 1}</div>
+										{#if match.penalty > 0}
+											<div class="text-[9px] font-black uppercase tracking-widest opacity-60 mt-1">
+												-{match.penalty.toFixed(0)}% Reality Check
+											</div>
+										{/if}
 									</div>
 								</div>
 								<div class="text-right shrink-0">
-									<div class="text-xl font-black text-primary font-mono">{match.matchPercentage.toFixed(0)}%</div>
-									{#if match.penalty > 0 && match.basePercentage !== undefined}
-										<div class="text-[10px] text-base-content/50 line-through font-mono leading-none mt-0.5">
-											{match.basePercentage.toFixed(0)}%
-										</div>
-									{/if}
+									<div class="text-2xl font-black font-mono leading-none">{match.matchPercentage.toFixed(0)}%</div>
 								</div>
 							</button>
 						{/each}
 					</div>
+
+					{#if adjustedMatches.length > 5}
+						<button
+							onclick={() => (showAllParties = !showAllParties)}
+							class="btn btn-ghost btn-sm w-full mt-4 text-xs font-black uppercase tracking-wider text-primary/60 hover:text-primary hover:bg-primary/5 rounded-2xl py-3"
+						>
+							{showAllParties ? 'Weniger anzeigen' : `Alle ${adjustedMatches.length} Parteien anzeigen`}
+						</button>
+					{/if}
 				</div>
 			</div>
 
-			<!-- RIGHT PANEL: Party Details, Werte-Vergleich, Positionen-Check, Einfluss -->
-			<div class="flex flex-col gap-4 lg:col-span-8">
+			<!-- RIGHT PANEL: Party Details -->
+			<div class="flex flex-col gap-6 lg:col-span-8">
 				{#if selectedMatch}
-					<div class="card w-full border border-base-300/40 bg-base-200 shadow-md overflow-hidden">
+					<div class="glass-card w-full rounded-[3rem] overflow-hidden border-white/40">
 						<!-- Header -->
-						<div class="bg-base-300/20 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-base-300/40">
-							<div class="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
+						<div class="bg-primary p-10 flex flex-col sm:flex-row items-center justify-between gap-10">
+							<div class="flex items-center gap-6 text-center sm:text-left flex-col sm:flex-row">
 								{#if selectedMatch.party.logo}
-									<img
-										src={selectedMatch.party.logo}
-										alt={selectedMatch.party.name}
-										class="h-16 w-16 rounded-full border-2 border-white bg-white object-contain p-1 shadow-sm"
-									/>
+									<div class="h-24 w-24 rounded-[2rem] bg-white p-4 shadow-xl border-4 border-white animate-float">
+										<img
+											src={selectedMatch.party.logo}
+											alt={selectedMatch.party.name}
+											class="h-full w-full object-contain"
+										/>
+									</div>
 								{/if}
-								<div>
-									<h2 class="text-2xl font-black text-base-content">{selectedMatch.party.name}</h2>
-									<p class="text-xs text-base-content/60 mt-0.5">Rang {adjustedMatches.findIndex(m => m.partyId === selectedPartyId) + 1}</p>
+								<div class="space-y-1">
+									<h2 class="text-4xl font-black text-white">{selectedMatch.party.name}</h2>
+									<div class="badge badge-accent font-black uppercase tracking-widest text-[10px] px-4 py-3">Rang {adjustedMatches.findIndex(m => m.partyId === selectedPartyId) + 1} von {adjustedMatches.length}</div>
 								</div>
 							</div>
-							<div class="text-center sm:text-right shrink-0">
-								<div class="text-4xl font-black text-primary font-mono leading-none">
+							<div class="text-center sm:text-right shrink-0 bg-white/10 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/10">
+								<div class="text-6xl font-black text-white font-mono leading-none tracking-tighter">
 									{selectedMatch.matchPercentage.toFixed(0)}%
 								</div>
-								<div class="text-[10px] font-bold text-base-content/75 uppercase tracking-wider mt-1.5">Übereinstimmung</div>
-								<div class="mt-1.5 flex flex-wrap items-center justify-center sm:justify-end gap-1.5">
-									{#if selectedMatch.penalty > 0}
-										<span class="badge badge-error badge-sm text-[10px] text-white font-bold">-{selectedMatch.penalty.toFixed(0)}% Abzug</span>
-									{/if}
-									{#if selectedMatch.basePercentage !== undefined && selectedMatch.penalty > 0}
-										<span class="text-xs text-base-content/50 line-through font-mono">Basis: {selectedMatch.basePercentage.toFixed(0)}%</span>
-									{/if}
-								</div>
+								<div class="text-[10px] font-black text-white/50 uppercase tracking-[0.2em] mt-3">Übereinstimmung</div>
 							</div>
 						</div>
 
 						<!-- Tabbed Navigation -->
-						<div class="tabs tabs-lifted w-full px-6 pt-3 bg-base-200 border-b border-base-300/40">
+						<div class="flex gap-2 p-6 bg-white/5 border-b border-white/10">
 							<button 
-								class="tab tab-md font-bold transition-all {activeTab === 'comparison' ? 'tab-active [--tab-bg:var(--fallback-b1,oklch(var(--b1)))] text-primary' : 'text-base-content/70 hover:text-base-content'}"
+								class="flex-1 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all {activeTab === 'comparison' ? 'bg-primary text-white shadow-premium' : 'text-primary/40 hover:bg-primary/5 hover:text-primary'}"
 								onclick={() => activeTab = 'comparison'}
 							>
-								📊 Werte
+								Werte-Match
 							</button>
 							<button 
-								class="tab tab-md font-bold transition-all {activeTab === 'impact' ? 'tab-active [--tab-bg:var(--fallback-b1,oklch(var(--b1)))] text-primary' : 'text-base-content/70 hover:text-base-content'}"
+								class="flex-1 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all {activeTab === 'impact' ? 'bg-primary text-white shadow-premium' : 'text-primary/40 hover:bg-primary/5 hover:text-primary'}"
 								onclick={() => activeTab = 'impact'}
 							>
-								⚡️ Wahl-Einfluss
+								Dilemma-Einfluss
 							</button>
 						</div>
 
 						<!-- Tab Content -->
-						<div class="p-6">
+						<div class="p-10">
 							{#if activeTab === 'comparison'}
 								<!-- TAB 1: VALUES COMPARISON -->
-								<div class="space-y-6">
-									<div class="text-xs text-base-content/80 leading-relaxed">
-										Vergleichen Sie Ihre Position auf den vier ideologischen Grundachsen direkt mit der 
-										<span class="font-bold text-base-content">{selectedMatch.party.name}</span>. Der Prozentwert ergibt sich aus der Gesamtdistanz aller Achsenwerte.
+								<div class="space-y-10">
+									<div class="flex items-start gap-4 p-6 bg-primary/5 rounded-3xl border border-primary/10">
+										<Sparkles class="h-6 w-6 text-accent shrink-0 mt-1" />
+										<p class="text-sm font-bold text-primary/70 leading-relaxed">
+											Hier sehen Sie, wie Ihre Position auf den vier ideologischen Grundachsen im Vergleich zur <span class="text-primary font-black">{selectedMatch.party.name}</span> liegt.
+										</p>
 									</div>
 
-									<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+									<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
 										{#each ideologicalAxes as axis}
 											{@const userScore = quizState.ideologicalProfile?.axis_scores[axis.id] || 5.5}
 											{@const partyScore = selectedPartyIdeology?.axis_scores[axis.id] || 5.5}
 
-											<div class="rounded-xl border border-base-300/40 bg-base-300/20 p-4 shadow-xs">
-												<h3 class="font-bold text-base-content text-sm">{axis.name}</h3>
-												<p class="text-[11px] text-base-content/70 mt-0.5 mb-3 leading-snug">{axis.description}</p>
+											<div class="space-y-6 p-2">
+												<div class="space-y-1">
+													<h3 class="font-black text-primary text-lg uppercase tracking-tight">{axis.name}</h3>
+													<p class="text-[11px] font-bold text-primary/40 uppercase tracking-widest">{axis.description}</p>
+												</div>
 
 												<!-- Visual slider -->
-												<div class="relative mb-2 h-10">
-													<!-- Background track -->
-													<div class="absolute left-0 right-0 top-4 h-2 rounded-full bg-base-300/60"></div>
+												<div class="relative h-12 flex items-center">
+													<div class="absolute inset-0 bg-primary/5 rounded-2xl border border-primary/10"></div>
+													<div class="absolute left-6 right-6 h-1 bg-primary/10 rounded-full"></div>
 
 													<!-- User position -->
 													<div
-														class="absolute top-2.5 z-10 h-5 w-5 rounded-full border-2 border-white bg-primary shadow-sm cursor-help hover:scale-105 transition-transform"
+														class="absolute z-20 h-8 w-8 rounded-full border-4 border-white bg-primary shadow-premium transition-all duration-500 hover:scale-110"
 														style="left: {((userScore - axis.min_value) / (axis.max_value - axis.min_value)) * 100}%; transform: translateX(-50%)"
-														title="Ihre Position: {userScore.toFixed(1)}"
-													></div>
+													>
+														<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[9px] font-black px-2 py-1 rounded-lg shadow-sm whitespace-nowrap">SIE</div>
+													</div>
 
 													<!-- Party position -->
 													<div
-														class="absolute top-2.5 z-10 h-5 w-5 rounded-full border-2 border-white bg-secondary opacity-80 shadow-sm cursor-help hover:scale-105 transition-transform"
+														class="absolute z-10 h-8 w-8 rounded-full border-4 border-white bg-secondary shadow-premium transition-all duration-500 hover:scale-110"
 														style="left: {((partyScore - axis.min_value) / (axis.max_value - axis.min_value)) * 100}%; transform: translateX(-50%)"
-														title="{selectedMatch.party.name}: {partyScore.toFixed(1)}"
-													></div>
+													>
+														<div class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-secondary text-white text-[9px] font-black px-2 py-1 rounded-lg shadow-sm whitespace-nowrap">{selectedMatch.party.name}</div>
+													</div>
 												</div>
 
 												<!-- Labels -->
-												<div class="mb-3 flex justify-between text-[10px] font-semibold text-base-content/60">
+												<div class="flex justify-between text-[10px] font-black uppercase tracking-[0.2em] text-primary/30 px-2">
 													<span>{axis.min_label}</span>
 													<span>{axis.max_label}</span>
-												</div>
-
-												<!-- Legend -->
-												<div class="flex flex-col gap-1.5 text-[11px] pt-2 border-t border-base-300/40">
-													<div class="flex items-center gap-1.5">
-														<div class="h-2 w-2 rounded-full bg-primary"></div>
-														<span class="text-base-content/70">Sie: <span class="font-bold text-base-content">{getAxisLabel(axis.id, userScore)} ({userScore.toFixed(1)})</span></span>
-													</div>
-													<div class="flex items-center gap-1.5">
-														<div class="h-2 w-2 rounded-full bg-secondary opacity-80"></div>
-														<span class="text-base-content/70">{selectedMatch.party.name}: <span class="font-bold text-base-content">{getAxisLabel(axis.id, partyScore)} ({partyScore.toFixed(1)})</span></span>
-													</div>
 												</div>
 											</div>
 										{/each}
 									</div>
 								</div>
 							{:else if activeTab === 'impact'}
-								{@const selectedPartyName = selectedMatch.party.name}
 								<!-- TAB 3: CHOICE IMPACT -->
-									<div class="space-y-6">
-										<div class="text-xs text-base-content/85 leading-relaxed">
-											Sehen Sie, wie sich Ihre Antworten bei den einzelnen Dilemma-Fragen im Vergleich zur Alternativ-Option auf die Übereinstimmung mit der 
-											<span class="font-bold text-base-content">{selectedPartyName}</span> ausgewirkt haben.
-										</div>
+								<div class="space-y-8">
+									<div class="flex items-start gap-4 p-6 bg-secondary/5 rounded-3xl border border-secondary/10">
+										<RotateCcw class="h-6 w-6 text-secondary shrink-0 mt-1" />
+										<p class="text-sm font-bold text-secondary/70 leading-relaxed">
+											Welche Entscheidungen haben den Ausschlag gegeben? Sehen Sie hier den Einfluss Ihrer Dilemma-Wahlen auf das Ergebnis.
+										</p>
+									</div>
 
-										<div class="flex flex-col gap-4">
-											{#each choiceImpacts as impact}
-												{@const question = quizState.selectedNarrativeQuestions.find((q) => q.id === impact.questionId)}
-												{@const selectedEffect = impact.partyMatchEffects.find((e) => e.partyId === selectedPartyId)}
-												{@const absDelta = selectedEffect ? Math.abs(selectedEffect.deltaPercentage) : 0}
-												{@const isPositive = selectedEffect && selectedEffect.deltaPercentage >= 0}
-												{@const hasEffect = selectedEffect && absDelta >= 0.01}
-
-												<div class="collapse collapse-arrow overflow-hidden rounded-xl border border-base-300/40 bg-base-200 shadow-xs {openQuestions[impact.questionId] ? 'collapse-open' : ''}">
-													<!-- Header -->
-													<div
-														role="button"
-														tabindex="0"
-														onclick={() => toggleQuestion(impact.questionId)}
-														onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleQuestion(impact.questionId)}
-														class="collapse-title flex cursor-pointer select-none flex-col justify-between gap-3 py-4 pr-12 text-sm font-semibold md:flex-row md:items-center"
-													>
-														<div class="flex-1 min-w-0 pr-2">
-															<span class="mb-1 block text-[9px] font-bold uppercase tracking-wider text-primary">Frage {impact.questionId}</span>
-															<span class="text-base-content text-sm leading-snug font-bold">{impact.storyText}</span>
-														</div>
-
-														<div class="flex flex-wrap items-center gap-2 shrink-0">
-															{#if hasEffect && selectedEffect}
-																<span class="font-mono text-[11px] font-bold rounded-lg px-2 py-1 border text-center {isPositive 
-																	? 'border-green-200 bg-green-50 text-green-700' 
-																	: 'border-red-200 bg-red-50 text-red-700'}">
+									<div class="flex flex-col gap-4">
+										{#each choiceImpacts as impact}
+											{@const selectedEffect = impact.partyMatchEffects.find((e) => e.partyId === selectedPartyId)}
+											{@const isPositive = selectedEffect && selectedEffect.deltaPercentage >= 0}
+											
+											<div class="glass-card rounded-3xl p-6 hover:bg-white/20 transition-all border-white/20">
+												<div class="flex flex-col md:flex-row justify-between gap-6">
+													<div class="space-y-3 flex-1">
+														<div class="flex items-center gap-3">
+															<span class="badge badge-secondary/10 text-secondary font-black text-[9px] uppercase tracking-widest px-3 py-3 border-secondary/20">Dilemma {impact.questionId}</span>
+															{#if selectedEffect}
+																<span class="font-black font-mono text-sm {isPositive ? 'text-emerald-600' : 'text-rose-600'}">
 																	{isPositive ? '+' : ''}{selectedEffect.deltaPercentage.toFixed(1)}%
-																</span>
-															{:else}
-																<span class="font-mono text-[11px] font-semibold rounded-lg px-2 py-1 border border-base-300/40 bg-base-300/20 text-base-content/60 text-center">
-																	Kein Einfluss
 																</span>
 															{/if}
 														</div>
+														<h4 class="text-lg font-black text-primary leading-tight">{impact.storyText}</h4>
 													</div>
-
-													<!-- Content -->
-													<div class="bg-base-300/10 collapse-content border-t border-base-300/30 pt-4">
-														<div class="grid grid-cols-1 gap-4 pb-2 pt-2 lg:grid-cols-2">
-															<!-- Options -->
-															<div>
-																<h4 class="mb-2 text-[10px] font-bold uppercase tracking-wider text-base-content/70">Optionen & Ihre Entscheidung</h4>
-																<div class="space-y-2 text-xs">
-																	<!-- Option A -->
-																	<div class="rounded-xl border-2 p-3 {impact.chosenOption.letter === 'A' 
-																		? 'border-primary bg-primary/5 text-base-content font-semibold shadow-xs' 
-																		: 'border-base-300/20 bg-base-200 text-base-content/50'}">
-																		<div class="flex items-start justify-between gap-2">
-																			<div>
-																				<span class="font-bold {impact.chosenOption.letter === 'A' ? 'text-primary' : 'text-base-content/60'}">A:</span>
-																				<span>{question?.optionA?.text || (impact.chosenOption.letter === 'A' ? impact.chosenOption.text : impact.alternativeOption.text)}</span>
-																			</div>
-																			{#if impact.chosenOption.letter === 'A'}
-																				<span class="badge badge-primary badge-sm px-1.5 py-1 text-[8px] font-bold tracking-wider uppercase shrink-0">Gewählt</span>
-																			{/if}
-																		</div>
-																	</div>
-																	
-																	<!-- Option B -->
-																	<div class="rounded-xl border-2 p-3 {impact.chosenOption.letter === 'B' 
-																		? 'border-primary bg-primary/5 text-base-content font-semibold shadow-xs' 
-																		: 'border-base-300/20 bg-base-200 text-base-content/50'}">
-																		<div class="flex items-start justify-between gap-2">
-																			<div>
-																				<span class="font-bold {impact.chosenOption.letter === 'B' ? 'text-primary' : 'text-base-content/60'}">B:</span>
-																				<span>{question?.optionB?.text || (impact.chosenOption.letter === 'B' ? impact.chosenOption.text : impact.alternativeOption.text)}</span>
-																			</div>
-																			{#if impact.chosenOption.letter === 'B'}
-																				<span class="badge badge-primary badge-sm px-1.5 py-1 text-[8px] font-bold tracking-wider uppercase shrink-0">Gewählt</span>
-																			{/if}
-																		</div>
-																	</div>
-
-																	<!-- Option C -->
-																	{#if question?.optionC}
-																		<div class="rounded-xl border-2 p-3 {impact.chosenOption.letter === 'C' 
-																			? 'border-primary bg-primary/5 text-base-content font-semibold shadow-xs' 
-																			: 'border-base-300/20 bg-base-200 text-base-content/50'}">
-																			<div class="flex items-start justify-between gap-2">
-																				<div>
-																					<span class="font-bold {impact.chosenOption.letter === 'C' ? 'text-primary' : 'text-base-content/60'}">C:</span>
-																					<span>{question.optionC.text}</span>
-																				</div>
-																				{#if impact.chosenOption.letter === 'C'}
-																					<span class="badge badge-primary badge-sm px-1.5 py-1 text-[8px] font-bold tracking-wider uppercase shrink-0">Gewählt</span>
-																				{/if}
-																			</div>
-																		</div>
-																	{/if}
+													
+													<div class="flex flex-col gap-2 shrink-0 md:w-64">
+														<div class="text-[9px] font-black uppercase tracking-widest text-primary/30">Ihre Wahl</div>
+														<div class="bg-primary/5 rounded-2xl p-4 border border-primary/10">
+															<div class="flex items-center gap-3">
+																<div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-black text-sm shrink-0">
+																	{impact.chosenOption.letter}
 																</div>
-															</div>
-
-															<!-- Values effect -->
-															<div class="flex flex-col justify-between gap-3">
-																<div>
-																	<h4 class="mb-2 text-[10px] font-bold uppercase tracking-wider text-base-content/70">Werte-Verschiebung durch Ihre Wahl</h4>
-																	{#if impact.axisShifts.length > 0}
-																		<div class="flex flex-col gap-1.5">
-																			{#each impact.axisShifts as shift}
-																				<div class="flex items-center justify-between rounded-lg border border-base-300/40 bg-base-200 p-2 text-[11px] text-base-content">
-																					<span class="text-base-content/60">{shift.axisName}:</span>
-																					<div class="flex items-center gap-1">
-																						<span class="font-bold {shift.delta >= 0 ? 'text-green-700' : 'text-orange-700'} font-mono">
-																							{shift.delta >= 0 ? '+' : ''}{shift.delta.toFixed(1)}
-																						</span>
-																						<span class="text-base-content/80 font-normal">({shift.label})</span>
-																					</div>
-																				</div>
-																			{/each}
-																		</div>
-																	{:else}
-																		<p class="text-[11px] text-base-content/50 italic">Diese Wahl hat keine ideologischen Achsen verschoben.</p>
-																	{/if}
-																</div>
-															</div>
-
-																{#if hasEffect && selectedEffect}
-																	<div class="rounded-xl border border-green-200 bg-green-50/50 p-3 text-[11px] leading-relaxed text-green-800">
-																		<span class="font-bold text-green-900">Effekt:</span> Durch Ihre Wahl der Option {impact.chosenOption.letter} hat sich die Übereinstimmung mit der 
-																		<span class="font-bold text-green-900">{selectedPartyName}</span> im Vergleich zur anderen Option um 
-																		<span class="font-bold font-mono">{selectedEffect.deltaPercentage >= 0 ? '+' : ''}{selectedEffect.deltaPercentage.toFixed(1)}%</span> verändert.
-																	</div>
-																{/if}
+																<span class="text-xs font-bold text-primary leading-snug">{impact.chosenOption.text}</span>
 															</div>
 														</div>
 													</div>
-												{/each}
-										</div>
+												</div>
+											</div>
+										{/each}
 									</div>
+								</div>
 							{/if}
 						</div>
 					</div>
 				{:else}
-					<div class="card w-full border border-base-300/40 bg-base-200 p-8 text-center text-base-content/60 shadow-md">
-						Wählen Sie eine Partei aus der Liste links aus, um detaillierte Ergebnisse zu sehen.
+					<div class="glass-card w-full rounded-[3rem] p-20 text-center flex flex-col items-center gap-6 border-dashed border-primary/10">
+						<div class="h-24 w-24 rounded-full bg-primary/5 flex items-center justify-center animate-pulse">
+							<span class="icon-[tabler--list-check] h-12 w-12 text-primary/20"></span>
+						</div>
+						<p class="text-xl font-black text-primary/30 uppercase tracking-widest">Wählen Sie eine Partei</p>
 					</div>
 				{/if}
 			</div>
 		</div>
+
+		<!-- RESTART BUTTON -->
+		<div class="w-full pb-24 pt-12 text-center animate-bounce-slow">
+			<button
+				class="btn btn-ghost btn-xl h-auto py-6 px-12 rounded-3xl text-primary/40 font-black hover:text-primary hover:bg-primary/5 transition-all"
+				onclick={() => {
+					resetQuiz();
+					goto('/fragen');
+				}}
+			>
+				<RotateCcw class="h-6 w-6 mr-3" />
+				Quiz neu starten
+			</button>
+		</div>
+	{/if}
+</div>
 
 		<!-- DEBUG MODE SECTION -->
 		<div class="mt-8 w-full border-t border-base-300 pt-8">
@@ -843,17 +649,3 @@
 			{/if}
 		</div>
 
-		<!-- RESTART BUTTON -->
-		<div class="w-full pb-12 pt-8 text-center">
-			<button
-				class="btn btn-outline btn-primary"
-				onclick={() => {
-					resetQuiz();
-					goto('/fragen');
-				}}
-			>
-				Quiz neu starten
-			</button>
-		</div>
-	{/if}
-</div>
